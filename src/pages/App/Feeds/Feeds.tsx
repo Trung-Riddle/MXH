@@ -45,7 +45,7 @@ const Feeds = () => {
   ]
 
   return (
-    <div className='w-3/5 h-full overflow-y-scroll'>
+    <div className='w-3/5 h-auto flex flex-col flex-grow overflow-y-scroll'>
       <h2 className='text-lg font-bold mb-3'>Stories</h2>
 
       <div className='base-hidden-scroll relative overflow-x-scroll bg-white rounded-md dark:bg-dark-main p-3'>
@@ -56,10 +56,10 @@ const Feeds = () => {
         </div>
       </div>
 
-      <div>
-        <div className='flex items-center justify-between'>
-          <h2 className='text-lg font-bold mb-3'>Feeds</h2>
-          <Button>Popular</Button>
+      <div className='mt-3'>
+        <div className='flex items-center justify-between mb-3'>
+          <h2 className='text-lg font-bold'>Feeds</h2>
+          <Button className='py-2 px-5'>Popular</Button>
         </div>
 
         <div className='bg-light-main dark:bg-dark-main rounded-md px-3'>
@@ -87,6 +87,18 @@ const Feeds = () => {
             </div>
           </div>
 
+          <div className='flex items-center w-full'>
+            <InputComment placeholder='Write your comment...' />
+          </div>
+          <div className='flex items-center w-full'>
+            <InputComment placeholder='Write your comment...' />
+          </div>
+          <div className='flex items-center w-full'>
+            <InputComment placeholder='Write your comment...' />
+          </div>
+          <div className='flex items-center w-full'>
+            <InputComment placeholder='Write your comment...' />
+          </div>
           <div className='flex items-center w-full'>
             <InputComment placeholder='Write your comment...' />
           </div>
