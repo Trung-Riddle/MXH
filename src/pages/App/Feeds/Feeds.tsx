@@ -1,4 +1,5 @@
 import { Avatar, Button, InputComment, Story } from 'src/components'
+import { CommentSvg, LikeSvg, ShareSvg } from 'src/components/icons/posts'
 
 const Feeds = () => {
   const UserSuggestions = [
@@ -45,11 +46,11 @@ const Feeds = () => {
   ]
 
   return (
-    <div className='w-3/5 h-auto flex flex-col flex-grow overflow-y-scroll'>
+    <div className='w-3/5 h-full flex flex-col flex-grow overflow-y-scroll'>
       <h2 className='text-lg font-bold mb-3'>Stories</h2>
 
-      <div className='base-hidden-scroll relative overflow-x-scroll bg-white rounded-md dark:bg-dark-main p-3'>
-        <div className='relative flex flex-grow flex-row items-center p-[2px] gap-5'>
+      <div className='base-hidden-scroll flex flex-col flex-grow flex-shrink-0 overflow-x-scroll bg-white rounded-md dark:bg-dark-main p-3'>
+        <div className='relative flex flex-row items-center p-[2px] gap-5'>
           {UserSuggestions.map(({ id, avatar, name }) => (
             <Story key={id} avatar={avatar} name={name} justPostNow={false} />
           ))}
@@ -59,11 +60,17 @@ const Feeds = () => {
       <div className='mt-3'>
         <div className='flex items-center justify-between mb-3'>
           <h2 className='text-lg font-bold'>Feeds</h2>
-          <Button className='py-2 px-5'>Popular</Button>
+
+          <div className='flex items-center gap-2'>
+            <Button className='py-2 px-5 shadow-md' textColor='text-light' bg='bg-light-main dark:bg-dark-main'>
+              Latest
+            </Button>
+            <Button className='py-2 px-5 shadow-md'>Popular</Button>
+          </div>
         </div>
 
-        <div className='bg-light-main dark:bg-dark-main rounded-md px-3'>
-          <div className='flex flex-col gap-4'>
+        <div className='bg-light-main w-full dark:bg-dark-main rounded-md px-3'>
+          <div className='flex flex-col gap-4 mb-6'>
             <Avatar
               name='Hồ Minh Thành'
               src='https://images.unsplash.com/photo-1692680887038-db37974e11ee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80'
@@ -80,19 +87,22 @@ const Feeds = () => {
               />
             </div>
 
-            <div className='flex items-center'>
-              <span>280.4k like</span>
-              <span>88 comment</span>
-              <span>12 share</span>
+            <div className='flex items-center justify-between'>
+              <div className='flex flex-row gap-2'>
+                <LikeSvg width='25' height='25' />
+                <span>280.4k like</span>
+              </div>
+              <div className='flex flex-row gap-2'>
+                <CommentSvg width='25' height='25' />
+                <span>88 comment</span>
+              </div>
+              <div className='flex flex-row gap-2'>
+                <ShareSvg width='25' height='25' />
+                <span>12 share</span>
+              </div>
             </div>
           </div>
 
-          <div className='flex items-center w-full'>
-            <InputComment placeholder='Write your comment...' />
-          </div>
-          <div className='flex items-center w-full'>
-            <InputComment placeholder='Write your comment...' />
-          </div>
           <div className='flex items-center w-full'>
             <InputComment placeholder='Write your comment...' />
           </div>

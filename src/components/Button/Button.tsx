@@ -4,15 +4,23 @@ import clsx from 'clsx'
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isLoading?: boolean
   rounded?: string
+  bg?: string
+  textColor?: string
 }
 
 function Button(props: ButtonProps) {
-  const { className, isLoading, children, rounded, disabled, ...rest } = props
+  const { className, isLoading, children, rounded, disabled, textColor, bg, ...rest } = props
   const newClassName = disabled ? className + ' cursor-not-allowed' : className
 
   return (
     <button
-      className={clsx('style-bg-main text-white font-bold text-sm', newClassName, rounded ? rounded : ' rounded-full')}
+      className={clsx(
+        'font-bold text-sm',
+        newClassName,
+        rounded ? rounded : ' rounded-full',
+        bg ? bg : ' style-bg-main',
+        textColor ? textColor : ' text-white'
+      )}
       disabled={isLoading}
       {...rest}
     >

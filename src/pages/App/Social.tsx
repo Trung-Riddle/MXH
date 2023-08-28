@@ -139,22 +139,24 @@ export default function Social() {
           <Article className='flex flex-col p-3'>
             <h2 className='font-bold text-base text-light dark:text-dark mb-3 text-center'>Suggestions for you</h2>
 
-            <div className='flex flex-col gap-5'>
-              {UserSuggestions.map(({ id, avatar, name }) => (
-                <Link key={id} to={'' + id} className='flex flex-row items-center gap-2'>
-                  <div className='relative w-10 h-10'>
-                    <div className='aspect-square'>
-                      <img
-                        loading='lazy'
-                        src={avatar}
-                        alt=''
-                        className='absolute rounded-full w-full h-full object-cover inset-0'
-                      />
+            <div className='overflow-y-scroll'>
+              <div className='flex flex-col gap-5'>
+                {UserSuggestions.map(({ id, avatar, name }) => (
+                  <Link key={id} to={'' + id} className='flex flex-row items-center gap-2'>
+                    <div className='relative w-10 h-10'>
+                      <div className='aspect-square'>
+                        <img
+                          loading='lazy'
+                          src={avatar}
+                          alt=''
+                          className='absolute rounded-full w-full h-full object-cover inset-0'
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <h4 className='text-sm'>{name}</h4>
-                </Link>
-              ))}
+                    <h4 className='text-sm'>{name}</h4>
+                  </Link>
+                ))}
+              </div>
             </div>
           </Article>
 

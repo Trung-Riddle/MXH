@@ -6,7 +6,12 @@ const Search = () => {
       <label htmlFor='search' className='block mr-10 ml-5'>
         <SearchSvg width='24' height='24' />
       </label>
-      <input type='text' id='search' className='outline-none bg-transparent py-2' placeholder='search explore...' />
+      <input
+        type='text'
+        id='search'
+        className='outline-none bg-transparent py-1 flex flex-1 text-base'
+        placeholder='search explore...'
+      />
     </div>
   )
 }
