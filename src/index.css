@@ -16,30 +16,18 @@
   }
 
   .base-hidden-scroll::-webkit-scrollbar {
-    width: 0;
-    padding: 0;
+    display: none;
   }
 
-  .base-hidden-scroll::-webkit-scrollbar-track {
-    scroll-padding: 0;
-    padding: 0;
-  }
-
-  .base-hidden-scroll::-webkit-scrollbar-thumb {
-    scroll-padding: 0;
-    padding: 0;
-  }
-
-  .base-hidden-scroll::-webkit-scrollbar-track-piece {
-    scroll-padding: 0;
-    padding: 0;
+  .base-hidden-scroll {
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
   }
 
   .article:is(:first-child) {
     @apply m-0
   }
-
-
 }
 
 
@@ -54,11 +42,9 @@ html {
 
 body {
   font-family: 'Lemonada', cursive;
-  background-color: #F5F6FC;
   width: 100%;
   height: 100%;
 }
-
 
 #root {
   width: 100%;
@@ -69,9 +55,6 @@ body {
   background-color: transparent;
   color: inherit;
 }
-
-
-
 
 .style-main {
   background: linear-gradient(90deg, #2ECEC2 0%, #34BAD0 30.21%, #3B89F1 100%);

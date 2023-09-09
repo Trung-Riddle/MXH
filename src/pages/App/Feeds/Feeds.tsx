@@ -42,18 +42,30 @@ const Feeds = () => {
       id: 8,
       avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
       name: 'lisa'
+    },
+    {
+      id: 8,
+      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
+      name: 'lisa'
+    },
+    {
+      id: 8,
+      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
+      name: 'lisa'
     }
   ]
 
   return (
     <div className='w-3/5 h-full flex flex-col flex-grow overflow-y-scroll'>
-      <h2 className='text-lg font-bold mb-3'>Stories</h2>
+      <div className=''>
+        <h2 className='text-lg font-bold mb-3'>Stories</h2>
 
-      <div className='base-hidden-scroll flex flex-col flex-grow flex-shrink-0 overflow-x-scroll bg-white rounded-md dark:bg-dark-main p-3'>
-        <div className='relative flex flex-row items-center p-[2px] gap-5'>
-          {UserSuggestions.map(({ id, avatar, name }) => (
-            <Story key={id} avatar={avatar} name={name} justPostNow={false} />
-          ))}
+        <div className='base-hidden-scroll flex flex-col flex-shrink-0 overflow-x-scroll bg-white rounded-md dark:bg-dark-main p-3'>
+          <div className='relative flex flex-row items-center p-[2px] gap-5'>
+            {UserSuggestions.map(({ id, avatar, name }) => (
+              <Story key={id} avatar={avatar} name={name} justPostNow={false} />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -103,12 +115,6 @@ const Feeds = () => {
             </div>
           </div>
 
-          <div className='flex items-center w-full'>
-            <InputComment placeholder='Write your comment...' />
-          </div>
-          <div className='flex items-center w-full'>
-            <InputComment placeholder='Write your comment...' />
-          </div>
           <div className='flex items-center w-full'>
             <InputComment placeholder='Write your comment...' />
           </div>

@@ -3,6 +3,7 @@ import { Avatar, Header, Metric } from 'src/components'
 import { Navbars } from 'src/mocks/data'
 import { IsActive, NotActive } from 'src/styles'
 import Article from 'src/components/Article/Article'
+import { LogoutSvg, SettingSvg } from 'src/components/icons'
 
 export default function Social() {
   const location = useLocation()
@@ -76,111 +77,131 @@ export default function Social() {
       id: 4,
       avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
       name: 'Lalisa Manoban'
+    },
+    {
+      id: 4,
+      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
+      name: 'Lalisa Manoban'
+    },
+    {
+      id: 4,
+      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
+      name: 'Lalisa Manoban'
+    },
+    {
+      id: 4,
+      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
+      name: 'Lalisa Manoban'
     }
   ]
 
   return (
-    <div className='w-full h-full'>
+    <div className='w-full h-full bg-white dark:bg-[#0C0F1D] text-[#1B1D2A] dark:text-white flex flex-col flex-grow'>
       <Header />
-      <div className='flex items-start gap-6 mx-auto w-4/5 flex-row mt-3 flex-grow h-full flex-shrink min-w-0 relative'>
-        <aside className='min-h-0 w-1/5 sticky flex flex-col flex-grow'>
-          <Article className='p-3 flex flex-col gap-2'>
-            <Avatar name={currentUser.name} alt='' src={currentUser.avatar} />
-
-            <div className='flex items-center justify-between'>
-              {Metrics.map(({ count, id, label }) => (
-                <Metric key={id} count={count} label={label} />
-              ))}
-            </div>
-          </Article>
-
-          <Article className='flex flex-col gap-5 p-3'>
-            {Navbars.map(({ icon: Icon, id, path, value }) => (
-              <NavLink key={id} to={path} className={({ isActive }) => (isActive ? IsActive : NotActive)}>
-                <Icon height='25' width='25' active={location.pathname === path} />
-                {value}
-              </NavLink>
-            ))}
-          </Article>
-
-          <Article className='flex flex-col gap-5 p-3'>
-            <NavLink to={'/home/settings'} className={({ isActive }) => (isActive ? IsActive : NotActive)}>
-              Settings
-            </NavLink>
-            <button className={NotActive}>Logout</button>
-          </Article>
-
-          <Article className='p-3'>
-            <h2 className='font-bold text-base text-light dark:text-dark mb-2'>Contact us</h2>
-            <address className='text-[#1B1D2ACC] text-xs mb-1'>lime8@gmail.com</address>
-            <p className='text-[#1B1D2ACC] whitespace-pre-wrap break-words text-xs'>
-              Copyright © COGNOSPHERE. All Rights Reserved.
-            </p>
-          </Article>
-        </aside>
-
-        <Outlet />
-
-        <aside className='min-h-0 w-1/5 sticky flex flex-col flex-grow'>
-          <Article className='p-3'>
-            <h2 className='font-bold text-base text-light dark:text-dark mb-3 text-center'>Trending feed</h2>
-
-            <div className='grid grid-cols-2 gap-2'>
-              {TrendingFeeds.map(({ image, id }) => (
-                <div key={id} className='w-full relative'>
-                  <div className='aspect-2/1'>
-                    <img alt='' src={image} className='absolute inset-0 rounded-md w-full h-full object-cover' />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Article>
-
-          <Article className='flex flex-col p-3'>
-            <h2 className='font-bold text-base text-light dark:text-dark mb-3 text-center'>Suggestions for you</h2>
-
-            <div className='overflow-y-scroll'>
-              <div className='flex flex-col gap-5'>
-                {UserSuggestions.map(({ id, avatar, name }) => (
-                  <Link key={id} to={'' + id} className='flex flex-row items-center gap-2'>
-                    <div className='relative w-10 h-10'>
-                      <div className='aspect-square'>
-                        <img
-                          loading='lazy'
-                          src={avatar}
-                          alt=''
-                          className='absolute rounded-full w-full h-full object-cover inset-0'
-                        />
-                      </div>
-                    </div>
-                    <h4 className='text-sm'>{name}</h4>
-                  </Link>
+      <div className='flex flex-col flex-grow flex-shrink min-h-0'>
+        <div className='flex items-start gap-6 mx-auto w-4/5 flex-row my-3 flex-grow flex-shrink min-h-0 min-w-0 relative'>
+          <aside className='min-h-full w-1/5 sticky flex flex-col flex-grow'>
+            <Article className='p-3 flex flex-col items-center justify-center gap-6'>
+              <Avatar name={currentUser.name} alt='' src={currentUser.avatar} />
+              <div className='flex items-center justify-between flex-row w-full'>
+                {Metrics.map(({ count, id, label }) => (
+                  <Metric key={id} count={count} label={label} />
                 ))}
               </div>
-            </div>
-          </Article>
+            </Article>
 
-          <Article className='p-3'>
-            <h2 className='font-bold text-base text-light dark:text-dark mb-3 text-center'>Content creator</h2>
-
-            <div className='mt-3 flex -space-x-2 overflow-hidden justify-center mb-1'>
-              {UserSuggestions.map(({ id, avatar }) => (
-                <div key={id} className='h-10 w-10 relative inline-block'>
-                  <div className='aspect-square'>
-                    <img
-                      className='h-full w-full rounded-full object-cover absolute inset-0 ring-2 ring-white'
-                      src={avatar}
-                      alt=''
-                    />
-                  </div>
-                </div>
+            <Article className='flex flex-col justify-center items-start gap-5 p-3'>
+              {Navbars.map(({ icon: Icon, id, path, value }) => (
+                <NavLink key={id} to={path} className={({ isActive }) => (isActive ? IsActive : NotActive)}>
+                  <Icon height='25' width='25' active={location.pathname === path} />
+                  {value}
+                </NavLink>
               ))}
-            </div>
-            <p className='text-center text-xs'>
-              More than 142k people became content creators, become a content creator of Lime8
-            </p>
-          </Article>
-        </aside>
+            </Article>
+
+            <Article className='flex flex-col gap-5 items-start p-3 justify-center'>
+              <NavLink to={'/home/settings'} className={({ isActive }) => (isActive ? IsActive : NotActive)}>
+                <SettingSvg height='25' width='25' />
+                Settings
+              </NavLink>
+              <button className={NotActive}>
+                <LogoutSvg height='25' width='25' />
+                Logout
+              </button>
+            </Article>
+
+            <Article className='p-3 flex flex-col justify-center'>
+              <h2 className='font-bold text-base text-light dark:text-white mb-2 text-center'>Contact us</h2>
+              <address className='text-[#1B1D2ACC] dark:text-white text-xs mb-1'>lime8@gmail.com</address>
+              <p className='text-[#1B1D2ACC] dark:text-white whitespace-pre-wrap break-words text-xs'>
+                Copyright © COGNOSPHERE. All Rights Reserved.
+              </p>
+            </Article>
+          </aside>
+
+          <Outlet />
+
+          <aside className='min-h-full w-1/5 sticky flex flex-col flex-grow'>
+            <Article className='p-3 flex flex-col justify-evenly'>
+              <h2 className='font-bold text-base text-light dark:text-white mb-3 text-center'>Trending feed</h2>
+
+              <div className='grid grid-cols-2 gap-2'>
+                {TrendingFeeds.map(({ image, id }) => (
+                  <div key={id} className='w-full relative'>
+                    <div className='aspect-2/1'>
+                      <img alt='' src={image} className='absolute inset-0 rounded-md w-full h-full object-cover' />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Article>
+
+            <Article className='flex flex-col justify-evenly p-3'>
+              <h2 className='font-bold text-base text-light dark:text-white mb-3 text-center'>Suggestions for you</h2>
+
+              <div className='base-hidden-scroll overflow-y-scroll flex flex-col flex-grow'>
+                <div className='flex flex-col max-h-60 gap-5'>
+                  {UserSuggestions.map(({ id, avatar, name }) => (
+                    <Link key={id} to={'' + id} className='flex flex-row items-center gap-2'>
+                      <div className='relative w-10 h-10'>
+                        <div className='aspect-square'>
+                          <img
+                            loading='lazy'
+                            src={avatar}
+                            alt=''
+                            className='absolute rounded-full w-full h-full object-cover inset-0'
+                          />
+                        </div>
+                      </div>
+                      <h4 className='text-sm'>{name}</h4>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </Article>
+
+            <Article className='p-3 flex justify-evenly items-center'>
+              <h2 className='font-bold text-base text-light dark:text-white mb-3 text-center'>Content creator</h2>
+
+              <div className='mt-3 flex -space-x-2 overflow-hidden justify-center mb-1'>
+                {UserSuggestions.map(({ id, avatar }) => (
+                  <div key={id} className='h-10 w-10 relative inline-block'>
+                    <div className='aspect-square'>
+                      <img
+                        className='h-full w-full rounded-full object-cover absolute inset-0 ring-2 ring-white'
+                        src={avatar}
+                        alt=''
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <p className='text-center text-xs'>
+                More than 142k people became content creators, become a content creator of Lime8
+              </p>
+            </Article>
+          </aside>
+        </div>
       </div>
     </div>
   )
