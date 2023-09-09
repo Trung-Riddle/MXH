@@ -1,7 +1,7 @@
 import { useRoutes } from 'react-router-dom'
 import { Feeds } from 'src/pages/App'
+import Social from 'src/pages/App/Social'
 import { AuthTabs } from 'src/pages/Auth'
-import { LayoutMain } from 'src/pages/Layouts'
 
 export default function AppRoutes() {
   const elements = useRoutes([
@@ -11,7 +11,7 @@ export default function AppRoutes() {
     },
     {
       path: '/home',
-      element: <LayoutMain />,
+      element: <Social />,
       children: [
         {
           path: 'feeds',
