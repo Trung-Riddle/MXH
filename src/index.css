@@ -2,13 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  .base-border-main {
+    @apply rounded-full z-10 relative border-transparent bg-clip-padding
+  }
+  .base-border-main::after {
+    content: "";
+    z-index: -1;
+    margin: -2px;
+    border-radius: inherit;
+    background-image: linear-gradient(90deg, #2ECEC2 0%, #34BAD0 25.65%, #3B89F1 100%);
+    @apply absolute inset-0
+  }
+
+  .base-hidden-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .base-hidden-scroll {
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
+  }
+
+  .article:is(:first-child) {
+    @apply m-0
+  }
+}
+
+
+
+
+
+html {
+  scroll-behavior: smooth;
+  height: 100%;
+  overflow-y: hidden;
+}
+
 body {
   font-family: 'Lemonada', cursive;
+  width: 100%;
+  height: 100%;
 }
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
 .block-select::selection {
   background-color: transparent;
   color: inherit;
 }
+
 .style-main {
   background: linear-gradient(90deg, #2ECEC2 0%, #34BAD0 30.21%, #3B89F1 100%);
 background-clip: text;

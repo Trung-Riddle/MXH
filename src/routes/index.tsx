@@ -1,4 +1,5 @@
 import { useRoutes } from 'react-router-dom'
+import { Feeds } from 'src/pages/App'
 import Social from 'src/pages/App/Social'
 import { AuthTabs } from 'src/pages/Auth'
 
@@ -10,7 +11,29 @@ export default function AppRoutes() {
     },
     {
       path: '/home',
-      element: <Social />
+      element: <Social />,
+      children: [
+        {
+          path: 'feeds',
+          element: <Feeds />
+        },
+        {
+          path: 'explore',
+          element: <h1 className='w-3/5'>Explore</h1>
+        },
+        {
+          path: 'top-tv',
+          element: <h1 className='w-3/5'>Top TV</h1>
+        },
+        {
+          path: 'my-favorites',
+          element: <h1 className='w-3/5'>Favorites</h1>
+        },
+        {
+          path: 'community',
+          element: <h1 className='w-3/5'>Community</h1>
+        }
+      ]
     }
   ])
   return elements
