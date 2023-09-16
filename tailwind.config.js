@@ -13,6 +13,7 @@ export default {
       backgroundColor: {
         'light-main': '#FFFFFF',
         'dark-main': '#1b1d2a',
+        'dark-second': '#0c0f1d',
         'light-input': '#f5f5f5',
         'dark-input': '#343746'
       },
@@ -20,6 +21,9 @@ export default {
         dark: '#fffff',
         light: '#1B1D2A',
         input: '#999999'
+      },
+      width: {
+        main: '1200px'
       }
     }
   },

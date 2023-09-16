@@ -1,12 +1,12 @@
 import { Navbars } from 'src/mocks/data'
-import { Article, Avatar, Metric } from '..'
+import { Article, Avatar, Metric } from '../..'
 import { NavLink } from 'react-router-dom'
 import { IsActive, NotActive } from 'src/styles'
-import { LogoutSvg, SettingSvg } from '../icons'
+import { LogoutSvg, SettingSvg } from '../../icons'
 
 const currentUser = {
   name: 'Minh Thành',
-  avatar: 'https://s120-ava-talk.zadn.vn/1/0/a/d/13/120/a6740d4fbdb661f360e03b10e6f115c2.jpg',
+  avatar: 'https://res.cloudinary.com/dpnwjc5bt/image/upload/v1694206067/bookingtour/xpxfxkpblhmzyeecbk1o.jpg',
   alt: '',
   presence: true
 }
@@ -31,9 +31,9 @@ const Metrics = [
 
 const Sidebar = () => {
   return (
-    <aside className='min-h-full w-1/5 sticky flex flex-col flex-grow'>
+    <aside className='w-1/5 flex flex-col'>
       <Article className='p-3 flex flex-col items-center justify-center gap-6'>
-        <Avatar name={currentUser.name} alt='' src={currentUser.avatar} />
+        <Avatar name={currentUser.name} className='' src={currentUser.avatar} />
         <div className='flex items-center justify-between flex-row w-full'>
           {Metrics.map(({ count, id, label }) => (
             <Metric key={id} count={count} label={label} />

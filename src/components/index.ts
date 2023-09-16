@@ -8,5 +8,6 @@ export { default as Article } from './Article/Article'
 export { default as Avatar } from './Avatar/Avatar'
 export { default as Metric } from './Metric/Metric'
 export { default as Story } from './Story/Story'
-export { default as Artice } from './Article/Article'
 export { default as InputComment } from './Input/InputComment'
+
+export { default as SidebarLeftHome } from './Sidebar/home/SidebarLeft'

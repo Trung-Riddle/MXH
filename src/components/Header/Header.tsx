@@ -3,7 +3,7 @@ import { AddSvg, FangSvg, HeartSvg, NotifySvg, SendSvg } from '../icons'
 
 export default function Header() {
   return (
-    <header className='h-[70px] shadow-md w-full flex items-center px-6 bg-light-main dark:bg-dark-main'>
+    <header className='h-[70px] shadow-3xl w-full flex items-center px-6 dark:bg-dark-main'>
       <div className='flex items-center'>
         <div className='flex items-center gap-2'>
           <FangSvg width='39' height='39' styleText='text-3xl' />

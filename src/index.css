@@ -6,6 +6,9 @@
   .base-border-main {
     @apply rounded-full z-10 relative border-transparent bg-clip-padding
   }
+  .text-white-80 {
+    color: rgba(255, 255, 255, 0.697);
+  }
   .base-border-main::after {
     content: "";
     z-index: -1;

@@ -9,11 +9,6 @@ const Feeds = () => {
       name: 'Jisoo'
     },
     {
-      id: 2,
-      avatar: 'https://24365withblinks.com/images/about/profile_jennie.jpg',
-      name: 'Jennie'
-    },
-    {
       id: 3,
       avatar: 'https://24365withblinks.com/images/about/profile_rose.jpg',
       name: 'Rose'
@@ -29,39 +24,24 @@ const Feeds = () => {
       name: 'lisa'
     },
     {
+      id: 10,
+      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
+      name: 'lisa'
+    },
+    {
       id: 6,
-      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
-      name: 'lisa'
-    },
-    {
-      id: 7,
-      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
-      name: 'lisa'
-    },
-    {
-      id: 8,
-      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
-      name: 'lisa'
-    },
-    {
-      id: 8,
-      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
-      name: 'lisa'
-    },
-    {
-      id: 8,
       avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
       name: 'lisa'
     }
   ]
 
   return (
-    <div className='w-3/5 h-full flex flex-col flex-grow overflow-y-scroll'>
+    <div className='w-3/5 h-full flex flex-col flex-grow overflow-y-scroll base-hidden-scroll'>
       <div className=''>
         <h2 className='text-lg font-bold mb-3'>Stories</h2>
 
         <div className='base-hidden-scroll flex flex-col flex-shrink-0 overflow-x-scroll bg-white rounded-md dark:bg-dark-main p-3'>
-          <div className='relative flex flex-row items-center p-[2px] gap-5'>
+          <div className='relative flex items-center p-[2px] justify-between'>
             {UserSuggestions.map(({ id, avatar, name }) => (
               <Story key={id} avatar={avatar} name={name} justPostNow={false} />
             ))}
@@ -81,14 +61,15 @@ const Feeds = () => {
           </div>
         </div>
 
-        <div className='bg-light-main w-full dark:bg-dark-main rounded-md px-3'>
+        <div className='bg-light-main w-full dark:bg-dark-main rounded-md px-3 py-4'>
           <div className='flex flex-col gap-4 mb-6'>
             <Avatar
               name='Hồ Minh Thành'
               src='https://images.unsplash.com/photo-1692680887038-db37974e11ee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80'
-              alt=''
-              className='flex flex-row'
+              alt='avt'
+              className='gap-3 items-center'
               styleText='text-xs'
+              subs='Hanoi, vietnam'
             />
 
             <div className='rounded-md overflow-hidden'>

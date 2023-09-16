@@ -2,6 +2,7 @@ import { useRoutes } from 'react-router-dom'
 import { Feeds } from 'src/pages/App'
 import Social from 'src/pages/App/Social'
 import { AuthTabs } from 'src/pages/Auth'
+import { LayoutMain } from 'src/pages/Layouts'
 
 export default function AppRoutes() {
   const elements = useRoutes([
@@ -11,7 +12,7 @@ export default function AppRoutes() {
     },
     {
       path: '/home',
-      element: <Social />,
+      element: <LayoutMain />,
       children: [
         {
           path: 'feeds',
@@ -34,6 +35,10 @@ export default function AppRoutes() {
           element: <h1 className='w-3/5'>Community</h1>
         }
       ]
+    },
+    {
+      path: '*',
+      element: <h1>Page not found</h1>
     }
   ])
   return elements
