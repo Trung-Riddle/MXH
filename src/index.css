@@ -25,15 +25,48 @@
   .base-hidden-scroll {
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none; /* for Firefox */
-    overflow-y: scroll; 
+  }
+
+  
+  .linear-gradient-activated {
+    background: linear-gradient(135deg, #2ECEC2 48.08%, #34BAD0 53.26%, #3B89F1 75%);
   }
 
   .article:is(:first-child) {
     @apply m-0
   }
+
+  .border-linear-color {
+    border-radius: 9999px;
+    border: 10px solid;
+    border-image-slice: 1;
+    border-width: 5px;
+
+    border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+  }
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
 
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #2ECEC2 48.08%, #34BAD0 53.26%, #3B89F1 75%);
+
+  border-radius: 8px;
+}
+
+/* Handle on hover */
+/* ::-webkit-scrollbar-thumb:hover {
+  background: red;
+} */
 
 
 
@@ -80,6 +113,10 @@ background-clip: text;
 .rotate-infinite {
   animation: rotate-animation 2s infinite linear;
 }
+
+
+
+
 @keyframes rotate-animation {
 	0% {
 		transform: rotate(0deg);
