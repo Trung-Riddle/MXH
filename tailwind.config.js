@@ -14,13 +14,16 @@ export default {
         'light-main': '#FFFFFF',
         'dark-main': '#1b1d2a',
         'dark-second': '#0c0f1d',
-        'light-input': '#f5f5f5',
-        'dark-input': '#343746'
+        chatBoxLight: '#F5F5F5',
+        messageLight: '#F5F5F5',
+        inputLight: '#F5F5F5',
+        inputLightSecondary: '#77757580',
+        light: '#FFFFFF',
+        lightMain: '#F5F6FC'
       },
       textColor: {
-        dark: '#fffff',
-        light: '#1B1D2A',
-        input: '#999999'
+        dark: '#1B1D2A',
+        light: '#FFFFFF'
       },
       width: {
         main: '1200px'

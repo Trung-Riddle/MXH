@@ -1,8 +1,14 @@
 import { useRoutes } from 'react-router-dom'
 import { Feeds } from 'src/pages/App'
-import Social from 'src/pages/App/Social'
+import Explore from 'src/pages/App/Explore/Explore'
+import Friend from 'src/pages/App/Friend/Friend'
+import Home from 'src/pages/App/Friend/Home/Home'
+import Message from 'src/pages/App/Messages/Message'
+import SingleChatBox from 'src/pages/App/Messages/SingleChatBox'
+import Profile from 'src/pages/App/Profile/Profile'
 import { AuthTabs } from 'src/pages/Auth'
-import { LayoutMain } from 'src/pages/Layouts'
+import { LayoutMain, LayoutMessage } from 'src/pages/Layouts'
+import LayoutChildren from 'src/pages/Layouts/LayoutChildren'
 
 export default function AppRoutes() {
   const elements = useRoutes([
@@ -33,6 +39,46 @@ export default function AppRoutes() {
         {
           path: 'community',
           element: <h1 className='w-3/5'>Community</h1>
+        }
+      ]
+    },
+    {
+      path: '',
+      element: <LayoutMessage />,
+      children: [
+        {
+          path: 'message',
+          element: <Message />,
+          children: [
+            {
+              path: ':userMessageId',
+              element: <SingleChatBox />
+            }
+          ]
+        },
+        {
+          path: '',
+          element: <LayoutChildren />,
+          children: [
+            {
+              path: 'explore',
+              element: <Explore />
+            },
+            {
+              path: 'profile',
+              element: <Profile />
+            },
+            {
+              path: 'friends',
+              element: <Friend />,
+              children: [
+                {
+                  path: '',
+                  element: <Home />
+                }
+              ]
+            }
+          ]
         }
       ]
     },
