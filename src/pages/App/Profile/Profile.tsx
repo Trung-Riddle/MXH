@@ -1,5 +1,5 @@
 import EditSvg from 'src/assets/icons/components/EditSvg'
-import { Button } from 'src/components'
+import { Article, Button } from 'src/components'
 import User from 'src/components/User/User'
 import { AddSvg } from 'src/components/icons'
 
@@ -14,7 +14,7 @@ const Profile = () => {
         />
       </div>
 
-      <div className='-mt-20 z-20 relative max-w-7xl mx-auto flex items-center'>
+      <div className='-mt-20 z-20 mb-5 relative max-w-7xl mx-auto flex items-center'>
         <User
           size='xl'
           alt=''
@@ -59,6 +59,22 @@ const Profile = () => {
             <AddSvg width='24' height='24' />
             Create new post
           </Button>
+        </div>
+      </div>
+
+      <div className='flex items-center max-w-7xl mx-auto'>
+        <div className='w-8/12'>Post</div>
+        <div className='w-1/3'>
+          <Article className='flex flex-col gap-6'>
+            <div className='flex items-center justify-between'>
+              <h3 className='text-sm font-semibold'>Your latest stories</h3>
+              <Button>watch all</Button>
+            </div>
+
+            <div className=''></div>
+          </Article>
+
+          <Article></Article>
         </div>
       </div>
     </div>

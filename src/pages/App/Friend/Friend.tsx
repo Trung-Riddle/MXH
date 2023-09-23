@@ -1,7 +1,9 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import AppSettings from 'src/configs/appsettings'
 
 const Friend = () => {
+  const location = useLocation()
+
   return (
     <div className='flex w-full h-full'>
       <div className='flex flex-col px-6 mt-6 w-2/12'>
@@ -18,6 +20,9 @@ const Friend = () => {
                 isActive ? AppSettings.NavigationFriendsStyles.Active : AppSettings.NavigationFriendsStyles.UnActive
               }
             >
+              {/* Active Link Conditions */}
+              {`/friends${route.pathname}` === location.pathname && <route.icon width='24px' height='24px' active />}
+              {`/friends${route.pathname}` !== location.pathname && <route.icon width='24px' height='24px' />}
               {route.label}
             </NavLink>
           ))}
