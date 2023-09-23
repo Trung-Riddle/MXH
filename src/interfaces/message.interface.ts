@@ -1,4 +1,3 @@
-
 export interface MessageDocument {
   id: string
   receiverId: string
