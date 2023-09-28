@@ -1,3 +1,9 @@
+import AddFrendsSvg from './components/friends/AddFriendSvg'
+import AllFriendsSvg from './components/friends/AllFriendsSvg'
+import CakeSvg from './components/friends/CakeSvg'
+import KeepSvg from './components/friends/KeepSvg'
+import FriendsSvg from './components/friends/FriendsSvg'
+
 import CommunitySvg from './components/navigations/ComunitySvg'
 import ExploreSvg from './components/navigations/ExploreSvg'
 import HomeSvg from './components/navigations/HomeSvg'
@@ -11,6 +17,13 @@ const Icons = {
     TopTv: ToptvSvg,
     Message: MessageSvg,
     Community: CommunitySvg
+  },
+  NavigationFriends: {
+    AddFriend: AddFrendsSvg,
+    Cake: CakeSvg,
+    AllFriends: AllFriendsSvg,
+    Keep: KeepSvg,
+    Friends: FriendsSvg
   }
 }
 

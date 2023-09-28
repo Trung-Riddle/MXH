@@ -6,8 +6,8 @@ const AppSettings = {
     UnActive: 'flex items-center justify-center py-4'
   },
   NavigationFriendsStyles: {
-    Active: 'flex items-center text-dark style-main text-sm font-medium',
-    UnActive: 'flex items-center text-dark text-sm font-medium'
+    Active: 'flex items-center text-dark style-main text-sm font-medium gap-4',
+    UnActive: 'flex items-center text-dark text-sm font-medium gap-4'
   },
   Routes: [
     {
@@ -44,32 +44,27 @@ const AppSettings = {
   RoutesFriends: [
     {
       pathname: '/',
-      icon: Icons.Navigations.Home,
-      iconActivated: Icons.Navigations.Home,
+      icon: Icons.NavigationFriends.Friends,
       label: 'Trang chủ'
     },
     {
       pathname: '/requests',
-      icon: Icons.Navigations.Home,
-      iconActivated: Icons.Navigations.Home,
+      icon: Icons.NavigationFriends.AddFriend,
       label: 'Lời mời kết bạn'
     },
     {
       pathname: '/suggestions',
-      icon: Icons.Navigations.Home,
-      iconActivated: Icons.Navigations.Home,
+      icon: Icons.NavigationFriends.Keep,
       label: 'Gợi ý'
     },
     {
       pathname: '/list',
-      icon: Icons.Navigations.Home,
-      iconActivated: Icons.Navigations.Home,
+      icon: Icons.NavigationFriends.AllFriends,
       label: 'Tất cả bạn bè'
     },
     {
       pathname: '/birthdays',
-      icon: Icons.Navigations.Home,
-      iconActivated: Icons.Navigations.Home,
+      icon: Icons.NavigationFriends.Cake,
       label: 'Sinh nhật'
     }
   ]

@@ -6,6 +6,8 @@ import EmailSvg from 'src/components/icons/Email'
 import User from 'src/components/icons/User'
 import Lock from 'src/components/icons/Lock'
 import { useState } from 'react'
+import authService from 'src/services/api/auth/auth.service'
+import Utils from 'src/services/utilities/utils'
 
 export default function Register() {
   const [keepLoggedIn, setKeepLoggedIn] = useState(false)
@@ -17,8 +19,28 @@ export default function Register() {
   } = useForm<RegisterSchema>({
     resolver: yupResolver(registerSchema)
   })
-  const whenSubmit = handleSubmit((data) => {
-    console.log(data)
+  const whenSubmit = handleSubmit(async (data) => {
+    try {
+      const avatarImage = Utils.generateAvatar(data.username.charAt(0).toUpperCase())
+      console.log({
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        avatarColor: 'red',
+        avatarImage
+      })
+
+      const result = await authService.register({
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        avatarColor: 'red',
+        avatarImage
+      })
+      console.log(result)
+    } catch (err) {
+      console.log(err)
+    }
   })
   return (
     <form className='w-full' onSubmit={whenSubmit}>

@@ -1,13 +1,17 @@
 import http from 'src/services/http'
 import { RegisterSchema, LoginSchema } from 'src/services/utilities/rules'
 
+interface IRegister extends Partial<RegisterSchema> {
+  avatarColor: string
+  avatarImage: string
+}
 class AuthService {
-  async register(data: RegisterSchema) {
+  async register(data: IRegister) {
     const response = await http.post('/api/v1/signup', data)
     return response
   }
-  async Login(data: LoginSchema) {
-    const response = await http.post('/api/v1/login', data)
+  async login(data: LoginSchema) {
+    const response = await http.post('/api/v1/signin', data)
     return response
   }
   async forgotPassword(email: string) {
