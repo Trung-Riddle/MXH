@@ -9,6 +9,7 @@ const LayoutMain = () => {
       <Header />
       <div className='w-main mx-auto'>
         <SidebarLeftHome />
+        
       </div>
     </div>
   )
