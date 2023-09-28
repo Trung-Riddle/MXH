@@ -20,10 +20,9 @@ export interface UserDocuments {
     youtube: string
   }
   blokedsBy: string[]
-  relationship: string
   bgImageCover: string
   work: string
-  status: string
+  status: boolean
   quote: string
   bgImageId: string
   location: string

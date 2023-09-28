@@ -22,6 +22,5 @@ export const registerSchema = Yup.object({
 })
 export const loginSchema = registerSchema.omit(['confirm', 'email'])
 
-
 export type RegisterSchema = Yup.InferType<typeof registerSchema>
 export type LoginSchema = Yup.InferType<typeof loginSchema>
