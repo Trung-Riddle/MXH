@@ -5,6 +5,12 @@ import { LoginSchema, loginSchema } from 'src/services/utilities/rules'
 import EmailSvg from 'src/components/icons/Email'
 import Lock from 'src/components/icons/Lock'
 import { useState } from 'react'
+import authService from 'src/services/api/auth/auth.service'
+
+function isValidEmail(email: string) {
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+  return emailRegex.test(email)
+}
 
 export default function Login() {
   const [keepLoggedIn, setKeepLoggedIn] = useState(false)
@@ -16,14 +22,16 @@ export default function Login() {
   } = useForm<LoginSchema>({
     resolver: yupResolver(loginSchema)
   })
-  const whenSubmit = handleSubmit((data) => {
+
+  const onSubmit = handleSubmit(async (data) => {
     console.log(data)
   })
+
   return (
-    <form className='w-full px-5' onSubmit={whenSubmit}>
+    <form className='w-full px-5' onSubmit={onSubmit}>
       <Input
-        errorMessage={errors.username?.message}
-        name='username'
+        errorMessage={errors.usernameOrEmail?.message}
+        name='usernameOrEmail'
         register={register}
         labelText='username or email'
         firstIcon={<EmailSvg width='36' height='34' />}

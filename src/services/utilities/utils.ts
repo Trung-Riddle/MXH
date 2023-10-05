@@ -1,5 +1,12 @@
+import { AvatarColor } from './static.data'
+import { floor, random } from 'lodash'
+
 export default class Utils {
-  static generateAvatar(text: string, foregroundColor: string = 'white', backgroundColor: string = '#009578') {
+  static randomAvatarColor() {
+    return AvatarColor[floor(random(0.9) * AvatarColor.length)]
+  }
+
+  static generateAvatar(text: string, foregroundColor: string, backgroundColor: string) {
     const canvas = document.createElement('canvas')
     const context = canvas.getContext('2d') as CanvasRenderingContext2D
 

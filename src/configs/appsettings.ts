@@ -11,39 +11,34 @@ const AppSettings = {
   },
   Routes: [
     {
-      pathname: '/feeds',
+      pathname: '/home/feeds',
       icon: Icons.Navigations.Home,
-      iconActivated: Icons.Navigations.Home,
-      label: ''
+      label: 'Feeds'
     },
     {
       pathname: '/message',
       icon: Icons.Navigations.Message,
-      iconActivated: Icons.Navigations.Message,
-      label: ''
+      label: 'Messages'
     },
     {
       pathname: '/explore',
       icon: Icons.Navigations.Explore,
-      iconActivated: Icons.Navigations.Explore,
-      label: ''
+      label: 'Explore'
     },
     {
       pathname: '/top-tv',
       icon: Icons.Navigations.TopTv,
-      iconActivated: Icons.Navigations.TopTv,
-      label: ''
+      label: 'Top Tv'
     },
     {
-      pathname: '/friends/',
+      pathname: '/friends',
       icon: Icons.Navigations.Community,
-      iconActivated: Icons.Navigations.Community,
-      label: ''
+      label: 'Community'
     }
   ],
   RoutesFriends: [
     {
-      pathname: '/',
+      pathname: '',
       icon: Icons.NavigationFriends.Friends,
       label: 'Trang chủ'
     },
@@ -66,6 +61,28 @@ const AppSettings = {
       pathname: '/birthdays',
       icon: Icons.NavigationFriends.Cake,
       label: 'Sinh nhật'
+    }
+  ],
+  RoutesProfile: [
+    {
+      pathname: '',
+      icon: Icons.NavigationFriends.Friends,
+      label: 'Bài viết'
+    },
+    {
+      pathname: '/profile/about',
+      icon: Icons.NavigationFriends.Friends,
+      label: 'Giới thiệu'
+    },
+    {
+      pathname: '/profile/friends',
+      icon: Icons.NavigationFriends.Friends,
+      label: 'Bạn bè'
+    },
+    {
+      pathname: '/profile/photos',
+      icon: Icons.NavigationFriends.Friends,
+      label: 'Hình ảnh'
     }
   ]
 }

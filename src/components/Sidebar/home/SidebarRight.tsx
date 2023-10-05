@@ -1,7 +1,5 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 import { Article } from 'src/components'
-
 
 const TrendingFeeds = [
   {
@@ -66,9 +64,9 @@ const UserSuggestions = [
 ]
 export default function SidebarRight() {
   return (
-    <aside className='min-h-full w-1/5 sticky flex flex-col flex-grow'>
+    <aside className='flex flex-col max-w-1/5 sticky inherits-h-header overflow-auto gap-3 py-3 base-hidden-scroll'>
       <Article className='p-3 flex flex-col justify-evenly'>
-        <h2 className='font-bold text-base text-light dark:text-white mb-3 text-center'>Trending feed</h2>
+        <h2 className='font-bold text-base text-dark dark:text-light mb-3 text-center'>Trending feed</h2>
 
         <div className='grid grid-cols-2 gap-2'>
           {TrendingFeeds.map(({ image, id }) => (
@@ -82,10 +80,10 @@ export default function SidebarRight() {
       </Article>
 
       <Article className='flex flex-col justify-evenly p-3'>
-        <h2 className='font-bold text-base text-light dark:text-white mb-3 text-center'>Suggestions for you</h2>
+        <h2 className='font-bold text-base text-dark dark:text-light mb-3 text-center'>Suggestions for you</h2>
 
         <div className='base-hidden-scroll overflow-y-scroll flex flex-col flex-grow'>
-          <div className='flex flex-col max-h-60 gap-5'>
+          <div className='flex flex-col max-h-80 gap-5'>
             {UserSuggestions.map(({ id, avatar, name }) => (
               <Link key={id} to={'' + id} className='flex flex-row items-center gap-2'>
                 <div className='relative w-10 h-10'>
@@ -106,11 +104,11 @@ export default function SidebarRight() {
       </Article>
 
       <Article className='p-3 flex justify-evenly items-center'>
-        <h2 className='font-bold text-base text-light dark:text-white mb-3 text-center'>Content creator</h2>
+        <h2 className='font-bold text-base text-dark dark:text-light mb-3 text-center'>Content creator</h2>
 
         <div className='mt-3 flex -space-x-2 overflow-hidden justify-center mb-1'>
-          {UserSuggestions.map(({ id, avatar }) => (
-            <div key={id} className='h-10 w-10 relative inline-block'>
+          {UserSuggestions.slice(0, 4).map(({ id, avatar }) => (
+            <div key={id} className='h-8 w-8 relative inline-block'>
               <div className='aspect-square'>
                 <img
                   className='h-full w-full rounded-full object-cover absolute inset-0 ring-2 ring-white'

@@ -1,14 +1,18 @@
 import { useRoutes } from 'react-router-dom'
-import { Feeds } from 'src/pages/App'
+import { Feeds, Friends } from 'src/pages/App'
 import Explore from 'src/pages/App/Explore/Explore'
-import Friend from 'src/pages/App/Friend/Friend'
-import Home from 'src/pages/App/Friend/Home/Home'
 import Message from 'src/pages/App/Messages/Message'
 import SingleChatBox from 'src/pages/App/Messages/SingleChatBox'
 import Profile from 'src/pages/App/Profile/Profile'
 import { AuthTabs } from 'src/pages/Auth'
 import { LayoutMain, LayoutMessage } from 'src/pages/Layouts'
 import LayoutChildren from 'src/pages/Layouts/LayoutChildren'
+
+// Pages child friends
+import { BirthDay, Home, List, Request, Suggest } from 'src/pages/App/Friends'
+
+// Pages child profile
+import { About, Friend, Photo, Post } from 'src/pages/App/Profile'
 
 export default function AppRoutes() {
   const elements = useRoutes([
@@ -65,16 +69,50 @@ export default function AppRoutes() {
               element: <Explore />
             },
             {
-              path: 'profile',
-              element: <Profile />
-            },
-            {
               path: 'friends',
-              element: <Friend />,
+              element: <Friends />,
               children: [
                 {
                   path: '',
                   element: <Home />
+                },
+                {
+                  path: 'requests',
+                  element: <Request />
+                },
+                {
+                  path: 'suggestions',
+                  element: <Suggest />
+                },
+                {
+                  path: 'list',
+                  element: <List />
+                },
+                {
+                  path: 'birthdays',
+                  element: <BirthDay />
+                }
+              ]
+            },
+            {
+              path: 'profile',
+              element: <Profile />,
+              children: [
+                {
+                  path: '',
+                  element: <Post />
+                },
+                {
+                  path: 'about',
+                  element: <About />
+                },
+                {
+                  path: 'friends',
+                  element: <Friend />
+                },
+                {
+                  path: 'photos',
+                  element: <Photo />
                 }
               ]
             }

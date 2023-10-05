@@ -32,7 +32,7 @@ const Message = () => {
   return (
     <div className='w-full flex h-full overflow-x-hidden'>
       {/* Navigation Messages */}
-      <div className='w-full sm:w-[350px] bg-white shadow-lg h-full overflow-y-auto flex-shrink-0'>
+      <div className='w-full sm:w-[350px] bg-light dark:bg-darkMessage shadow-lg h-full overflow-y-auto flex-shrink-0'>
         {/* Avatar User */}
         <User
           alt='User'
@@ -46,7 +46,7 @@ const Message = () => {
         <div className='flex items-start flex-col w-full my-5 h-[80%]'>
           {/* Frients Presence */}
           <div className='w-full mb-5 px-6'>
-            <p className='font-semibold text-dark text-sm mb-2'>Online now</p>
+            <p className='font-semibold text-dark text-sm mb-2 dark:text-light'>Online now</p>
             <div className='flex overflow-x-scroll w-full base-hidden-scroll items-center overflow-y-hidden gap-3 p-[2px] relative'>
               {Array(8)
                 .fill({})
@@ -64,7 +64,7 @@ const Message = () => {
           {/* Search Frients */}
           <div className='w-full mb-5 px-6'>
             <div className='flex items-center justify-between mb-2'>
-              <h2 className='text-dark font-semibold text-sm'>Message</h2>
+              <h2 className='text-dark font-semibold text-sm dark:text-light'>Message</h2>
               <MoreSvg width='25px' />
             </div>
 
@@ -113,7 +113,7 @@ const Message = () => {
       {windowWidth >= 576 && <Outlet />}
 
       {/* More Profile Frient */}
-      <div className='md:flex flex-col w-3/12 bg-light px-6 justify-between hidden'>
+      <div className='md:flex flex-col w-3/12 bg-light dark:bg-darkMain px-6 justify-between hidden'>
         <User
           source='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8eg7kYUVGeqWE0QwEcwVcDKVo_CsaYyi9BQ&usqp=CAU'
           username='Bé iu <3'
@@ -127,7 +127,7 @@ const Message = () => {
         {/* Gallerys */}
         <div className='my-5'>
           <div className='flex items-center justify-between mb-3'>
-            <h3 className='text-dark font-semibold text-sm '>Media(21)</h3>
+            <h3 className='text-dark dark:text-light font-semibold text-sm'>Media(21)</h3>
             <button className='style-main text-sm'>See all</button>
           </div>
           <div className='grid grid-cols-3 w-full gap-3'>
@@ -180,32 +180,32 @@ const Message = () => {
 
         {/* Reports  */}
         <div className='my-5'>
-          <h3 className='text-dark font-semibold text-sm mb-2'>Settings</h3>
+          <h3 className='text-dark dark:text-light  font-semibold text-sm mb-2'>Settings</h3>
 
           <div className='flex flex-col gap-1'>
             <div className='flex items-center gap-3'>
               <button>
                 <ReportSvg width='24px' height='24px' />
               </button>
-              <p>Report</p>
+              <p className='text-dark dark:text-light'>Report</p>
             </div>
             <div className='flex items-center gap-3'>
               <button>
                 <LockSvg width='24px' height='24px' />
               </button>
-              <p>Terminal key code</p>
+              <p className='text-dark dark:text-light'>Terminal key code</p>
             </div>
             <div className='flex items-center gap-3'>
               <button>
                 <BellSvg width='24px' height='24px' />
               </button>
-              <p>Turn off notifications</p>
+              <p className='text-dark dark:text-light'>Turn off notifications</p>
             </div>
             <div className='flex items-center gap-3'>
               <button>
                 <TrashSvg width='24px' height='24px' />
               </button>
-              <p>Remove message</p>
+              <p className='text-dark dark:text-light'>Remove message</p>
             </div>
           </div>
         </div>

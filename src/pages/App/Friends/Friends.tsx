@@ -1,7 +1,7 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import AppSettings from 'src/configs/appsettings'
 
-const Friend = () => {
+const Friends = () => {
   const location = useLocation()
 
   return (
@@ -36,4 +36,4 @@ const Friend = () => {
   )
 }
 
-export default Friend
+export default Friends

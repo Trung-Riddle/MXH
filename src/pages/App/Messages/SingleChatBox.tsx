@@ -53,6 +53,36 @@ const message = [
     id: 9,
     message: 'Oke',
     status: 'receiver'
+  },
+  {
+    id: 7,
+    message: 'Lười làm thích gáy!',
+    status: 'sender'
+  },
+  {
+    id: 8,
+    message: 'Oke',
+    status: 'sender'
+  },
+  {
+    id: 9,
+    message: 'Oke',
+    status: 'receiver'
+  },
+  {
+    id: 7,
+    message: 'Lười làm thích gáy!',
+    status: 'sender'
+  },
+  {
+    id: 8,
+    message: 'Oke',
+    status: 'sender'
+  },
+  {
+    id: 9,
+    message: 'Oke',
+    status: 'receiver'
   }
 ]
 
@@ -77,7 +107,7 @@ const SingleChatBox = () => {
   const conversation = usersMessagesBox.find((item) => item.id.toString() === userMessageId)
 
   return (
-    <div className='w-full flex flex-col h-full bg-white flex-1'>
+    <div className='w-full flex flex-col h-full bg-light dark:bg-[#0C0F1D] flex-1'>
       <header className='flex items-center justify-between px-6 my-5'>
         <User
           username={conversation?.receivedUsername || ''}
@@ -110,7 +140,9 @@ const SingleChatBox = () => {
               key={index}
               className={clsx(
                 'rounded-full px-4 py-2 w-max text-sm font-normal',
-                message.status === 'sender' ? 'ml-auto style-bg-main text-light' : 'mr-auto bg-messageLight text-dark'
+                message.status === 'sender'
+                  ? 'ml-auto style-bg-main text-light'
+                  : 'mr-auto dark:bg-messageDark bg-messageLight text-dark dark:text-light'
               )}
             >
               {message.message}
@@ -121,14 +153,14 @@ const SingleChatBox = () => {
       {/* Input Chat */}
       <div className='flex items-center w-full gap-6 mt-auto px-6 py-6'>
         <div className='base-border-main flex flex-1'>
-          <div className=' bg-inputLight w-full flex items-center rounded-full'>
+          <div className='bg-inputLight dark:bg-inputDark w-full flex items-center rounded-full'>
             <span className='px-6'>
               <LinkSvg height='24px' width='24px' />
             </span>
             <input
               type='text'
               placeholder='Type a message here...'
-              className='outline-none border-none bg-transparent py-2 flex-1'
+              className='outline-none border-none bg-transparent py-1.5 flex-1'
             />
             <button className='px-6 relative' onClick={() => {}}>
               <IconSvg height='24px' width='24px' />
@@ -137,7 +169,7 @@ const SingleChatBox = () => {
         </div>
 
         <span>
-          <SendSvg height='24px' width='24px' />
+          <SendSvg height='32' width='32' />
         </span>
       </div>
     </div>
