@@ -1,4 +1,4 @@
-import http from "src/services/http";
+import http from 'src/services/http'
 
 class UserService {
   async getUserSuggestions() {
@@ -7,6 +7,10 @@ class UserService {
   }
   async updateBasicInfo(data: any) {
     const response = await http.put('user', data)
+    return response
+  }
+  async checkCurrentUser() {
+    const response = await http.get('currentuser')
     return response
   }
 }

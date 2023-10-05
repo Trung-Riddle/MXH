@@ -11,3 +11,4 @@ export { default as Story } from './Story/Story'
 export { default as InputComment } from './Input/InputComment'
 
 export { default as SidebarLeftHome } from './Sidebar/home/SidebarLeft'
+export { default as SidebarRightHome } from './Sidebar/home/SidebarRight'

@@ -20,7 +20,29 @@ export const registerSchema = Yup.object({
     .max(15, 'Password không quá 15 kí tự')
     .oneOf([Yup.ref('password')], 'password nhập lại như cc')
 })
-export const loginSchema = registerSchema.omit(['confirm', 'email'])
+
+const emailSchema = Yup.string().required('Vui lòng nhập email').email('Email không đúng định dạng')
+const usernameSchema = Yup.string().required('Vui lòng nhập username').max(6, 'Invliad username')
+
+export const loginSchema = Yup.object().shape({
+  usernameOrEmail: Yup.string()
+    .required('Please enter email or username')
+    .when({
+      is: (value: any) => {
+        console.log(value)
+        return value && value.includes('@')
+      },
+      then: () => {
+        console.log('email')
+        return emailSchema
+      },
+      otherwise: () => {
+        console.log('user')
+        return usernameSchema
+      }
+    }),
+  password: Yup.string().required('Password is required')
+})
 
 export type RegisterSchema = Yup.InferType<typeof registerSchema>
 export type LoginSchema = Yup.InferType<typeof loginSchema>

@@ -1,6 +1,7 @@
 import NotifySvg from 'src/assets/icons/components/Notify'
 import { Button } from '..'
 import SearchSvg from 'src/assets/icons/components/SearchSvg'
+import ToggleTheme from '../Toggle/ToggleTheme'
 
 const HeaderChildren = () => {
   return (
@@ -8,7 +9,7 @@ const HeaderChildren = () => {
       <div className='flex flex-1'>
         <label
           htmlFor='SearchInputBar'
-          className='bg-inputLightSecondary rounded-full mx-auto w-4/12 flex items-center cursor-text select-none'
+          className='bg-inputLightSecondary rounded-full mx-auto w-2/5 flex items-center cursor-text select-none'
         >
           <span className='cursor-pointer pr-6 pl-2'>
             <SearchSvg width='24px' height='24px' />
@@ -22,6 +23,7 @@ const HeaderChildren = () => {
         </label>
       </div>
       <div className='flex items-center gap-5'>
+        <ToggleTheme />
         <Button className='p-2'>
           <NotifySvg width='20px' height='20px' />
         </Button>

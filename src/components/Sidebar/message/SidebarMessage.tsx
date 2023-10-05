@@ -28,9 +28,7 @@ const SidebarMessage = () => {
                   isActive ? AppSettings.NavigationStyles.Active : AppSettings.NavigationStyles.UnActive
                 }
               >
-                {/* Active Link Conditions */}
-                {route.pathname === pathname && <route.iconActivated width='28px' height='28px' active />}
-                {route.pathname !== pathname && <route.icon width='28px' height='28px' />}
+                <route.icon width='28px' height='28px' active={route.pathname === pathname} />
               </NavLink>
               {route.pathname === pathname && (
                 <div className='linear-gradient-activated h-10 w-2.5 absolute -left-[5%] top-2/4 rounded-lg -translate-y-2/4'></div>
@@ -41,7 +39,7 @@ const SidebarMessage = () => {
 
         <div className='flex flex-col items-start justify-center mt-auto w-full mb-10'>
           <NavLink to={'settings'} className='flex items-center justify-center py-4 w-full'>
-            <SettingSvg width='38' height='38' />
+            <SettingSvg width='28' height='28' />
           </NavLink>
           <button className='w-full flex items-center justify-center py-4'>
             <SignOutSvg width='28' height='28' />

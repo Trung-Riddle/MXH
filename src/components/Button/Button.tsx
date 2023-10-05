@@ -19,7 +19,7 @@ function Button(props: ButtonProps) {
         newClassName,
         rounded ? rounded : ' rounded-full',
         bg ? bg : ' style-bg-main',
-        textColor ? textColor : ' text-white'
+        textColor ? textColor : ' text-light'
       )}
       disabled={isLoading}
       {...rest}
@@ -28,7 +28,7 @@ function Button(props: ButtonProps) {
         <svg
           aria-hidden='true'
           role='status'
-          className='inline w-4 h-4 mr-3 text-white animate-spin'
+          className='inline w-4 h-4 mr-3 text-light animate-spin'
           viewBox='0 0 100 101'
           fill='none'
           xmlns='http://www.w3.org/2000/svg'

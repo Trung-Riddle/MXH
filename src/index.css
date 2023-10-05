@@ -1,8 +1,34 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Lemonada:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --header-height: 50px;
+    --bg-dark-main: #0C0F1D;
+    --bg-light-main: #F5F6FC;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    height: 100%;
+    overflow-y: hidden;
+  }
+  
+  body {
+    font-family: 'Lemonada', cursive;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+  }
+
+  .inherits-h-header {
+    top: var(--header-height);
+    height: calc(100vh - var(--header-height));
+  }
+
   .base-border-main {
     @apply rounded-full z-10 relative border-transparent bg-clip-padding
   }
@@ -44,6 +70,11 @@
 
     border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
   }
+
+
+
+  .sidebar-home-style {
+  }
 }
 
 /* width */
@@ -70,17 +101,7 @@
 
 
 
-html {
-  scroll-behavior: smooth;
-  height: 100%;
-  overflow-y: hidden;
-}
 
-body {
-  font-family: 'Lemonada', cursive;
-  width: 100%;
-  height: 100%;
-}
 
 #root {
   width: 100%;
@@ -128,3 +149,27 @@ background-clip: text;
 		transform: rotate(360deg);
 	}
 }
+
+.button-toggle-shadow {
+  box-shadow: inset 0 8px 60px rgba(0,0,0, .1),
+  inset 0 8px 8px rgba(0,0,0, .1),
+  inset 0 -4px 4px rgba(0,0,0, .1);
+
+}
+
+.dark .button-toggle-shadow {
+  box-shadow: inset 0 8px 60px rgba(0,0,0, .2),
+              inset 8px 0 8px rgba(0,0,0, .2),
+              inset 0 -4px 4px rgba(0,0,0, .2);
+}
+
+.animated{
+  animation: spin 0.5s;
+}
+
+@keyframes spin{
+  to {
+    transform: rotate(360deg);
+  }
+}
+

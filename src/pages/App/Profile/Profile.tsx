@@ -1,7 +1,9 @@
+import { NavLink, Outlet } from 'react-router-dom'
 import EditSvg from 'src/assets/icons/components/EditSvg'
 import { Article, Button } from 'src/components'
 import User from 'src/components/User/User'
 import { AddSvg } from 'src/components/icons'
+import AppSettings from 'src/configs/appsettings'
 
 const Profile = () => {
   return (
@@ -25,11 +27,11 @@ const Profile = () => {
         >
           <div className='flex items-center text-dark'>
             <nav className='flex items-center gap-6'>
-              <span>Bài viết</span>
-              <span>Giới thiệu</span>
-              <span>Bạn bè</span>
-              <span>Hình ảnh</span>
-              <span>Xem thêm</span>
+              {AppSettings.RoutesProfile.map((route, index) => (
+                <NavLink key={index} to={route.pathname}>
+                  {route.label}
+                </NavLink>
+              ))}
             </nav>
           </div>
         </User>
@@ -43,39 +45,27 @@ const Profile = () => {
               </div>
               <div className='flex items-center gap-3'>
                 <span className='text-sm font-semibold text-light'>11.7k</span>
-                <p className='text-sm font-semibold text-light'>Flollowing</p>
+                <p className='text-sm font-semibold text-light'>Following</p>
               </div>
               <div className='flex items-center gap-3'>
                 <span className='text-sm font-semibold text-light'>120</span>
                 <p className='text-sm font-semibold text-light'>Followers</p>
               </div>
             </div>
-            <Button className='flex items-center gap-1 py-2 px-3'>
+            <Button className='flex items-center gap-1 py-1 px-3'>
               <EditSvg width='24px' height='24px' />
               Edit
             </Button>
           </div>
-          <Button className='flex items-center flex-shrink-0 justify-center gap-2 px-3 py-2 ml-10'>
+          <Button className='flex items-center flex-shrink-0 justify-center gap-2 px-3 py-1 ml-10'>
             <AddSvg width='24' height='24' />
             Create new post
           </Button>
         </div>
       </div>
 
-      <div className='flex items-center max-w-7xl mx-auto'>
-        <div className='w-8/12'>Post</div>
-        <div className='w-1/3'>
-          <Article className='flex flex-col gap-6'>
-            <div className='flex items-center justify-between'>
-              <h3 className='text-sm font-semibold'>Your latest stories</h3>
-              <Button>watch all</Button>
-            </div>
-
-            <div className=''></div>
-          </Article>
-
-          <Article></Article>
-        </div>
+      <div>
+        <Outlet />
       </div>
     </div>
   )

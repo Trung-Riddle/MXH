@@ -8,9 +8,14 @@ import Lock from 'src/components/icons/Lock'
 import { useState } from 'react'
 import authService from 'src/services/api/auth/auth.service'
 import Utils from 'src/services/utilities/utils'
+import withBaseComponent from 'src/hooks/withBaseComponent'
+import IHocProps from 'src/interfaces/hoc.interface'
+import useLocalStorage from 'src/hooks/useLocalStorage'
 
-export default function Register() {
+function Register({ dispatch }: IHocProps) {
+  const [loading, setLoading] = useState(false)
   const [keepLoggedIn, setKeepLoggedIn] = useState(false)
+
   const {
     register,
     setError,
@@ -21,22 +26,16 @@ export default function Register() {
   })
   const whenSubmit = handleSubmit(async (data) => {
     try {
-      const avatarImage = Utils.generateAvatar(data.username.charAt(0).toUpperCase())
-      console.log({
-        username: data.username,
-        email: data.email,
-        password: data.password,
-        avatarColor: 'red',
-        avatarImage
-      })
-
+      const avatarColor = Utils.randomAvatarColor()
+      const avatarImage = Utils.generateAvatar(data.username.charAt(0).toUpperCase(), 'white', avatarColor)
       const result = await authService.register({
         username: data.username,
         email: data.email,
         password: data.password,
-        avatarColor: 'red',
+        avatarColor: avatarColor,
         avatarImage
       })
+
       console.log(result)
     } catch (err) {
       console.log(err)
@@ -102,3 +101,5 @@ export default function Register() {
     </form>
   )
 }
+
+export default withBaseComponent(Register)

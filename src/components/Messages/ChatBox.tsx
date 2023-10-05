@@ -7,7 +7,7 @@ interface ChatBoxProps extends UserProps {
 
 const ChatBox = ({ message, presence, username, source, alt }: ChatBoxProps) => {
   return (
-    <div className='bg-chatBoxLight shadow-md w-full px-4 rounded-lg flex h-max py-4 items-center'>
+    <div className='bg-chatBoxLight dark:bg-chatBoxDark shadow-md w-full px-4 rounded-lg flex h-max py-4 items-center'>
       <User username={username} alt={alt} source={source} presence={presence}>
         <span className='text-xs text-ellipsis line-clamp-1'>{message}</span>
       </User>

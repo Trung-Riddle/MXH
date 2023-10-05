@@ -1,15 +1,10 @@
-import { Navbars } from 'src/mocks/data'
 import { Article, Avatar, Metric } from '../..'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { IsActive, NotActive } from 'src/styles'
-import { LogoutSvg, SettingSvg } from '../../icons'
-
-const currentUser = {
-  name: 'Minh Thành',
-  avatar: 'https://res.cloudinary.com/dpnwjc5bt/image/upload/v1694206067/bookingtour/xpxfxkpblhmzyeecbk1o.jpg',
-  alt: '',
-  presence: true
-}
+import AppSettings from 'src/configs/appsettings'
+import { useTheme } from 'src/hooks/useTheme'
+import SettingSvg from 'src/assets/icons/components/navigations/SettingSvg'
+import SignOutSvg from 'src/assets/icons/components/navigations/SignOutSvg'
 
 const Metrics = [
   {
@@ -30,10 +25,23 @@ const Metrics = [
 ]
 
 const Sidebar = () => {
+  const location = useLocation()
+  const { chooseTheme } = useTheme()
+
   return (
-    <aside className='w-1/5 flex flex-col'>
-      <Article className='p-3 flex flex-col items-center justify-center gap-6'>
-        <Avatar name={currentUser.name} className='' src={currentUser.avatar} />
+    <div className='flex flex-col max-w-1/5 sticky inherits-h-header base-hidden-scroll overflow-y-auto overflow-x-hidden gap-3 py-3'>
+      <Article className='p-3 flex flex-col items-center justify-center gap-4'>
+        <div className='flex flex-col justify-center items-center gap-2 my-2'>
+          <div className='rounded-full relative w-20 h-20 overflow-hidden'>
+            <img
+              className='absolute inset-0 object-cover w-full h-full max-w-full'
+              src='https://images.unsplash.com/photo-1695763594594-31505b18b58a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80'
+              alt=''
+            />
+          </div>
+
+          <h5 className='text-sm text-dark dark:text-light font-bold'>Hồ Minh Thành</h5>
+        </div>
         <div className='flex items-center justify-between flex-row w-full'>
           {Metrics.map(({ count, id, label }) => (
             <Metric key={id} count={count} label={label} />
@@ -41,34 +49,42 @@ const Sidebar = () => {
         </div>
       </Article>
 
-      <Article className='flex flex-col justify-center items-start gap-5 p-3'>
-        {Navbars.map(({ icon: Icon, id, path, value }) => (
-          <NavLink key={id} to={path} className={({ isActive }) => (isActive ? IsActive : NotActive)}>
-            <Icon height='25' width='25' active={location.pathname === path} />
-            {value}
-          </NavLink>
+      <Article className='flex flex-col justify-center items-start gap-3 py-5'>
+        {AppSettings.Routes.map((route, index) => (
+          <div key={index} className='relative overflow-hidden'>
+            <NavLink to={route.pathname} className={({ isActive }) => (isActive ? IsActive : NotActive)}>
+              <route.icon
+                width='28px'
+                height='28px'
+                active={location.pathname === route.pathname}
+                theme={chooseTheme}
+              />
+              {route.label}
+              {route.pathname === location.pathname && (
+                <div className='linear-gradient-activated h-10 w-2.5 absolute -left-[3%] top-2/4 rounded-lg -translate-y-2/4'></div>
+              )}
+            </NavLink>
+          </div>
         ))}
       </Article>
 
-      <Article className='flex flex-col gap-5 items-start p-3 justify-center'>
+      <Article className='flex flex-col gap-5 items-start py-5 justify-center'>
         <NavLink to={'/home/settings'} className={({ isActive }) => (isActive ? IsActive : NotActive)}>
-          <SettingSvg height='25' width='25' />
+          <SettingSvg height='28' width='28' />
           Settings
         </NavLink>
         <button className={NotActive}>
-          <LogoutSvg height='25' width='25' />
+          <SignOutSvg height='28' width='28' />
           Logout
         </button>
       </Article>
 
       <Article className='p-3 flex flex-col justify-center'>
-        <h2 className='font-bold text-base text-light dark:text-white mb-2 text-center'>Contact us</h2>
-        <address className='text-[#1B1D2ACC] dark:text-white text-xs mb-1'>lime8@gmail.com</address>
-        <p className='text-[#1B1D2ACC] dark:text-white whitespace-pre-wrap break-words text-xs'>
-          Copyright © COGNOSPHERE. All Rights Reserved.
-        </p>
+        <h2 className='font-bold text-base mb-2 text-center'>Contact us</h2>
+        <address className='text-xs mb-1'>lime8@gmail.com</address>
+        <p className='whitespace-pre-wrap break-words text-xs'>Copyright © COGNOSPHERE. All Rights Reserved.</p>
       </Article>
-    </aside>
+    </div>
   )
 }
 

@@ -5,4 +5,5 @@ export default interface Props {
 
 export interface NavigationProps extends Props {
   active?: boolean
+  theme?: boolean
 }
