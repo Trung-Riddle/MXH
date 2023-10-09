@@ -26,41 +26,9 @@ const AppSettings = {
       label: 'Explore'
     },
     {
-      pathname: '/top-tv',
-      icon: Icons.Navigations.TopTv,
-      label: 'Top Tv'
-    },
-    {
       pathname: '/friends',
       icon: Icons.Navigations.Community,
       label: 'Community'
-    }
-  ],
-  RoutesFriends: [
-    {
-      pathname: '',
-      icon: Icons.NavigationFriends.Friends,
-      label: 'Trang chủ'
-    },
-    {
-      pathname: '/requests',
-      icon: Icons.NavigationFriends.AddFriend,
-      label: 'Lời mời kết bạn'
-    },
-    {
-      pathname: '/suggestions',
-      icon: Icons.NavigationFriends.Keep,
-      label: 'Gợi ý'
-    },
-    {
-      pathname: '/list',
-      icon: Icons.NavigationFriends.AllFriends,
-      label: 'Tất cả bạn bè'
-    },
-    {
-      pathname: '/birthdays',
-      icon: Icons.NavigationFriends.Cake,
-      label: 'Sinh nhật'
     }
   ],
   RoutesProfile: [
@@ -80,9 +48,38 @@ const AppSettings = {
       label: 'Bạn bè'
     },
     {
-      pathname: '/profile/photos',
+      pathname: '/profile/resources',
       icon: Icons.NavigationFriends.Friends,
-      label: 'Hình ảnh'
+      label: 'Tài nguyên'
+    }
+  ],
+  RoutesAbout: [
+    {
+      pathname: 'about',
+      label: 'Tổng quan'
+    },
+    {
+      pathname: 'about-work-and-education',
+      label: 'Công việc và học vấn'
+    },
+
+    {
+      pathname: 'about-family-and-relationships',
+      label: 'Gia đình & mối quan hệ'
+    },
+    {
+      pathname: 'about-contact-and-basic-info',
+      label: 'Thông tin liên hệ và cơ bản '
+    }
+  ],
+  RoutesProfileFriends: [
+    {
+      pathname: 'followers-all',
+      label: 'Tổng quan'
+    },
+    {
+      pathname: 'following',
+      label: 'Đang theo dõi'
     }
   ]
 }

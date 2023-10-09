@@ -29,7 +29,7 @@ const Sidebar = () => {
   const { chooseTheme } = useTheme()
 
   return (
-    <div className='flex flex-col max-w-1/5 sticky inherits-h-header base-hidden-scroll overflow-y-auto overflow-x-hidden gap-3 py-3'>
+    <div className='md:flex hidden flex-col max-w-1/5 sticky inherits-h-header base-hidden-scroll overflow-y-auto overflow-x-hidden gap-3 py-3'>
       <Article className='p-3 flex flex-col items-center justify-center gap-4'>
         <div className='flex flex-col justify-center items-center gap-2 my-2'>
           <div className='rounded-full relative w-20 h-20 overflow-hidden'>

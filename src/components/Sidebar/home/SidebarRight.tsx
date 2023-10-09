@@ -64,7 +64,7 @@ const UserSuggestions = [
 ]
 export default function SidebarRight() {
   return (
-    <aside className='flex flex-col max-w-1/5 sticky inherits-h-header overflow-auto gap-3 py-3 base-hidden-scroll'>
+    <aside className='md:flex hidden flex-col max-w-1/5 sticky inherits-h-header overflow-auto gap-3 py-3 base-hidden-scroll'>
       <Article className='p-3 flex flex-col justify-evenly'>
         <h2 className='font-bold text-base text-dark dark:text-light mb-3 text-center'>Trending feed</h2>
 

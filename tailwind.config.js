@@ -4,6 +4,10 @@ export default {
   darkMode: 'class',
   theme: {
     extend: {
+      fill: {
+        dark: '#1B1D2A',
+        light: '#FFFFFF'
+      },
       boxShadow: {
         shadowMain: '0px 1px 8px 1px rgba(0, 0, 0, 0.10)'
       },
@@ -11,8 +15,8 @@ export default {
         '2/1': '2 / 1'
       },
       colors: {
-        'black-1': '#0b0f22',
-        'black-2': '#1d1d2a'
+        dark: '#1B1D2A',
+        light: '#FFFFFF'
       },
       backgroundColor: {
         chatBoxLight: '#F5F5F5',

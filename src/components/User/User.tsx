@@ -18,7 +18,7 @@ const User = ({ username, sloggan, source, presence, alt, size, styleText, style
       <UserPresence alt={alt} presence={presence} source={source} size={size} />
 
       {/* User informations */}
-      <div className={clsx('flex flex-col', styleContent)}>
+      <div className={clsx('flex flex-col flex-1', styleContent)}>
         <h4 className={clsx(styleText ? styleText : 'text-sm text-dark dark:text-light font-semibold mb-1')}>
           {username}
         </h4>

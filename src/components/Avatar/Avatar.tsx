@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-type AvatarSizes = 'sm' | 'lg' | 'md'
+export type AvatarSizes = 'sm' | 'lg' | 'md'
 
 const avatarSizes: Record<AvatarSizes, string> = {
   md: '',

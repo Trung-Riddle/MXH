@@ -12,6 +12,8 @@ import ChatBox from 'src/components/Messages/ChatBox'
 import User from 'src/components/User/User'
 import UserPresence from 'src/components/User/UserPresence'
 
+import { Messages } from 'src/mocks/data/message'
+
 const Message = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
@@ -32,7 +34,7 @@ const Message = () => {
   return (
     <div className='w-full flex h-full overflow-x-hidden'>
       {/* Navigation Messages */}
-      <div className='w-full sm:w-[350px] bg-light dark:bg-darkMessage shadow-lg h-full overflow-y-auto flex-shrink-0'>
+      <div className='w-full flex-col sm:w-[350px] bg-light dark:bg-darkMessage shadow-lg h-screen overflow-y-auto flex-shrink-0'>
         {/* Avatar User */}
         <User
           alt='User'
@@ -92,20 +94,18 @@ const Message = () => {
 
           {/* Frients Messages */}
           <div className='flex items-start flex-col overflow-y-auto h-full px-6 w-full gap-3 base-hidden-scroll'>
-            {Array(8)
-              .fill({})
-              .map((_, index) => (
-                <Link key={index} to={`/message/${index + 1}`}>
-                  <ChatBox
-                    key={index}
-                    message='I want to curse my bastard friends'
-                    presence='active'
-                    username='Eminiem'
-                    alt='Friend'
-                    source='https://wstatic-prod.pubg.com/web/live/static/og/img-og-pubg.jpg'
-                  />
-                </Link>
-              ))}
+            {Messages.map((box, index) => (
+              <Link key={index} to={`/message/${box.id}`} className='block w-full'>
+                <ChatBox
+                  key={index}
+                  message={box.contents.at(-1)!}
+                  presence='active'
+                  username={box.receiverUsername}
+                  alt={box.receiverUsername}
+                  source={box.receiverAvatarColor}
+                />
+              </Link>
+            ))}
           </div>
         </div>
       </div>

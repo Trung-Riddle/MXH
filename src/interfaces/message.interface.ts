@@ -4,7 +4,7 @@ export interface MessageDocument {
   isRead: boolean
   senderAvatarColor: string
   receiverAvatarColor: string
-  contents: string
+  contents: string[]
   senderUsername: string
   receiverUsername: string
   receiverProfilePicture: string
