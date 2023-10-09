@@ -1,13 +1,5 @@
 import { Button } from '..'
 
-// interface CardFriendProps {
-//   avatarUrl: string
-//   followers: string
-//   followings: string
-//   posts: string
-//   username: string
-// }
-
 const CardFriend = () => {
   return (
     <div className='bg-light shadow-shadowMain dark:bg-dark rounded-md overflow-hidden flex flex-col w-[calc((1_/_7)_*_100%_-_8px)] mx-1 mb-2'>

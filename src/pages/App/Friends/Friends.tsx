@@ -10,14 +10,7 @@ const Friends = () => {
         {Array(12)
           .fill(1)
           .map((_, index) => (
-            <CardFriend
-              key={index}
-              avatarUrl='https://s120-ava-talk.zadn.vn/c/2/1/9/8/120/af240160c9d3f895e9c3cffa58caa8bb.jpg'
-              followers='12'
-              followings='11k'
-              posts='12'
-              username='Hồ Minh Thành'
-            />
+            <CardFriend key={index} />
           ))}
       </div>
 
@@ -35,14 +28,7 @@ const Friends = () => {
         {Array(12)
           .fill(1)
           .map((_, index) => (
-            <CardFriend
-              key={index}
-              avatarUrl='https://s120-ava-talk.zadn.vn/c/2/1/9/8/120/af240160c9d3f895e9c3cffa58caa8bb.jpg'
-              followers='12'
-              followings='11k'
-              posts='12'
-              username='Hồ Minh Thành'
-            />
+            <CardFriend key={index} />
           ))}
       </div>
 

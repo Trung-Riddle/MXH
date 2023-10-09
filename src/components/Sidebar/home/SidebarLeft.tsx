@@ -1,4 +1,4 @@
-import { Article, Avatar, Metric } from '../..'
+import { Article, Metric } from '../../../components'
 import { NavLink, useLocation } from 'react-router-dom'
 import { IsActive, NotActive } from 'src/styles'
 import AppSettings from 'src/configs/appsettings'
