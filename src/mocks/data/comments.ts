@@ -1,3 +1,3 @@
 import { CommentDocuments } from 'src/interfaces/comment.interface'
 
-const Comments: CommentDocuments = []
+export const Comments: CommentDocuments[] = []
