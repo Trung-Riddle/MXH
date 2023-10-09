@@ -8,7 +8,7 @@ export interface StoryProps {
   size?: AvatarSizes
 }
 
-const Story = ({ avatar, justPostNow, username, size }: StoryProps) => {
+const Story = ({ avatar, username, size }: StoryProps) => {
   return <Avatar name={username ?? ''} alt='' size={size} src={avatar} styleText='text-sm' />
 }
 

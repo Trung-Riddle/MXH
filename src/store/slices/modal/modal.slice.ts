@@ -44,14 +44,30 @@ const ModalSlice = createSlice({
       state.data = null
       state.type = ''
     },
-    toggleGifsModal: (state, action) => {},
-    toggleFeelingsModal: (state, action) => {},
-    toggleVideoModal: (state, action) => {},
-    toggleImageModal: (state, action) => {},
-    toggleCommentModal: (state, action) => {},
-    toggleReactionModal: (state, action) => {},
-    toggleRemoveDialog: (state, action) => {},
-    addFeelings: (state, action) => {}
+    toggleGifsModal: (state, action) => {
+      console.log(state, action)
+    },
+    toggleFeelingsModal: (state, action) => {
+      console.log(state, action)
+    },
+    toggleVideoModal: (state, action) => {
+      console.log(state, action)
+    },
+    toggleImageModal: (state, action) => {
+      console.log(state, action)
+    },
+    toggleCommentModal: (state, action) => {
+      console.log(state, action)
+    },
+    toggleReactionModal: (state, action) => {
+      console.log(state, action)
+    },
+    toggleRemoveDialog: (state, action) => {
+      console.log(state, action)
+    },
+    addFeelings: (state, action) => {
+      console.log(state, action)
+    }
   }
 })
 

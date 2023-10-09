@@ -5,20 +5,14 @@ import { RegisterSchema, registerSchema } from 'src/services/utilities/rules'
 import EmailSvg from 'src/components/icons/Email'
 import User from 'src/components/icons/User'
 import Lock from 'src/components/icons/Lock'
-import { useState } from 'react'
 import authService from 'src/services/api/auth/auth.service'
 import Utils from 'src/services/utilities/utils'
 import withBaseComponent from 'src/hooks/withBaseComponent'
-import IHocProps from 'src/interfaces/hoc.interface'
-import useLocalStorage from 'src/hooks/useLocalStorage'
-
-function Register({ dispatch }: IHocProps) {
-  const [loading, setLoading] = useState(false)
-  const [keepLoggedIn, setKeepLoggedIn] = useState(false)
-
+// import IHocProps from 'src/interfaces/hoc.interface'
+function Register() {
   const {
     register,
-    setError,
+    // setError,
     handleSubmit,
     formState: { errors }
   } = useForm<RegisterSchema>({
