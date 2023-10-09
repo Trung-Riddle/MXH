@@ -1,3 +1,3 @@
-import { ImageDocuments } from "src/interfaces/images.interface";
+import { ImageDocuments } from 'src/interfaces/images.interface'
 
-const Images:ImageDocuments=[]
+const Images: ImageDocuments = []
