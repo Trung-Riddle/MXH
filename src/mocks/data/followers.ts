@@ -1,3 +1,3 @@
-import { FollowerDocuments } from "src/interfaces/follower.interface";
+import { FollowerDocuments } from 'src/interfaces/follower.interface'
 
-const Followers:FollowerDocuments=[]
+const Followers: FollowerDocuments = []

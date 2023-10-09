@@ -1,3 +1,3 @@
-import { NotificationDocuments } from "src/interfaces/notification.interface";
+import { NotificationDocuments } from 'src/interfaces/notification.interface'
 
-const Notification:NotificationDocuments=[]
+const Notification: NotificationDocuments = []
