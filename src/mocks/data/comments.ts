@@ -1,3 +1,3 @@
-import { CommentDocuments } from "src/interfaces/comment.interface";
+import { CommentDocuments } from 'src/interfaces/comment.interface'
 
-const Comments:CommentDocuments=[]
+const Comments: CommentDocuments = []
