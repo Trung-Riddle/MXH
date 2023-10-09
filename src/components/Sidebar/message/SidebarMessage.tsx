@@ -11,7 +11,7 @@ const SidebarMessage = () => {
     : `/${location.pathname.split('/')[1]}`
 
   return (
-    <div className='h-full md:flex flex-col overflow-auto w-max base-hidden-scroll hidden'>
+    <div className='h-screen sticky md:flex flex-col overflow-auto w-max base-hidden-scroll hidden top-0'>
       {/* Logo Fang */}
       <div className='mx-6 mb-10 mt-5'>
         <FangHeadSvg width='40px' height='40px' />
@@ -37,7 +37,7 @@ const SidebarMessage = () => {
           ))}
         </div>
 
-        <div className='flex flex-col items-start justify-center mt-auto w-full mb-10'>
+        <div className='flex flex-col items-start justify-center mt-auto w-full pb-10'>
           <NavLink to={'settings'} className='flex items-center justify-center py-4 w-full'>
             <SettingSvg width='28' height='28' />
           </NavLink>

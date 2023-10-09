@@ -5,7 +5,7 @@ import ToggleTheme from '../Toggle/ToggleTheme'
 
 const HeaderChildren = () => {
   return (
-    <div className='w-full flex items-center px-6 py-4 bg-transparent z-50'>
+    <div className='w-full flex items-center px-6 py-4 bg-transparent sticky z-50 top-0 right-0'>
       <div className='flex flex-1'>
         <label
           htmlFor='SearchInputBar'

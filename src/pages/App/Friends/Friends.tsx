@@ -1,37 +1,58 @@
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
-import AppSettings from 'src/configs/appsettings'
+import { Button } from 'src/components'
+import CardFriend from 'src/components/Friends/CardFriend'
 
 const Friends = () => {
-  const location = useLocation()
-
   return (
-    <div className='flex w-full h-full'>
-      <div className='flex flex-col px-6 mt-6 w-2/12'>
-        <div className='flex items-center mb-6'>
-          <h2 className='text-base font-bold'>Bạn bè</h2>
-        </div>
+    <div className='flex w-full h-full flex-col px-6'>
+      <h2 className='text-base font-bold mb-4 block text-dark dark:text-light'>Tất cả người theo dõi</h2>
 
-        <nav className='flex flex-col gap-6'>
-          {AppSettings.RoutesFriends.map((route, index) => (
-            <NavLink
+      <div className='flex items-center flex-wrap -mx-1'>
+        {Array(12)
+          .fill(1)
+          .map((_, index) => (
+            <CardFriend
               key={index}
-              to={`/friends${route.pathname}`}
-              className={({ isActive }) =>
-                isActive ? AppSettings.NavigationFriendsStyles.Active : AppSettings.NavigationFriendsStyles.UnActive
-              }
-            >
-              {/* Active Link Conditions */}
-              {`/friends${route.pathname}` === location.pathname && <route.icon width='24px' height='24px' active />}
-              {`/friends${route.pathname}` !== location.pathname && <route.icon width='24px' height='24px' />}
-              {route.label}
-            </NavLink>
+              avatarUrl='https://s120-ava-talk.zadn.vn/c/2/1/9/8/120/af240160c9d3f895e9c3cffa58caa8bb.jpg'
+              followers='12'
+              followings='11k'
+              posts='12'
+              username='Hồ Minh Thành'
+            />
           ))}
-        </nav>
       </div>
 
-      <div className='w-5/6 h-full px-6'>
-        <Outlet />
+      <Button
+        bg='bg-light'
+        textColor='text-dark dark:text-light'
+        className='py-3 rounded-md shadow-shadowMain mt-4 dark:bg-dark'
+      >
+        Xem thêm
+      </Button>
+
+      <h2 className='text-base font-bold mb-4 block mt-6 text-dark dark:text-light'>Những người bạn có thể biết</h2>
+
+      <div className='flex items-center flex-wrap -mx-1'>
+        {Array(12)
+          .fill(1)
+          .map((_, index) => (
+            <CardFriend
+              key={index}
+              avatarUrl='https://s120-ava-talk.zadn.vn/c/2/1/9/8/120/af240160c9d3f895e9c3cffa58caa8bb.jpg'
+              followers='12'
+              followings='11k'
+              posts='12'
+              username='Hồ Minh Thành'
+            />
+          ))}
       </div>
+
+      <Button
+        bg='bg-light'
+        textColor='text-dark dark:text-light'
+        className='py-3 rounded-md shadow-shadowMain mt-4 dark:bg-dark'
+      >
+        Xem thêm
+      </Button>
     </div>
   )
 }

@@ -8,11 +8,12 @@ import { AuthTabs } from 'src/pages/Auth'
 import { LayoutMain, LayoutMessage } from 'src/pages/Layouts'
 import LayoutChildren from 'src/pages/Layouts/LayoutChildren'
 
-// Pages child friends
-import { BirthDay, Home, List, Request, Suggest } from 'src/pages/App/Friends'
-
 // Pages child profile
-import { About, Friend, Photo, Post } from 'src/pages/App/Profile'
+import { About, Friend, Resource, Post } from 'src/pages/App/Profile'
+
+// Pages child about
+import { ContactAndBasics, FamilyAndRelationships, Overview, WorkAndEducation } from 'src/pages/App/Profile/Abouts'
+import { PhotoResource, VideoResource } from 'src/pages/App/Profile/Resources'
 
 export default function AppRoutes() {
   const elements = useRoutes([
@@ -70,29 +71,7 @@ export default function AppRoutes() {
             },
             {
               path: 'friends',
-              element: <Friends />,
-              children: [
-                {
-                  path: '',
-                  element: <Home />
-                },
-                {
-                  path: 'requests',
-                  element: <Request />
-                },
-                {
-                  path: 'suggestions',
-                  element: <Suggest />
-                },
-                {
-                  path: 'list',
-                  element: <List />
-                },
-                {
-                  path: 'birthdays',
-                  element: <BirthDay />
-                }
-              ]
+              element: <Friends />
             },
             {
               path: 'profile',
@@ -103,16 +82,44 @@ export default function AppRoutes() {
                   element: <Post />
                 },
                 {
-                  path: 'about',
-                  element: <About />
+                  path: '',
+                  element: <About />,
+                  children: [
+                    {
+                      path: 'about',
+                      element: <Overview />
+                    },
+                    {
+                      path: 'about-work-and-education',
+                      element: <WorkAndEducation />
+                    },
+                    {
+                      path: 'about-family-and-relationships',
+                      element: <FamilyAndRelationships />
+                    },
+                    {
+                      path: 'about-contact-and-basic-info',
+                      element: <ContactAndBasics />
+                    }
+                  ]
                 },
                 {
                   path: 'friends',
                   element: <Friend />
                 },
                 {
-                  path: 'photos',
-                  element: <Photo />
+                  path: 'resources',
+                  element: <Resource />,
+                  children: [
+                    {
+                      path: '',
+                      element: <PhotoResource />
+                    },
+                    {
+                      path: 'resources-video',
+                      element: <VideoResource />
+                    }
+                  ]
                 }
               ]
             }

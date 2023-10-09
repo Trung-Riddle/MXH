@@ -38,15 +38,16 @@ const Feeds = () => {
   ]
 
   return (
-    <div className='flex-[6] flex h-full flex-col flex-shrink px-3 pt-3'>
-      <div className='flex items-center justify-between select-none mb-3'>
+    <div className='flex-[6] flex h-full flex-col flex-shrink p-3'>
+      <div className='md:flex hidden items-center justify-between select-none mb-3'>
         <h2 className='text-lg font-bold text-dark dark:text-light'>Stories</h2>
         <Link to='' className='flex items-center font-bold text-sm gap-2'>
           Watch all
           <WatchAllSvg width='15' height='15' />
         </Link>
       </div>
-      <div className='base-hidden-scroll flex flex-col flex-shrink-0 overflow-x-scroll bg-light rounded-md dark:bg-dark p-3 shadow-shadowMain'>
+
+      <div className='base-hidden-scroll flex flex-col flex-shrink-0 overflow-x-scroll bg-transparent md:bg-light rounded-md md:dark:bg-dark md:p-3 md:shadow-shadowMain'>
         <div className='relative flex items-center p-[2px] justify-between'>
           <Story avatar={''} justPostNow={false} />
           {UserSuggestions.map(({ id, avatar, name }) => (
@@ -56,7 +57,7 @@ const Feeds = () => {
       </div>
 
       <div className='mt-3 flex flex-col'>
-        <div className='flex items-center justify-between mb-3'>
+        <div className='md:flex hidden items-center justify-between mb-3'>
           <h2 className='text-lg font-bold'>Feeds</h2>
 
           <div className='flex items-center gap-2'>
