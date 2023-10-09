@@ -1,4 +1,3 @@
-import React from 'react'
 import Props from '../../type'
 
 const LinkSvg = ({ width, height }: Props) => {
