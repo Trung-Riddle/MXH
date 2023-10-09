@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userSlice from './slices/user/user.slice'
+import modalSlice from './slices/modal/modal.slice'
 
 export const store = configureStore({
   reducer: {
-    user: userSlice
+    user: userSlice,
+    modal: modalSlice
   }
 })
 
