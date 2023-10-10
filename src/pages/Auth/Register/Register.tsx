@@ -10,12 +10,8 @@ import Utils from 'src/services/utilities/utils'
 import withBaseComponent from 'src/hooks/withBaseComponent'
 
 function Register() {
-  // const [loading, setLoading] = useState(false)
-  // const [keepLoggedIn, setKeepLoggedIn] = useState(false)
-
   const {
     register,
-    // setError,
     handleSubmit,
     formState: { errors }
   } = useForm<RegisterSchema>({

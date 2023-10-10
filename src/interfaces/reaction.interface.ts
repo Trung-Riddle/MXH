@@ -9,3 +9,11 @@ export interface ReactionsDocuments {
   comment: string
   createdAt: Date
 }
+export interface IReactions {
+  angry: number
+  happy: number
+  like: number
+  love: number
+  sad: number
+  wow: number
+}

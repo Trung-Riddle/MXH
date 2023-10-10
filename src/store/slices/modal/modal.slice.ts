@@ -11,10 +11,12 @@ interface InitialState {
   type: Type
   removeDialog: boolean
   data: unknown
+  isOpenFormPost: boolean
 }
 
 const initialState: InitialState = {
   isOpen: false,
+  isOpenFormPost: false,
   gifIsOpen: false,
   videoIsOpen: false,
   removeDialog: false,
@@ -33,6 +35,12 @@ const ModalSlice = createSlice({
       state.isOpen = true
       state.type = type
       state.data = data
+    },
+    onOpenFormPost: (state) => {
+      state.isOpenFormPost = true
+    },
+    onCloseFormPost: (state) => {
+      state.isOpenFormPost = false
     },
     onClose: (state) => {
       state.isOpen = false
@@ -81,7 +89,9 @@ export const {
   toggleImageModal,
   toggleReactionModal,
   toggleRemoveDialog,
-  toggleVideoModal
+  toggleVideoModal,
+  onCloseFormPost,
+  onOpenFormPost
 } = ModalSlice.actions
 
 export default ModalSlice.reducer

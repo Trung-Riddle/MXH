@@ -1,9 +1,13 @@
-import FangHeadSvg from 'src/assets/icons/components/navigations/FangHeadSvg'
 import { Button, Search } from '..'
 import { AddSvg, FangSvg, HeartSvg, NotifySvg, SendSvg } from '../icons'
+import { useAppDispatch } from 'src/hooks/useRedux'
+import { onOpenFormPost } from 'src/store/slices/modal/modal.slice'
+import FangHeadSvg from 'src/assets/icons/components/navigations/FangHeadSvg'
 import ToggleTheme from '../Toggle/ToggleTheme'
 
 export default function Header() {
+  const dispatch = useAppDispatch()
+
   return (
     <header className='py-2 md:shadow-md w-full flex items-center md:px-6 px-3 md:bg-light bg-transparent md:dark:bg-dark flex-shrink-0 sticky h-header top-0 z-50'>
       <span className='md:hidden'>
@@ -17,7 +21,10 @@ export default function Header() {
 
         <Search />
 
-        <Button className='md:flex hidden items-center flex-shrink-0 justify-center gap-2 px-3 py-1 ml-20 text-sm font-normal'>
+        <Button
+          onClick={() => dispatch(onOpenFormPost())}
+          className='md:flex hidden items-center flex-shrink-0 justify-center gap-2 px-3 py-1 ml-20 text-sm font-normal'
+        >
           <AddSvg width='24' height='24' />
           Create new post
         </Button>

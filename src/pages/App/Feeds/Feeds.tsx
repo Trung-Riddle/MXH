@@ -50,7 +50,7 @@ const Feeds = () => {
       <div className='base-hidden-scroll flex flex-col flex-shrink-0 overflow-x-scroll bg-transparent md:bg-light rounded-md md:dark:bg-dark md:p-3 md:shadow-shadowMain'>
         <div className='relative flex items-center p-[2px] justify-between'>
           <Story avatar={''} justPostNow={false} />
-          {UserSuggestions.map(({ id, avatar, name }) => (
+          {UserSuggestions.map(({ id, avatar }) => (
             <Story key={id} avatar={avatar} justPostNow={false} />
           ))}
         </div>
