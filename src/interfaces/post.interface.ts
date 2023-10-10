@@ -1,5 +1,3 @@
-import { IReactions } from "./reaction.interface"
-
 export interface PostDocuments {
   id?: string
   userId: string
@@ -17,6 +15,6 @@ export interface PostDocuments {
   feelings: string
   gifUrl: string
   privacy: string
-  reactions: IReactions
+  reactions: number
   createdAt?: Date
 }

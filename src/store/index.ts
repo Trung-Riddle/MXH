@@ -1,11 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userSlice from './slices/user/user.slice'
 import modalSlice from './slices/modal/modal.slice'
+import postSlice from './slices/post/post.slice'
+import allPostSlice from './slices/post/posts.slice'
 
 export const store = configureStore({
   reducer: {
     user: userSlice,
-    modal: modalSlice
+    modal: modalSlice,
+    post: postSlice,
+    allPost: allPostSlice
   }
 })
 

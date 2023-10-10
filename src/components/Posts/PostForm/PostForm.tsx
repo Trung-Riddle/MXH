@@ -3,11 +3,14 @@ import User from 'src/components/User/User'
 import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import { RootState } from 'src/store'
 import { onCloseFormPost } from 'src/store/slices/modal/modal.slice'
+import Icons from 'src/assets/icons'
 
 const PostForm = () => {
   const dispatch = useAppDispatch()
   const isOpen = useAppSelector((state: RootState) => state.modal.isOpenFormPost)
-
+  const testOpen = () => {
+    dispatch(onCloseFormPost())
+  }
   return (
     isOpen && (
       <div className='fixed w-full h-full inset-0 z-50 bg-black/60 flex items-center justify-center'>
@@ -35,8 +38,22 @@ const PostForm = () => {
               A
             </div>
 
-            <div className='border-[#B2A3A3] border flex items-center rounded-lg py-4 px-6'>
+            <div className='border-[#B2A3A3] border flex items-center rounded-lg py-4 px-6 justify-between'>
               <p className='text-sm'>Thêm vào bài viết</p>
+              <div className='flex items-center'>
+                <span>
+                  <Icons.NavigationFriends.Friends width='28' height='28' active />
+                </span>
+                <span>
+                  <Icons.NavigationFriends.Cake width='28' height='28' active />
+                </span>
+                <span>
+                  <Icons.NavigationFriends.AllFriends width='28' height='28' active />
+                </span>
+                <span>
+                  <Icons.NavigationFriends.Keep width='28' height='28' active />
+                </span>
+              </div>
             </div>
           </div>
 
@@ -44,7 +61,7 @@ const PostForm = () => {
             Đăng
           </Button>
 
-          <button className='absolute top-3 right-3' onClick={() => dispatch(onCloseFormPost())}>
+          <button className='absolute top-3 right-3' onClick={testOpen}>
             <svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' viewBox='0 0 50 50' fill='none'>
               <path
                 d='M15 15L35 35M35 15L15 35'
