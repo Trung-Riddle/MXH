@@ -1,2 +1,2 @@
-export const NotActive = 'flex gap-2 items-center font-semibold text-sm ml-10'
-export const IsActive = 'flex gap-2 items-center font-semibold text-sm ml-10 style-main'
+export const NotActive = 'flex gap-2 items-center font-medium text-sm ml-10 py-3 w-full'
+export const IsActive = 'flex gap-2 items-center font-medium text-sm ml-10 py-3 w-full style-main'

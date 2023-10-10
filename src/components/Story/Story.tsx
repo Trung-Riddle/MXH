@@ -1,13 +1,15 @@
 import { Avatar } from '..'
+import { AvatarSizes } from '../Avatar/Avatar'
 
-interface StoryProps {
+export interface StoryProps {
   avatar: string
-  justPostNow: boolean
-  name: string
+  justPostNow?: boolean
+  username?: string
+  size?: AvatarSizes
 }
 
-const Story = ({ avatar, justPostNow, name }: StoryProps) => {
-  return <Avatar name={name} alt='' src={avatar} styleText='text-sm' />
+const Story = ({ avatar, username, size }: StoryProps) => {
+  return <Avatar name={username ?? ''} alt='' size={size} src={avatar} styleText='text-sm' />
 }
 
 export default Story

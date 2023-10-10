@@ -10,20 +10,22 @@ export default function Login() {
   const [keepLoggedIn, setKeepLoggedIn] = useState(false)
   const {
     register,
-    setError,
+    // setError,
     handleSubmit,
     formState: { errors }
   } = useForm<LoginSchema>({
     resolver: yupResolver(loginSchema)
   })
-  const whenSubmit = handleSubmit((data) => {
+
+  const onSubmit = handleSubmit(async (data) => {
     console.log(data)
   })
+
   return (
-    <form className='w-full px-5' onSubmit={whenSubmit}>
+    <form className='w-full px-5' onSubmit={onSubmit}>
       <Input
-        errorMessage={errors.username?.message}
-        name='username'
+        errorMessage={errors.usernameOrEmail?.message}
+        name='usernameOrEmail'
         register={register}
         labelText='username or email'
         firstIcon={<EmailSvg width='36' height='34' />}

@@ -5,20 +5,35 @@ import { RegisterSchema, registerSchema } from 'src/services/utilities/rules'
 import EmailSvg from 'src/components/icons/Email'
 import User from 'src/components/icons/User'
 import Lock from 'src/components/icons/Lock'
-import { useState } from 'react'
-
-export default function Register() {
-  const [keepLoggedIn, setKeepLoggedIn] = useState(false)
+import authService from 'src/services/api/auth/auth.service'
+import Utils from 'src/services/utilities/utils'
+import withBaseComponent from 'src/hooks/withBaseComponent'
+// import IHocProps from 'src/interfaces/hoc.interface'
+function Register() {
   const {
     register,
-    setError,
+    // setError,
     handleSubmit,
     formState: { errors }
   } = useForm<RegisterSchema>({
     resolver: yupResolver(registerSchema)
   })
-  const whenSubmit = handleSubmit((data) => {
-    console.log(data)
+  const whenSubmit = handleSubmit(async (data) => {
+    try {
+      const avatarColor = Utils.randomAvatarColor()
+      const avatarImage = Utils.generateAvatar(data.username.charAt(0).toUpperCase(), 'white', avatarColor)
+      const result = await authService.register({
+        username: data.username,
+        email: data.email,
+        password: data.password,
+        avatarColor: avatarColor,
+        avatarImage
+      })
+
+      console.log(result)
+    } catch (err) {
+      console.log(err)
+    }
   })
   return (
     <form className='w-full' onSubmit={whenSubmit}>
@@ -80,3 +95,5 @@ export default function Register() {
     </form>
   )
 }
+
+export default withBaseComponent(Register)

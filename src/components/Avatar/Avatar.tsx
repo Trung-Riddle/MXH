@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-type AvatarSizes = 'sm' | 'lg' | 'md'
+export type AvatarSizes = 'sm' | 'lg' | 'md'
 
 const avatarSizes: Record<AvatarSizes, string> = {
   md: '',
@@ -32,9 +32,9 @@ const Avatar = ({ name, styleText, className, subs, alt, size = 'sm', ...props }
       </div>
 
       <div className={clsx('flex flex-col gap-2', styleText ? styleText : 'text-base')}>
-        <h3 className='font-semibold text-[16px]'>{name}</h3>
+        <h3 className='font-semibold text-sm'>{name}</h3>
         <span className='text-stone-200 text-xs'>{subs}</span>
-        </div>
+      </div>
     </div>
   )
 }

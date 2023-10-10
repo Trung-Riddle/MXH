@@ -5,10 +5,7 @@ interface ArticleProps extends React.HTMLAttributes<HTMLDivElement> {}
 export default function Article({ children, className, ...props }: ArticleProps) {
   return (
     <div
-      className={clsx(
-        'bg-[#ffffff] dark:bg-dark-main shadow-md rounded-xl mt-3 flex flex-col flex-grow article',
-        className
-      )}
+      className={clsx('bg-light dark:bg-dark shadow-shadowMain rounded-xl flex flex-col flex-grow mx-2', className)}
       {...props}
     >
       {children}

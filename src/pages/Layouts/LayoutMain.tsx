@@ -1,15 +1,14 @@
-import { Header, SidebarLeftHome } from 'src/components'
+import { Header, SidebarLeftHome, SidebarRightHome } from 'src/components'
+import { Outlet } from 'react-router-dom'
 
 const LayoutMain = () => {
   return (
-    <div
-      className='w-full bg-dark-second h-screen overflow-hidden
-  text-[#1B1D2A] dark:text-white-80 flex flex-col flex-grow'
-    >
+    <div className='w-full bg-lightMain dark:bg-darkMain text-dark dark:text-light'>
       <Header />
-      <div className='w-main mx-auto'>
+      <div className='flex md:w-4/5 mx-auto'>
         <SidebarLeftHome />
-        
+        <Outlet />
+        <SidebarRightHome />
       </div>
     </div>
   )
