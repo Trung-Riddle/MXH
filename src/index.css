@@ -63,16 +63,15 @@
   }
 
   .border-linear-color {
-    border-radius: 9999px;
     border: 10px solid;
-    border-image-slice: 1;
-    border-width: 5px;
-
-    border-image-source: linear-gradient(to left, #743ad5, #d53a9d);
+    border-image-slice: 2;
+    border-width: 1.5px;
+    border-image-source: linear-gradient(90deg, #2ECEC2 0%, #34BAD0 48.23%, #3B89F1 125.13%);
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
   }
 
-  .sidebar-home-style {
-  }
 }
 
 /* width */

@@ -26,9 +26,7 @@ function Create({ selectedImage }: Props) {
     videoPost: ''
   })
 
-  return <div>
-    
-  </div>
+  return <div></div>
 }
 
 export default withBaseComponent(memo(Create))
