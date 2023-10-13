@@ -14,44 +14,51 @@ const PostForm = () => {
   return (
     isOpen && (
       <div className='fixed w-full h-full inset-0 z-50 bg-black/60 flex items-center justify-center'>
-        <div className='bg-light dark:bg-dark w-1/3 px-6 py-3 rounded-md relative'>
-          <div className='text-center py-4 border-b border-b-black'>
-            <h2 className='text-base font-semibold text-dark dark:text-light'>Tạo bài viết</h2>
+        <div className='bg-light dark:bg-dark w-1/3 px-6 pb-4 rounded-md relative'>
+          <div className='text-center py-4'>
+            <h2 className='text-base font-bold text-dark dark:text-light'>Tạo bài viết</h2>
           </div>
 
-          <div className='flex flex-col gap-6 my-4'>
+          <div className='border-linear-color w-3/4 mx-auto'></div>
+
+          <div className='flex flex-col gap-4 my-4'>
             <User
               source='https://images.unsplash.com/photo-1695782098642-b71604fcb72a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60'
               username='Hồ Minh Thành'
-              alt=''
+              alt='Avatar'
             >
-              <Button>Mọi người</Button>
+              <Button className='flex items-center py-0.5 px-2 gap-2 text-xs font-normal w-max' rounded='rounded-xl'>
+                <Icons.Privacy width='20' height='20' />
+                Mọi người
+              </Button>
             </User>
 
-            <input
-              type='text'
-              className='bg-transparent border-none outline-none placeholder:text-dark dark:placeholder:text-light'
-              placeholder='Bạn đang nghĩ gì thế ?'
-            />
+            <div className='h-28'>
+              <input
+                type='text'
+                className='bg-transparent border-none w-full outline-none placeholder:text-dark dark:placeholder:text-light text-sm font-medium'
+                placeholder='Bạn đang nghĩ gì thế ?'
+              />
+            </div>
 
             <div className='rounded-md style-bg-main text-light flex items-center justify-center p-2 w-8 h-8 shadow-shadowMain'>
               A
             </div>
 
-            <div className='border-[#B2A3A3] border flex items-center rounded-lg py-4 px-6 justify-between'>
+            <div className='border-[#B2A3A3] border flex items-center rounded-lg py-4 px-6 justify-between select-none'>
               <p className='text-sm'>Thêm vào bài viết</p>
-              <div className='flex items-center'>
+              <div className='flex items-center gap-4'>
                 <span>
-                  <Icons.NavigationFriends.Friends width='28' height='28' active />
+                  <Icons.Post.AddImage width='28' height='28' />
                 </span>
                 <span>
-                  <Icons.NavigationFriends.Cake width='28' height='28' active />
+                  <Icons.Post.AddVideo width='28' height='28' />
                 </span>
                 <span>
-                  <Icons.NavigationFriends.AllFriends width='28' height='28' active />
+                  <Icons.Post.AddIcons width='28' height='28' />
                 </span>
                 <span>
-                  <Icons.NavigationFriends.Keep width='28' height='28' active />
+                  <Icons.Post.AddGif width='28' height='28' />
                 </span>
               </div>
             </div>
