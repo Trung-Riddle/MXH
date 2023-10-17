@@ -9,11 +9,12 @@ import ExploreSvg from './components/navigations/ExploreSvg'
 import HomeSvg from './components/navigations/HomeSvg'
 import MessageSvg from './components/navigations/MessageSvg'
 import ToptvSvg from './components/navigations/ToptvSvg'
-import PrivacySvg from './components/PrivacySvg'
 import AddImageSvg from './components/posts/AddImageSvg'
 import AddVideoSvg from './components/posts/AddVideoSvg'
 import AddGifSvg from './components/posts/AddGifSvg'
 import AddIconsSvg from './components/posts/AddIconsSvg'
+
+import Privacy from './components/privacy'
 
 const Icons = {
   Navigations: {
@@ -30,13 +31,14 @@ const Icons = {
     Keep: KeepSvg,
     Friends: FriendsSvg
   },
-  Privacy: PrivacySvg,
+  // Privacy: PrivacySvg,
   Post: {
     AddImage: AddImageSvg,
     AddVideo: AddVideoSvg,
     AddGif: AddGifSvg,
     AddIcons: AddIconsSvg
-  }
+  },
+  Privacy
 }
 
 export default Icons

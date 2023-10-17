@@ -5,24 +5,28 @@ type Type = 'add' | 'delete' | 'update' | ''
 interface InitialState {
   isOpen: boolean
   feelingIsOpen: boolean
+  privacyIsOpen: boolean
   videoIsOpen: boolean
   gifIsOpen: boolean
   reactionIsOpen: boolean
-  type: Type
   removeDialog: boolean
-  data: unknown
   isOpenFormPost: boolean
+  feeling: string
+  type: Type
+  data: unknown
 }
 
 const initialState: InitialState = {
   isOpen: false,
   isOpenFormPost: false,
+  privacyIsOpen: false,
   gifIsOpen: false,
   videoIsOpen: false,
   removeDialog: false,
   feelingIsOpen: false,
   reactionIsOpen: false,
   data: null,
+  feeling: '',
   type: ''
 }
 
@@ -55,8 +59,8 @@ const ModalSlice = createSlice({
     toggleGifsModal: (state, action) => {
       console.log(state, action)
     },
-    toggleFeelingsModal: (state, action) => {
-      console.log(state, action)
+    toggleFeelingsModal: (state) => {
+      state.feelingIsOpen = !state.feelingIsOpen
     },
     toggleVideoModal: (state, action) => {
       console.log(state, action)
@@ -74,7 +78,10 @@ const ModalSlice = createSlice({
       console.log(state, action)
     },
     addFeelings: (state, action) => {
-      console.log(state, action)
+      state.feeling = action.payload
+    },
+    togglePrivacyModal: (state) => {
+      state.privacyIsOpen = !state.privacyIsOpen
     }
   }
 })
@@ -89,6 +96,7 @@ export const {
   toggleImageModal,
   toggleReactionModal,
   toggleRemoveDialog,
+  togglePrivacyModal,
   toggleVideoModal,
   onCloseFormPost,
   onOpenFormPost
