@@ -1,32 +1,36 @@
 import { linearGradient } from 'src/mocks/linear-gradient-backgrounds'
 import { motion } from 'framer-motion'
 import { useCallback, useState } from 'react'
+import { useAppDispatch } from 'src/hooks/useRedux'
+import { changeBgColor } from 'src/store/slices/post/post.slice'
+import { toggleOpenBackground } from 'src/store/slices/modal/modal.slice'
 
 interface ToggleBackgroundProps {
   onToggleBackground: React.Dispatch<React.SetStateAction<boolean>>
-  onChangeBackground: React.Dispatch<React.SetStateAction<string>>
   isToggle: boolean
 }
 
-export default function ToggleBackground({ onToggleBackground, isToggle, onChangeBackground }: ToggleBackgroundProps) {
+export default function ToggleBackground({ onToggleBackground, isToggle }: ToggleBackgroundProps) {
   const [isActive, setIsActive] = useState(-1)
+  const dispatch = useAppDispatch()
 
   const handleToggleBackground = useCallback(() => {
     onToggleBackground((v) => !v)
-    onChangeBackground('')
+    dispatch(toggleOpenBackground())
+    dispatch(changeBgColor(''))
     setIsActive(-1)
-  }, [onChangeBackground, onToggleBackground])
+  }, [onToggleBackground, dispatch])
 
   const handleChangeBackground = useCallback(
     (linearColor: string, index: number) => {
       if (isActive === index) {
         return
       } else {
+        dispatch(changeBgColor(linearColor))
         setIsActive(index)
-        onChangeBackground(linearColor)
       }
     },
-    [onChangeBackground, isActive]
+    [isActive, dispatch]
   )
 
   return (
@@ -46,13 +50,13 @@ export default function ToggleBackground({ onToggleBackground, isToggle, onChang
       {isToggle &&
         linearGradient.map((linearColor, index) => (
           <motion.button
+            key={index}
             initial={{ x: -30 }}
             animate={{ x: 0 }}
             exit={{ x: -30, opacity: 0 }}
             whileTap={{ scale: 0.8 }}
             whileHover={{ scale: 1.1 }}
             transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-            key={index}
             onClick={() => handleChangeBackground(linearColor.color, index)}
             className={`rounded-md w-8 h-8 shadow-shadowMain ${linearColor.color} ${
               index === isActive && 'border-2 border-white'

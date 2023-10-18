@@ -9,6 +9,7 @@ interface InitialState {
   type: Type
   data: unknown
 
+  backgroundIsOpen: boolean
   inputFileIsOpen: boolean
 
   mainModalIsOpen: boolean
@@ -26,7 +27,7 @@ interface InitialState {
 const initialState: InitialState = {
   mainModalIsOpen: false,
   inputFileIsOpen: false,
-
+  backgroundIsOpen: false,
   // Security Modals
   privacyModalIsOpen: false,
 
@@ -49,15 +50,20 @@ const ModalSlice = createSlice({
   reducers: {
     toggleOpenMainModal: (state) => {
       state.mainModalIsOpen = !state.mainModalIsOpen
-
       if (!state.mainModalIsOpen) {
         state.inputFileIsOpen = false
         state.feelingModalIsOpen = false
         state.gifModalIsOpen = false
         state.videoModalIsOpen = false
         state.imageModalIsOpen = false
+        state.backgroundIsOpen = false
       }
     },
+
+    toggleOpenBackground: (state) => {
+      state.backgroundIsOpen = !state.backgroundIsOpen
+    },
+
     toggleOpenInputFile: (state) => {
       state.inputFileIsOpen = !state.inputFileIsOpen
     },
@@ -107,7 +113,8 @@ export const {
   toggleOpenPrivacyModal,
   toggleOpenVideoModal,
   toggleOpenMainModal,
-  toggleOpenInputFile
+  toggleOpenInputFile,
+  toggleOpenBackground
 } = ModalSlice.actions
 
 export default ModalSlice.reducer

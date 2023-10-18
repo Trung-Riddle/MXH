@@ -6,14 +6,18 @@ import InputFile from '../InputFile/InputFile'
 import { useAppSelector } from 'src/hooks/useRedux'
 import { RootState } from 'src/store'
 
-const Form = () => {
+interface FormProps {
+  onChangeContent: (content: string) => void
+}
+
+const Form = ({ onChangeContent }: FormProps) => {
   const contentEditableRef = useRef<HTMLDivElement | null>(null)
   const [toggleBackground, setToggleBackground] = useState(false)
-  const [changeBackground, setChangeBackground] = useState('')
   const [content, setContent] = useState<string>('')
   const [placeholder, setPlaceholder] = useState<string>('Nhập nội dung ở đây...')
 
   const inputFileIsOpen = useAppSelector((state: RootState) => state.modal.inputFileIsOpen)
+  const bgColor = useAppSelector((state: RootState) => state.post.bgColor)
 
   const handleChangeContent = (e: ContentEditableEvent) => {
     const text = e.target.value
@@ -23,6 +27,8 @@ const Form = () => {
       contentEditableRef.current!.style.fontSize = '16px'
     }
     text.length > 100 ? setContent(text.substring(0, 100)) : setContent(text)
+
+    onChangeContent(text)
   }
   const handleFocus = () => {
     setPlaceholder('')
@@ -35,10 +41,10 @@ const Form = () => {
 
   return (
     <motion.div
-      animate={changeBackground && { scale: [1, 1.02, 1] }}
+      animate={bgColor && { scale: [1, 1.02, 1] }}
       transition={{ ease: 'easeOut', bounce: 0.25 }}
-      className={`rounded-md flex flex-col ${changeBackground} ${
-        changeBackground ? 'min-h-[350px]' : !changeBackground && inputFileIsOpen ? 'h-[300px]' : 'h-52'
+      className={`rounded-md flex flex-col ${bgColor} ${
+        bgColor ? 'min-h-[350px]' : !bgColor && inputFileIsOpen ? 'h-[300px]' : 'h-52'
       }`}
     >
       <ContentEditable
@@ -48,18 +54,12 @@ const Form = () => {
         innerRef={contentEditableRef}
         onChange={handleChangeContent}
         className={`p-2 outline-none text-dark dark:text-light overflow-y-scroll h ${
-          changeBackground && 'text-light text-center my-auto max-h-[302px] overflow-x-hidden'
+          bgColor && 'text-light text-center my-auto max-h-[302px] overflow-x-hidden'
         }`}
       />
 
       {inputFileIsOpen && <InputFile />}
-      {!inputFileIsOpen && (
-        <ToggleBackground
-          isToggle={toggleBackground}
-          onToggleBackground={setToggleBackground}
-          onChangeBackground={setChangeBackground}
-        />
-      )}
+      {!inputFileIsOpen && <ToggleBackground isToggle={toggleBackground} onToggleBackground={setToggleBackground} />}
     </motion.div>
   )
 }
