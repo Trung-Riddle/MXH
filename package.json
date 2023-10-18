@@ -21,6 +21,7 @@
     "framer-motion": "^10.16.4",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
+    "react-contenteditable": "^3.3.7",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.4",
     "react-icons": "^4.10.1",
