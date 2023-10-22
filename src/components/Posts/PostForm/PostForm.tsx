@@ -159,7 +159,7 @@ const PostForm = ({ selectImage, selectVideo }: PostFormProps) => {
             initial={{ scale: 0.2 }}
             animate={{ scale: 1 }}
             exit={{ scale: 0 }}
-            className='bg-light dark:bg-dark w-1/3 px-6 pb-4 rounded-md relative'
+            className='bg-light dark:bg-dark w-1/3 px-6 pb-4 rounded-md relative overflow-hidden'
           >
             <div className='text-center py-4'>
               <h2 className='text-base font-bold text-dark dark:text-light'>Tạo bài viết</h2>

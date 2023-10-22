@@ -128,6 +128,10 @@ export default function AppRoutes() {
       ]
     },
     {
+      path: '/test',
+      element: <div className='w-full h-96 border' contentEditable>Cái đầu buồi nó dkm</div>
+    },
+    {
       path: '*',
       element: <h1>Page not found</h1>
     }
