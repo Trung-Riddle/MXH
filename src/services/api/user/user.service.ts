@@ -13,5 +13,9 @@ class UserService {
     const response = await http.get('currentuser')
     return response
   }
+  async logoutUser() {
+    const response = await http.get('signout')
+    return response
+  }
 }
 export default new UserService()

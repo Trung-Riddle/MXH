@@ -14,6 +14,7 @@ import { About, Friend, Resource, Post } from 'src/pages/App/Profile'
 // Pages child about
 import { ContactAndBasics, FamilyAndRelationships, Overview, WorkAndEducation } from 'src/pages/App/Profile/Abouts'
 import { PhotoResource, VideoResource } from 'src/pages/App/Profile/Resources'
+import ProtectedRoutes from 'src/pages/ProtectedRoutes'
 
 export default function AppRoutes() {
   const elements = useRoutes([
@@ -23,7 +24,11 @@ export default function AppRoutes() {
     },
     {
       path: '/home',
-      element: <LayoutMain />,
+      element: (
+        <ProtectedRoutes>
+          <LayoutMain />
+        </ProtectedRoutes>
+      ),
       children: [
         {
           path: 'feeds',
@@ -49,7 +54,11 @@ export default function AppRoutes() {
     },
     {
       path: '',
-      element: <LayoutMessage />,
+      element: (
+        <ProtectedRoutes>
+          <LayoutMessage />
+        </ProtectedRoutes>
+      ),
       children: [
         {
           path: 'message',
@@ -126,10 +135,6 @@ export default function AppRoutes() {
           ]
         }
       ]
-    },
-    {
-      path: '/test',
-      element: <div className='w-full h-96 border' contentEditable>Cái đầu buồi nó dkm</div>
     },
     {
       path: '*',

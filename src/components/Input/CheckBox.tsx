@@ -8,12 +8,14 @@ interface Props {
   value?: any
   checked?: boolean
   handleChange?: () => void
+  onChange?: any
 }
-export default function CheckBox({ id, textCheck, name, value }: Props) {
+export default function CheckBox({ id, textCheck, name, value, onChange }: Props) {
   const [checked, setChecked] = React.useState(false)
 
-  const handleCheck = () => {
+  const handleCheck = (value: boolean) => {
     setChecked(!checked)
+    onChange(!value)
   }
 
   return (
@@ -32,8 +34,8 @@ export default function CheckBox({ id, textCheck, name, value }: Props) {
         checked={checked}
         value={value}
         id={id}
-        className='checkmark hidden'
-        onChange={handleCheck}
+        className='hidden'
+        onChange={() => handleCheck(value)}
       />
       <span>{textCheck}</span>
     </label>

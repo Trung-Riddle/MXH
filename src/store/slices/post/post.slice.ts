@@ -30,6 +30,10 @@ const PostSlice = createSlice({
       return initialState
     },
 
+    changeBgColor: (state, action) => {
+      state.bgColor = action.payload
+    },
+
     changePrivacyPost: (state, action) => {
       state.privacy = action.payload
     },
@@ -39,5 +43,5 @@ const PostSlice = createSlice({
     }
   }
 })
-export const { resetPost, changePrivacyPost, changeFeelingPost } = PostSlice.actions
+export const { resetPost, changePrivacyPost, changeFeelingPost, changeBgColor } = PostSlice.actions
 export default PostSlice.reducer

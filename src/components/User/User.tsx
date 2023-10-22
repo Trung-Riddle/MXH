@@ -35,7 +35,7 @@ const User = ({
           {username}
 
           {feeling && (
-            <span className='ml-1 text-xs text-dark dark:text-light font-medium'>{`hiện đang ❤️ cảm thấy ${feeling}`}</span>
+            <span className='ml-1 text-[10px] text-dark dark:text-light font-semibold'>{`hiện đang ❤️ cảm thấy ${feeling}`}</span>
           )}
         </h4>
         {sloggan && (

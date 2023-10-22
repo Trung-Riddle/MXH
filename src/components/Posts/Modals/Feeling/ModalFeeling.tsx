@@ -3,7 +3,7 @@ import { FeelingList } from 'src/services/utilities/static.data'
 
 // Redux
 import { useAppDispatch } from 'src/hooks/useRedux'
-import { toggleFeelingsModal } from 'src/store/slices/modal/modal.slice'
+import { toggleOpenFeelingsModal } from 'src/store/slices/modal/modal.slice'
 import { changeFeelingPost } from 'src/store/slices/post/post.slice'
 
 const ModalFeeling = () => {
@@ -11,7 +11,7 @@ const ModalFeeling = () => {
 
   const handleAddFeelings = (feeling: string) => {
     dispatch(changeFeelingPost(feeling))
-    dispatch(toggleFeelingsModal())
+    dispatch(toggleOpenFeelingsModal())
   }
 
   return (
@@ -43,7 +43,7 @@ const ModalFeeling = () => {
         ))}
       </div>
 
-      <button className='absolute top-3 left-3' onClick={() => dispatch(toggleFeelingsModal())}>
+      <button className='absolute top-3 left-3' onClick={() => dispatch(toggleOpenFeelingsModal())}>
         <svg xmlns='http://www.w3.org/2000/svg' width='35' height='35' viewBox='0 0 50 50' fill='none'>
           <path
             d='M39.6753 23.3989H15.0222L29.7778 10.5899C30.0137 10.3834 29.8705 10 29.5587 10H25.8298C25.6654 10 25.5095 10.059 25.3873 10.1643L9.46459 23.9803C9.31876 24.1067 9.2018 24.263 9.12164 24.4386C9.04148 24.6142 9 24.8049 9 24.9979C9 25.1909 9.04148 25.3816 9.12164 25.5572C9.2018 25.7328 9.31876 25.889 9.46459 26.0154L25.48 39.9157C25.5432 39.9705 25.6191 40 25.6991 40H29.5545C29.8663 40 30.0095 39.6124 29.7736 39.4101L15.0222 26.6011H39.6753C39.8607 26.6011 40.0123 26.4494 40.0123 26.264V23.736C40.0123 23.5506 39.8607 23.3989 39.6753 23.3989Z'

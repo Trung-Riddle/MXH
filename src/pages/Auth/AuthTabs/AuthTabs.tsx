@@ -1,9 +1,17 @@
 import bgImg from 'src/assets/bg/bg-auth.jpeg'
 import { Register, Login } from '..'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import useLocalStorage from 'src/hooks/useLocalStorage'
+import { useNavigate } from 'react-router-dom'
 
 export default function AuthTabs() {
+  const keepLoggedIn = useLocalStorage('keepLoggedIn', 'get')
   const [tab, setTab] = useState(false)
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (keepLoggedIn) navigate('/home/feeds')
+  }, [keepLoggedIn, navigate])
+
   const toggle = () => {
     if (!tab) {
       return setTab(true)
