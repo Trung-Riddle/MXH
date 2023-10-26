@@ -1,15 +1,34 @@
+import { memo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import FangHeadSvg from 'src/assets/icons/components/navigations/FangHeadSvg'
 import SettingSvg from 'src/assets/icons/components/navigations/SettingSvg'
 import SignOutSvg from 'src/assets/icons/components/navigations/SignOutSvg'
 import AppSettings from 'src/configs/appsettings'
+import withBaseComponent from 'src/hooks/withBaseComponent'
+import IHocProps from 'src/interfaces/hoc.interface'
+import userService from 'src/services/api/user/user.service'
+import { clearUser } from 'src/store/slices/user/user.slice'
+import Swal from 'sweetalert2'
 
-const SidebarMessage = () => {
+const SidebarMessage = ({ navigate, dispatch }: IHocProps) => {
   const location = useLocation()
   const pathname = location.pathname.includes('/friends/')
     ? `/${location.pathname.split('/')[1]}/`
     : `/${location.pathname.split('/')[1]}`
-
+  const logout = () => {
+    Swal.fire({
+      title: 'Bạn có chắc là muốn đăng xuất?',
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(clearUser())
+        userService.logoutUser()
+        navigate('/')
+      }
+    })
+  }
   return (
     <div className='h-screen sticky md:flex flex-col overflow-auto w-max base-hidden-scroll hidden top-0'>
       {/* Logo Fang */}
@@ -41,7 +60,7 @@ const SidebarMessage = () => {
           <NavLink to={'settings'} className='flex items-center justify-center py-4 w-full'>
             <SettingSvg width='28' height='28' />
           </NavLink>
-          <button className='w-full flex items-center justify-center py-4'>
+          <button onClick={logout} className='w-full flex items-center justify-center py-4'>
             <SignOutSvg width='28' height='28' />
           </button>
         </div>
@@ -50,4 +69,4 @@ const SidebarMessage = () => {
   )
 }
 
-export default SidebarMessage
+export default withBaseComponent(memo(SidebarMessage))

@@ -1,7 +1,7 @@
 import { Button, Search } from '..'
 import { AddSvg, FangSvg, HeartSvg, NotifySvg, SendSvg } from '../icons'
 import { useAppDispatch } from 'src/hooks/useRedux'
-import { onOpenFormPost } from 'src/store/slices/modal/modal.slice'
+import { toggleOpenMainModal } from 'src/store/slices/modal/modal.slice'
 import FangHeadSvg from 'src/assets/icons/components/navigations/FangHeadSvg'
 import ToggleTheme from '../Toggle/ToggleTheme'
 
@@ -22,7 +22,7 @@ export default function Header() {
         <Search />
 
         <Button
-          onClick={() => dispatch(onOpenFormPost())}
+          onClick={() => dispatch(toggleOpenMainModal())}
           className='md:flex hidden items-center flex-shrink-0 justify-center gap-2 px-3 py-1 ml-20 text-sm font-normal'
         >
           <AddSvg width='24' height='24' />

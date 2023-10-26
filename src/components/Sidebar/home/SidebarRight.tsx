@@ -47,17 +47,17 @@ const UserSuggestions = [
     name: 'Lalisa Manoban'
   },
   {
-    id: 4,
+    id: 5,
     avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
     name: 'Lalisa Manoban'
   },
   {
-    id: 4,
+    id: 6,
     avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
     name: 'Lalisa Manoban'
   },
   {
-    id: 4,
+    id: 7,
     avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
     name: 'Lalisa Manoban'
   }

@@ -1,4 +1,4 @@
-import { PostDocuments } from './../../../interfaces/post.interface';
+import { PostDocuments } from './../../../interfaces/post.interface'
 import { createSlice } from '@reduxjs/toolkit'
 
 interface InitialState extends PostDocuments {}
@@ -18,7 +18,7 @@ const initialState: InitialState = {
   videoId: '',
   feelings: '',
   gifUrl: '',
-  privacy: '',
+  privacy: 'public',
   reactions: 0
 }
 
@@ -28,8 +28,20 @@ const PostSlice = createSlice({
   reducers: {
     resetPost: () => {
       return initialState
+    },
+
+    changeBgColor: (state, action) => {
+      state.bgColor = action.payload
+    },
+
+    changePrivacyPost: (state, action) => {
+      state.privacy = action.payload
+    },
+
+    changeFeelingPost: (state, action) => {
+      state.feelings = action.payload
     }
   }
 })
-export const { resetPost } = PostSlice.actions
+export const { resetPost, changePrivacyPost, changeFeelingPost, changeBgColor } = PostSlice.actions
 export default PostSlice.reducer

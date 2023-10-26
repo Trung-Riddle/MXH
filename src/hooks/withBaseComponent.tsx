@@ -1,12 +1,13 @@
 import { useNavigate } from 'react-router-dom'
-import { useAppDispatch } from './useRedux'
+import { useAppDispatch, useAppSelector } from './useRedux'
 import IHocProps from 'src/interfaces/hoc.interface'
 
 const withBaseComponent = <P extends IHocProps>(Component: React.ComponentType<P>) => {
   const WrappedComponent: React.FC<P> = (props) => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
-    return <Component {...props} dispatch={dispatch} navigate={navigate} />
+
+    return <Component {...props} dispatch={dispatch} navigate={navigate} useSelector={useAppSelector} />
   }
 
   if (Component.displayName || Component.name) {

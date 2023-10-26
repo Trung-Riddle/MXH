@@ -1,3 +1,4 @@
+import { addUser, clearUser } from 'src/store/slices/user/user.slice'
 import { AvatarColor } from './static.data'
 import { floor, random } from 'lodash'
 
@@ -23,5 +24,17 @@ export default class Utils {
     context.fillText(text, canvas.width / 2, canvas.height / 2)
 
     return canvas.toDataURL('image/png')
+  }
+
+  static dispatchUser({ response, pageReload, dispatch, setUser }: any) {
+    pageReload(true)
+    dispatch(addUser({ token: response.data.token, profile: response.data.user }))
+    setUser(response.data.user)
+  }
+  static clearStore({ dispatch, deleteStorageUsername, deleteSessionPageReload, setLoggedIn }: any) {
+    dispatch(clearUser())
+    deleteStorageUsername()
+    deleteSessionPageReload()
+    setLoggedIn(false)
   }
 }

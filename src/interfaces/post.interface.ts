@@ -9,12 +9,12 @@ export interface PostDocuments {
   post: string
   commentCount: string
   imgPost: string
-  imgId: string
+  imgId?: string
   videoPost: string
-  videoId: string
+  videoId?: string
   feelings: string
   gifUrl: string
   privacy: string
-  reactions: number
+  reactions?: number
   createdAt?: Date
 }

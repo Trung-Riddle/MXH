@@ -7,19 +7,19 @@ interface IRegister extends Partial<RegisterSchema> {
 }
 class AuthService {
   async register(data: IRegister) {
-    const response = await http.post('/api/v1/signup', data)
+    const response = await http.post('signup', data)
     return response
   }
   async login(data: LoginSchema) {
-    const response = await http.post('/api/v1/signin', data)
+    const response = await http.post('signin', data)
     return response
   }
   async forgotPassword(email: string) {
-    const response = await http.post('/api/v1/forgot-password', { email })
+    const response = await http.post('forgot-password', { email })
     return response
   }
   async changePassword(token: string, data: any) {
-    const response = await http.post(`/api/v1/reset-password/${token}`, data)
+    const response = await http.post(`reset-password/${token}`, data)
     return response
   }
 }

@@ -1,11 +1,17 @@
-import { Article, Metric } from '../../../components'
+import { Article, Metric } from '../..'
 import { NavLink, useLocation } from 'react-router-dom'
 import { IsActive, NotActive } from 'src/styles'
 import AppSettings from 'src/configs/appsettings'
 import { useTheme } from 'src/hooks/useTheme'
 import SettingSvg from 'src/assets/icons/components/navigations/SettingSvg'
 import SignOutSvg from 'src/assets/icons/components/navigations/SignOutSvg'
-
+import { useAppSelector } from 'src/hooks/useRedux'
+import { clearUser } from 'src/store/slices/user/user.slice'
+import userService from 'src/services/api/user/user.service'
+import Swal from 'sweetalert2'
+import withBaseComponent from 'src/hooks/withBaseComponent'
+import IHocProps from 'src/interfaces/hoc.interface'
+import { memo } from 'react'
 const Metrics = [
   {
     id: 1,
@@ -24,10 +30,24 @@ const Metrics = [
   }
 ]
 
-const Sidebar = () => {
+const Sidebar = ({ navigate, dispatch }: IHocProps) => {
+  const { profile } = useAppSelector((state) => state.user)
   const location = useLocation()
   const { chooseTheme } = useTheme()
-
+  const logout = () => {
+    Swal.fire({
+      title: 'Bạn có chắc là muốn đăng xuất?',
+      showCancelButton: true,
+      confirmButtonText: 'Save',
+      denyButtonText: `Don't save`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch(clearUser())
+        userService.logoutUser()
+        navigate('/')
+      }
+    })
+  }
   return (
     <div className='md:flex hidden flex-col max-w-1/5 sticky inherits-h-header base-hidden-scroll overflow-y-auto overflow-x-hidden gap-3 py-3'>
       <Article className='p-3 flex flex-col items-center justify-center gap-4'>
@@ -35,7 +55,7 @@ const Sidebar = () => {
           <div className='rounded-full relative w-20 h-20 overflow-hidden'>
             <img
               className='absolute inset-0 object-cover w-full h-full max-w-full'
-              src='https://images.unsplash.com/photo-1695763594594-31505b18b58a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80'
+              src={profile.profilePicture}
               alt=''
             />
           </div>
@@ -73,7 +93,7 @@ const Sidebar = () => {
           <SettingSvg height='28' width='28' />
           Settings
         </NavLink>
-        <button className={NotActive}>
+        <button onClick={logout} className={NotActive}>
           <SignOutSvg height='28' width='28' />
           Logout
         </button>
@@ -88,4 +108,4 @@ const Sidebar = () => {
   )
 }
 
-export default Sidebar
+export default withBaseComponent(memo(Sidebar))

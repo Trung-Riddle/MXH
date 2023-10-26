@@ -3,26 +3,44 @@ import { createSlice } from '@reduxjs/toolkit'
 type Type = 'add' | 'delete' | 'update' | ''
 
 interface InitialState {
-  isOpen: boolean
-  feelingIsOpen: boolean
-  videoIsOpen: boolean
-  gifIsOpen: boolean
   reactionIsOpen: boolean
-  type: Type
   removeDialog: boolean
+  feeling: string
+  type: Type
   data: unknown
-  isOpenFormPost: boolean
+
+  backgroundIsOpen: boolean
+  inputFileIsOpen: boolean
+
+  mainModalIsOpen: boolean
+
+  // Security Modals
+  privacyModalIsOpen: boolean
+
+  // Secondary Modals
+  gifModalIsOpen: boolean
+  videoModalIsOpen: boolean
+  imageModalIsOpen: boolean
+  feelingModalIsOpen: boolean
 }
 
 const initialState: InitialState = {
-  isOpen: false,
-  isOpenFormPost: false,
-  gifIsOpen: false,
-  videoIsOpen: false,
+  mainModalIsOpen: false,
+  inputFileIsOpen: false,
+  backgroundIsOpen: false,
+  // Security Modals
+  privacyModalIsOpen: false,
+
+  // Secondary Modals
+  gifModalIsOpen: false,
+  videoModalIsOpen: false,
+  imageModalIsOpen: false,
+  feelingModalIsOpen: false,
+
   removeDialog: false,
-  feelingIsOpen: false,
   reactionIsOpen: false,
   data: null,
+  feeling: '',
   type: ''
 }
 
@@ -30,40 +48,45 @@ const ModalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    onOpen: (state, action) => {
-      const { type, data } = action.payload
-      state.isOpen = true
-      state.type = type
-      state.data = data
+    toggleOpenMainModal: (state) => {
+      state.mainModalIsOpen = !state.mainModalIsOpen
+      if (!state.mainModalIsOpen) {
+        state.inputFileIsOpen = false
+        state.feelingModalIsOpen = false
+        state.gifModalIsOpen = false
+        state.videoModalIsOpen = false
+        state.imageModalIsOpen = false
+        state.backgroundIsOpen = false
+      }
     },
-    onOpenFormPost: (state) => {
-      state.isOpenFormPost = true
+
+    toggleOpenBackground: (state) => {
+      state.backgroundIsOpen = !state.backgroundIsOpen
     },
-    onCloseFormPost: (state) => {
-      state.isOpenFormPost = false
+
+    toggleOpenInputFile: (state) => {
+      state.inputFileIsOpen = !state.inputFileIsOpen
     },
-    onClose: (state) => {
-      state.isOpen = false
-      state.gifIsOpen = false
-      state.videoIsOpen = false
-      state.removeDialog = false
-      state.feelingIsOpen = false
-      state.reactionIsOpen = false
-      state.data = null
-      state.type = ''
+
+    // Security Modals Action
+    toggleOpenPrivacyModal: (state) => {
+      state.privacyModalIsOpen = !state.privacyModalIsOpen
     },
-    toggleGifsModal: (state, action) => {
-      console.log(state, action)
+
+    // Secondary Modals Actions
+    toggleOpenGifsModal: (state) => {
+      state.gifModalIsOpen = !state.gifModalIsOpen
     },
-    toggleFeelingsModal: (state, action) => {
-      console.log(state, action)
+    toggleOpenFeelingsModal: (state) => {
+      state.feelingModalIsOpen = !state.feelingModalIsOpen
     },
-    toggleVideoModal: (state, action) => {
-      console.log(state, action)
+    toggleOpenVideoModal: (state) => {
+      state.videoModalIsOpen = !state.videoModalIsOpen
     },
-    toggleImageModal: (state, action) => {
-      console.log(state, action)
+    toggleOpenImageModal: (state) => {
+      state.imageModalIsOpen = !state.imageModalIsOpen
     },
+
     toggleCommentModal: (state, action) => {
       console.log(state, action)
     },
@@ -74,7 +97,7 @@ const ModalSlice = createSlice({
       console.log(state, action)
     },
     addFeelings: (state, action) => {
-      console.log(state, action)
+      state.feeling = action.payload
     }
   }
 })
@@ -82,16 +105,16 @@ const ModalSlice = createSlice({
 export const {
   addFeelings,
   toggleCommentModal,
-  onClose,
-  onOpen,
-  toggleFeelingsModal,
-  toggleGifsModal,
-  toggleImageModal,
+  toggleOpenFeelingsModal,
+  toggleOpenGifsModal,
+  toggleOpenImageModal,
   toggleReactionModal,
   toggleRemoveDialog,
-  toggleVideoModal,
-  onCloseFormPost,
-  onOpenFormPost
+  toggleOpenPrivacyModal,
+  toggleOpenVideoModal,
+  toggleOpenMainModal,
+  toggleOpenInputFile,
+  toggleOpenBackground
 } = ModalSlice.actions
 
 export default ModalSlice.reducer
