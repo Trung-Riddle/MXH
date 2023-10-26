@@ -15,6 +15,8 @@ import { About, Friend, Resource, Post } from 'src/pages/App/Profile'
 import { ContactAndBasics, FamilyAndRelationships, Overview, WorkAndEducation } from 'src/pages/App/Profile/Abouts'
 import { PhotoResource, VideoResource } from 'src/pages/App/Profile/Resources'
 import ProtectedRoutes from 'src/pages/ProtectedRoutes'
+import LayoutMobile from 'src/pages/Layouts/LayoutMobile'
+import NotFound from 'src/pages/Error/NotFound'
 
 export default function AppRoutes() {
   const elements = useRoutes([
@@ -23,110 +25,99 @@ export default function AppRoutes() {
       element: <AuthTabs />
     },
     {
-      path: '/home',
-      element: (
-        <ProtectedRoutes>
-          <LayoutMain />
-        </ProtectedRoutes>
-      ),
+      element: <LayoutMobile />,
       children: [
         {
-          path: 'feeds',
-          element: <Feeds />
-        },
-        {
-          path: 'explore',
-          element: <h1 className='w-3/5'>Explore</h1>
-        },
-        {
-          path: 'top-tv',
-          element: <h1 className='w-3/5'>Top TV</h1>
-        },
-        {
-          path: 'my-favorites',
-          element: <h1 className='w-3/5'>Favorites</h1>
-        },
-        {
-          path: 'community',
-          element: <h1 className='w-3/5'>Community</h1>
-        }
-      ]
-    },
-    {
-      path: '',
-      element: (
-        <ProtectedRoutes>
-          <LayoutMessage />
-        </ProtectedRoutes>
-      ),
-      children: [
-        {
-          path: 'message',
-          element: <Message />,
+          path: '/home',
+          element: (
+            <ProtectedRoutes>
+              <LayoutMain />
+            </ProtectedRoutes>
+          ),
           children: [
             {
-              path: ':userMessageId',
-              element: <SingleChatBox />
+              path: 'feeds',
+              element: <Feeds />
             }
           ]
         },
         {
           path: '',
-          element: <LayoutChildren />,
+          element: (
+            <ProtectedRoutes>
+              <LayoutMessage />
+            </ProtectedRoutes>
+          ),
           children: [
             {
-              path: 'explore',
-              element: <Explore />
-            },
-            {
-              path: 'friends',
-              element: <Friends />
-            },
-            {
-              path: 'profile',
-              element: <Profile />,
+              path: 'message',
+              element: <Message />,
               children: [
                 {
-                  path: '',
-                  element: <Post />
-                },
+                  path: ':userMessageId',
+                  element: <SingleChatBox />
+                }
+              ]
+            },
+            {
+              path: '',
+              element: <LayoutChildren />,
+              children: [
                 {
-                  path: '',
-                  element: <About />,
-                  children: [
-                    {
-                      path: 'about',
-                      element: <Overview />
-                    },
-                    {
-                      path: 'about-work-and-education',
-                      element: <WorkAndEducation />
-                    },
-                    {
-                      path: 'about-family-and-relationships',
-                      element: <FamilyAndRelationships />
-                    },
-                    {
-                      path: 'about-contact-and-basic-info',
-                      element: <ContactAndBasics />
-                    }
-                  ]
+                  path: 'explore',
+                  element: <Explore />
                 },
                 {
                   path: 'friends',
-                  element: <Friend />
+                  element: <Friends />
                 },
                 {
-                  path: 'resources',
-                  element: <Resource />,
+                  path: 'profile',
+                  element: <Profile />,
                   children: [
                     {
                       path: '',
-                      element: <PhotoResource />
+                      element: <Post />
                     },
                     {
-                      path: 'resources-video',
-                      element: <VideoResource />
+                      path: '',
+                      element: <About />,
+                      children: [
+                        {
+                          path: 'about',
+                          element: <Overview />
+                        },
+                        {
+                          path: 'about-work-and-education',
+                          element: <WorkAndEducation />
+                        },
+                        {
+                          path: 'about-family-and-relationships',
+                          element: <FamilyAndRelationships />
+                        },
+                        {
+                          path: 'about-contact-and-basic-info',
+                          element: <ContactAndBasics />
+                        }
+                      ]
+                    },
+                    {
+                      path: 'friends',
+                      element: <Friend />
+                    },
+                    {
+                      path: 'resources',
+                      element: <Resource />,
+                      children: [
+                        {
+                          path: '',
+                          element: <PhotoResource />
+                        },
+                        {
+                          path: 'resources-video',
+                          element: <VideoResource />
+                        }
+                      ]
                     }
                   ]
                 }
@@ -138,7 +129,7 @@ export default function AppRoutes() {
     },
     {
       path: '*',
-      element: <h1>Page not found</h1>
+      element: <NotFound />
     }
   ])
   return elements

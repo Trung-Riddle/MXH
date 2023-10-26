@@ -59,9 +59,9 @@ function Register({ dispatch, navigate }: IHocProps) {
     <>
       {loading && <Loading />}
       <form className='w-full' onSubmit={whenSubmit}>
-        <div className='flex gap-2'>
+        <div className='md:flex gap-2'>
           <Input
-            className='w-2/4'
+            className='md:w-2/4'
             errorMessage={errors.email?.message}
             name='email'
             register={register}
@@ -76,7 +76,7 @@ function Register({ dispatch, navigate }: IHocProps) {
             type='text'
           />
           <Input
-            className='w-2/4'
+            className='md:w-2/4'
             errorMessage={errors.username?.message}
             name='username'
             register={register}
@@ -87,11 +87,11 @@ function Register({ dispatch, navigate }: IHocProps) {
             type='text'
           />
         </div>
-        <div className='flex gap-2'>
+        <div className='md:flex gap-2'>
           <Input
             errorMessage={errors.password?.message}
             register={register}
-            className='w-2/4'
+            className='md:w-2/4'
             name='password'
             labelText='Password'
             firstIcon={<Lock width='36' height='34' />}
@@ -103,7 +103,7 @@ function Register({ dispatch, navigate }: IHocProps) {
             errorMessage={errors.confirm?.message}
             register={register}
             name='confirm'
-            className='w-2/4'
+            className='md:w-2/4'
             labelText='Confirm Password'
             firstIcon={<Lock width='36' height='34' />}
             styleInput='border w-full bg-yellow-10 px-16  rounded-md shadow-1'

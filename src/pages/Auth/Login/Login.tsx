@@ -1,11 +1,10 @@
-import { memo, useEffect } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { Input, CheckBox, Loading } from 'src/components'
 import { LoginSchema, loginSchema } from 'src/services/utilities/rules'
 import EmailSvg from 'src/components/icons/Email'
 import Lock from 'src/components/icons/Lock'
-import { useState } from 'react'
 import useLocalStorage from 'src/hooks/useLocalStorage'
 import withBaseComponent from 'src/hooks/withBaseComponent'
 import IHocProps from 'src/interfaces/hoc.interface'
@@ -53,15 +52,15 @@ function Login({ dispatch, navigate }: IHocProps) {
   return (
     <>
       {loading && <Loading />}
-      <form className='w-full px-5' onSubmit={onSubmit}>
+      <form className='w-full md:px-5' onSubmit={onSubmit}>
         <Input
           errorMessage={errors.email?.message}
-          name='email'
+          name={'email'}
           register={register}
-          labelText='Email'
+          labelText={'Email'}
           firstIcon={<EmailSvg width='36' height='34' />}
           styleInput='border w-full bg-yellow-10 px-16 rounded-md shadow-1'
-          placeholder='Vui lòng nhập email của bạn'
+          placeholder={`Vui lòng nhập email  của bạn`}
           type='text'
         />
         <Input
@@ -74,8 +73,17 @@ function Login({ dispatch, navigate }: IHocProps) {
           placeholder='Vui lòng nhập mật khẩu của bạn'
           type='password'
         />
-        <CheckBox id='remember' value={keepLoggedIn} onChange={setKeepLoggedIn} name='remember' textCheck='remember me' />
-        <button className='border-none block mx-auto font-bold text-white px-20 rounded-md py-3 my-10 style-bg-main'>
+        <CheckBox
+          id='remember'
+          value={keepLoggedIn}
+          onChange={setKeepLoggedIn}
+          name='remember'
+          textCheck='Keep Login'
+        />
+        <button
+          type='submit'
+          className='border-none block mx-auto font-bold text-white px-20 rounded-md py-3 my-10 style-bg-main'
+        >
           Login
         </button>
       </form>
