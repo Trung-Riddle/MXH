@@ -2,41 +2,10 @@ import { Avatar, Button, InputComment, Story } from 'src/components'
 import { CommentSvg, LikeSvg, ShareSvg } from 'src/components/icons/posts'
 import { Link } from 'react-router-dom'
 import WatchAllSvg from 'src/assets/icons/components/WatchAllSvg'
+import { AddSvg } from 'src/components/icons'
+import { PostList, StoryList } from 'src/services/utilities/static.data'
 
 const Feeds = () => {
-  const UserSuggestions = [
-    {
-      id: 1,
-      avatar: 'https://24365withblinks.com/images/about/profile_jisoo.jpg',
-      name: 'Jisoo'
-    },
-    {
-      id: 3,
-      avatar: 'https://24365withblinks.com/images/about/profile_rose.jpg',
-      name: 'Rose'
-    },
-    {
-      id: 4,
-      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
-      name: 'lisa'
-    },
-    {
-      id: 5,
-      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
-      name: 'lisa'
-    },
-    {
-      id: 10,
-      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
-      name: 'lisa'
-    },
-    {
-      id: 6,
-      avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
-      name: 'lisa'
-    }
-  ]
-
   return (
     <div className='flex-[6] flex h-full flex-col flex-shrink p-3'>
       <div className='md:flex hidden items-center justify-between select-none mb-3'>
@@ -47,12 +16,27 @@ const Feeds = () => {
         </Link>
       </div>
 
-      <div className='base-hidden-scroll flex flex-col flex-shrink-0 overflow-x-scroll bg-transparent md:bg-light rounded-md md:dark:bg-dark md:p-3 md:shadow-shadowMain'>
-        <div className='relative flex items-center p-[2px] justify-between'>
-          <Story avatar={''} justPostNow={false} />
-          {UserSuggestions.map(({ id, avatar }) => (
-            <Story key={id} avatar={avatar} justPostNow={false} />
-          ))}
+      <div className='w-full md:w-[709px]'>
+        <div className='base-hidden-scroll flex flex-col flex-shrink-0 overflow-x-scroll bg-light rounded-md dark:bg-dark md:p-3 md:shadow-shadowMain'>
+          <div className='relative flex items-center p-[2px] justify-between gap-2 md:gap-5'>
+            <Story
+              size='lg'
+              justPostNow={true}
+              username='Add Story'
+              className='w-full h-full flex items-center justify-center'
+            >
+              <AddSvg width='20' height='20' className='-m-[2px]' />
+            </Story>
+            {StoryList.map((story) => (
+              <Story
+                key={story.id}
+                size='lg'
+                avatar={story.avatar}
+                justPostNow={story.justPostedNow}
+                username={story.username}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -68,85 +52,41 @@ const Feeds = () => {
           </div>
         </div>
 
-        <div className='bg-light shadow-shadowMain w-full dark:bg-dark rounded-md px-3 py-4 mb-10'>
-          <div className='flex flex-col gap-4 mb-6'>
-            <Avatar
-              name='Hồ Minh Thành'
-              src='https://images.unsplash.com/photo-1692680887038-db37974e11ee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80'
-              alt='avt'
-              className='gap-3 items-center'
-              styleText='text-xs'
-              subs='Hanoi, vietnam'
-            />
+        {PostList.map((post) => (
+          <div key={post.id} className='bg-light shadow-shadowMain w-full dark:bg-dark rounded-md px-3 py-4 mb-3'>
+            <div className='flex flex-col gap-2 md:gap-4'>
+              <Avatar avatar={post.avatar} subs={post.quote} fullName={post.fullName} size='md' />
 
-            <div className='rounded-md overflow-hidden'>
-              <img
-                src='https://f58-zpg-r.zdn.vn/7177377810965329116/5fd013b0b03c62623b2d.jpg'
-                className='w-full h-auto'
-                alt=''
-              />
-            </div>
+              <div className='rounded-xl md:rounded-md overflow-hidden'>
+                <img src={post.imgPost} className='w-full h-[250px] md:h-[400px] object-cover' alt='' />
+              </div>
 
-            <div className='flex items-center justify-between'>
-              <div className='flex flex-row gap-2'>
-                <LikeSvg width='25' height='25' />
-                <span>280.4k like</span>
-              </div>
-              <div className='flex flex-row gap-2'>
-                <CommentSvg width='25' height='25' />
-                <span>88 comment</span>
-              </div>
-              <div className='flex flex-row gap-2'>
-                <ShareSvg width='25' height='25' />
-                <span>12 share</span>
+              <div className='flex items-center md:justify-between'>
+                <div className='flex flex-row gap-2 mr-4'>
+                  <LikeSvg className='md:w-8 md:h-8 w-6 h-6' />
+                  <span className='flex items-center gap-2 text-xs md:text-sm'>
+                    280.4k
+                    <span className='hidden md:block'>like</span>
+                  </span>
+                </div>
+                <div className='flex flex-row gap-2 md:mr-0'>
+                  <CommentSvg className='md:w-8 md:h-8 w-6 h-6' />
+                  <span className='flex items-center gap-2 text-xs md:text-sm'>
+                    88 <span className='hidden md:block'>comment</span>
+                  </span>
+                </div>
+                <div className='flex flex-row gap-2 md:ml-0 ml-auto'>
+                  <ShareSvg className='md:w-8 md:h-8 w-6 h-6' />
+                  <span className='hidden md:block'>12 share</span>
+                </div>
               </div>
             </div>
+
+            {/* <div className='flex items-center w-full'>
+              <InputComment placeholder='Write your comment...' />
+            </div> */}
           </div>
-
-          <div className='flex items-center w-full'>
-            <InputComment placeholder='Write your comment...' />
-          </div>
-        </div>
-
-        <div className='bg-light shadow-shadowMain w-full dark:bg-dark rounded-md px-3 py-4'>
-          <div className='flex flex-col gap-4 mb-6'>
-            <Avatar
-              name='Hồ Minh Thành'
-              src='https://images.unsplash.com/photo-1692680887038-db37974e11ee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80'
-              alt='avt'
-              className='gap-3 items-center'
-              styleText='text-xs'
-              subs='Hanoi, vietnam'
-            />
-
-            <div className='rounded-md overflow-hidden'>
-              <img
-                src='https://f58-zpg-r.zdn.vn/7177377810965329116/5fd013b0b03c62623b2d.jpg'
-                className='w-full h-auto'
-                alt=''
-              />
-            </div>
-
-            <div className='flex items-center justify-between'>
-              <div className='flex flex-row gap-2'>
-                <LikeSvg width='25' height='25' />
-                <span>280.4k like</span>
-              </div>
-              <div className='flex flex-row gap-2'>
-                <CommentSvg width='25' height='25' />
-                <span>88 comment</span>
-              </div>
-              <div className='flex flex-row gap-2'>
-                <ShareSvg width='25' height='25' />
-                <span>12 share</span>
-              </div>
-            </div>
-          </div>
-
-          <div className='flex items-center w-full'>
-            <InputComment placeholder='Write your comment...' />
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   )

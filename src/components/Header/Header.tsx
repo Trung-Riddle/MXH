@@ -9,7 +9,7 @@ export default function Header() {
   const dispatch = useAppDispatch()
 
   return (
-    <header className='py-2 md:shadow-md w-full flex items-center md:px-6 px-3 md:bg-light bg-transparent md:dark:bg-dark flex-shrink-0 sticky h-header top-0 z-50'>
+    <header className='py-2 md:shadow-md w-full flex items-center md:px-6 px-3 bg-light dark:bg-dark flex-shrink-0 z-10 sticky h-header top-0'>
       <span className='md:hidden'>
         <FangHeadSvg width='35' height='35' />
       </span>
