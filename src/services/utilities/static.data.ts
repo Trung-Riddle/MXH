@@ -221,3 +221,329 @@ export const SuggesList = [
     justPostedNow: true
   }
 ]
+
+export const ListFollow = [
+  {
+    id: 1,
+    avatar: 'https://i.pinimg.com/474x/d0/e5/dd/d0e5ddcfc87427eabe0dbc6b110a04bc.jpg',
+    fullName: 'Minh Thành',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 2,
+    avatar: 'https://i.pinimg.com/474x/95/2b/a4/952ba4a2a9c044c45ec41d0ce533951c.jpg',
+    fullName: 'Mỹ Duyên',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 3,
+    avatar: 'https://i.pinimg.com/474x/5d/74/fe/5d74fe82c0a24a3f03a8938cbec4ac9b.jpg',
+    fullName: 'Lợi Xuân',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 4,
+    avatar: 'https://i.pinimg.com/474x/7c/e0/76/7ce07667632333a9a60c26bb54011ad3.jpg',
+    fullName: 'LeeBao',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 5,
+    avatar: 'https://i.pinimg.com/474x/d2/2e/14/d22e1421474ee8df0fda089fcc3f64e1.jpg',
+    fullName: 'Moving',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 6,
+    avatar: 'https://i.pinimg.com/474x/ad/2e/c1/ad2ec15749150014b0eb4a01c2a2ed6b.jpg',
+    fullName: 'Vạn Thành',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 7,
+    avatar: 'https://i.pinimg.com/474x/e9/0a/24/e90a24c4f3c024c3c1fa58e25424553a.jpg',
+    fullName: 'Hải Cường',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 8,
+    avatar: 'https://i.pinimg.com/474x/33/d6/a3/33d6a3ce454d15f37afac4d75cc814a4.jpg',
+    fullName: 'Chung Vi',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 9,
+    avatar: 'https://i.pinimg.com/474x/03/57/0b/03570b3c4abf73e5c23acbc669df8051.jpg',
+    fullName: 'Thaỏ Thành',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 10,
+    avatar: 'https://i.pinimg.com/474x/b4/96/a9/b496a9537226f58abea355c8da21e262.jpg',
+    fullName: 'Mèo con đáng iu',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 11,
+    avatar: 'https://i.pinimg.com/474x/1e/71/10/1e71102c66c13c93952824521513dca9.jpg',
+    fullName: 'Thanh Thảo',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 12,
+    avatar: 'https://i.pinimg.com/474x/d7/a2/16/d7a216eed472a0438f08b4941c90c7b0.jpg',
+    fullName: 'Thiên Thần',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 13,
+    avatar: 'https://i.pinimg.com/474x/af/9a/31/af9a313a6b1ced136aa73e10267b0091.jpg',
+    fullName: 'Cu Cường',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 14,
+    avatar: 'https://i.pinimg.com/474x/a4/cf/e6/a4cfe6c92d053ffc6065dd15b4c96973.jpg',
+    fullName: 'Ác Quỷ Trong Em',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 15,
+    avatar: 'https://i.pinimg.com/474x/67/d7/47/67d7474f84a8cbf9c454db546f201037.jpg',
+    fullName: 'LuXuRy',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 16,
+    avatar: 'https://i.pinimg.com/474x/4d/ad/00/4dad00978dc3639729edd6102ca100b9.jpg',
+    fullName: 'Hoài Thương',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  },
+  {
+    id: 17,
+    avatar: 'https://i.pinimg.com/474x/3e/66/c4/3e66c4b6483271f52c41976832d09e9a.jpg',
+    fullName: 'Uyên Lee',
+    friends: [
+      {
+        id: 1,
+        avatar: 'https://i.pinimg.com/474x/c2/85/78/c28578d3c5d0333a7ec4b3e94f48f3e5.jpg'
+      },
+      {
+        id: 2,
+        avatar: 'https://i.pinimg.com/474x/fe/da/09/feda09c956a3baa1cff9f1e4a0509d20.jpg'
+      },
+      {
+        id: 3,
+        avatar: 'https://i.pinimg.com/474x/30/38/a1/3038a15f0479f8514136ab1f16097347.jpg'
+      }
+    ]
+  }
+]
