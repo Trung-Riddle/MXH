@@ -4,7 +4,7 @@ export type AvatarSizes = 'sm' | 'lg' | 'md'
 
 const avatarSizes: Record<AvatarSizes, string> = {
   md: '',
-  lg: 'md:w-20 md:h-20 w-[53px] h-[53px]',
+  lg: 'lg:w-20 lg:h-20 md:w-14 md:h-14 w-[53px] h-[53px]',
   sm: 'w-12 h-12'
 }
 

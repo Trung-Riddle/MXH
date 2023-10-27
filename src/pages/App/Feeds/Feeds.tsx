@@ -1,4 +1,4 @@
-import { Avatar, Button, InputComment, Story } from 'src/components'
+import { Avatar, Button, Story } from 'src/components'
 import { CommentSvg, LikeSvg, ShareSvg } from 'src/components/icons/posts'
 import { Link } from 'react-router-dom'
 import WatchAllSvg from 'src/assets/icons/components/WatchAllSvg'
@@ -7,7 +7,7 @@ import { PostList, StoryList } from 'src/services/utilities/static.data'
 
 const Feeds = () => {
   return (
-    <div className='flex-[6] flex h-full flex-col flex-shrink p-3'>
+    <div className='max-w-[60%] flex h-full flex-col flex-shrink p-3'>
       <div className='md:flex hidden items-center justify-between select-none mb-3'>
         <h2 className='text-lg font-bold text-dark dark:text-light'>Stories</h2>
         <Link to='' className='flex items-center font-bold text-sm gap-2'>
@@ -16,7 +16,7 @@ const Feeds = () => {
         </Link>
       </div>
 
-      <div className='w-full md:w-[709px]'>
+      <div className='w-full'>
         <div className='base-hidden-scroll flex flex-col flex-shrink-0 overflow-x-scroll bg-light rounded-md dark:bg-dark md:p-3 md:shadow-shadowMain'>
           <div className='relative flex items-center p-[2px] justify-between gap-2 md:gap-5'>
             <Story
