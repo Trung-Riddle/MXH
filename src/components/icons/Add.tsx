@@ -3,7 +3,7 @@ interface Props {
   height: string
 }
 
-const AddSvg = ({ height, width, className }: Props & { className: string }) => {
+const AddSvg = ({ height, width, className }: Props & { className?: string }) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'

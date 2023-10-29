@@ -7,7 +7,7 @@ import { PostList, StoryList } from 'src/services/utilities/static.data'
 
 const Feeds = () => {
   return (
-    <div className='max-w-[60%] flex h-full flex-col flex-shrink p-3'>
+    <div className='w-full md:max-w-[60%] flex h-full flex-col flex-shrink p-3'>
       <div className='md:flex hidden items-center justify-between select-none mb-3'>
         <h2 className='text-lg font-bold text-dark dark:text-light'>Stories</h2>
         <Link to='' className='flex items-center font-bold text-sm gap-2'>

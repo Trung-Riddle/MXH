@@ -4,6 +4,7 @@ import { useAppDispatch } from 'src/hooks/useRedux'
 import { toggleOpenMainModal } from 'src/store/slices/modal/modal.slice'
 import FangHeadSvg from 'src/assets/icons/components/navigations/FangHeadSvg'
 import ToggleTheme from '../Toggle/ToggleTheme'
+import { Link } from 'react-router-dom'
 
 export default function Header() {
   const dispatch = useAppDispatch()
@@ -45,9 +46,11 @@ export default function Header() {
           </Button>
         </li>
         <li>
-          <Button className='p-2'>
-            <SendSvg width='20' height='20' />
-          </Button>
+          <Link to='/message'>
+            <Button className='p-2'>
+              <SendSvg width='20' height='20' />
+            </Button>
+          </Link>
         </li>
       </ul>
     </header>
