@@ -6,8 +6,8 @@ import { ToastContainer } from 'react-toastify'
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AnimatePresence>
+    <AnimatePresence>
+      <BrowserRouter>
         <AppRoutes />
         <PostMain />
         <ToastContainer
@@ -22,7 +22,7 @@ export default function App() {
           pauseOnHover
           theme='light'
         />
-      </AnimatePresence>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AnimatePresence>
   )
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useParams } from 'react-router-dom'
 import AddFriend from 'src/assets/icons/components/AddFriend'
 import MoreSvg from 'src/assets/icons/components/MoreSvg'
 import SearchMessageSvg from 'src/assets/icons/components/SearchMessageSvg'
@@ -11,21 +11,26 @@ import TrashSvg from 'src/assets/icons/components/messages/TrashSvg'
 import ChatBox from 'src/components/Messages/ChatBox'
 import User from 'src/components/User/User'
 import UserPresence from 'src/components/User/UserPresence'
+import { useAppSelector } from 'src/hooks/useRedux'
 
-import { Messages } from 'src/mocks/data/message'
+import { ListFriendMocks, Messages } from 'src/mocks/data/message'
+import { RootState } from 'src/store'
 
 const Message = () => {
+  const { userMessageId } = useParams()
+
+  console.log(userMessageId)
+
+  const profile = useAppSelector((state: RootState) => state.user.profile)
+
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
 
-  // Sử dụng useEffect để cập nhật giá trị windowWidth khi kích thước cửa sổ thay đổi
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth)
     }
 
     window.addEventListener('resize', handleResize)
-
-    // Xóa bỏ event listener khi component unmount
     return () => {
       window.removeEventListener('resize', handleResize)
     }
@@ -94,15 +99,14 @@ const Message = () => {
 
           {/* Frients Messages */}
           <div className='flex items-start flex-col overflow-y-auto h-full px-6 w-full gap-3 base-hidden-scroll'>
-            {Messages.map((box, index) => (
-              <Link key={index} to={`/message/${box.id}`} className='block w-full'>
+            {ListFriendMocks.map((friend) => (
+              <Link key={friend.id} to={`/message/${friend.id}`} className='block w-full'>
                 <ChatBox
-                  key={index}
-                  message={box.contents.at(-1)!}
-                  presence='active'
-                  username={box.receiverUsername}
-                  alt={box.receiverUsername}
-                  source={box.receiverAvatarColor}
+                  message={''}
+                  presence={'active'}
+                  username={friend.fullName}
+                  source={friend.profilePicture}
+                  alt={friend.fullName}
                 />
               </Link>
             ))}
@@ -110,7 +114,8 @@ const Message = () => {
         </div>
       </div>
 
-      {windowWidth >= 576 && <Outlet />}
+      {/* {windowWidth >= 576 && <Outlet />} */}
+      <Outlet />
 
       {/* More Profile Frient */}
       <div className='md:flex flex-col w-3/12 bg-light dark:bg-darkMain px-6 justify-between hidden'>

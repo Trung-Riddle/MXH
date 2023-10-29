@@ -5,7 +5,7 @@ const LayoutMain = () => {
   return (
     <div className='w-full bg-lightMain dark:bg-darkMain text-dark dark:text-light'>
       <Header />
-      <div className='flex md:w-4/5 mx-auto'>
+      <div className='flex md:w-4/5 w-full flex-col md:flex-row md:mx-auto relative -z-0'>
         <SidebarLeftHome />
         <Outlet />
         <SidebarRightHome />

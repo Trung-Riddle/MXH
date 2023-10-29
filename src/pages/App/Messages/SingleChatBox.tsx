@@ -1,30 +1,43 @@
 import clsx from 'clsx'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import MoreSvg from 'src/assets/icons/components/MoreSvg'
 import CallSvg from 'src/assets/icons/components/messages/CallSvg'
 import IconSvg from 'src/assets/icons/components/messages/IconSvg'
 import LinkSvg from 'src/assets/icons/components/messages/LinkSvg'
 import PhoneSvg from 'src/assets/icons/components/messages/PhoneSvg'
-import User from 'src/components/User/User'
+import { Button } from 'src/components'
 import { SearchSvg, SendSvg } from 'src/components/icons'
+import { useAppSelector } from 'src/hooks/useRedux'
 import { Messages } from 'src/mocks/data/message'
+import { RootState } from 'src/store'
 
 const SingleChatBox = () => {
+  const profile = useAppSelector((state: RootState) => state.user.profile)
+
   const { userMessageId } = useParams()
 
-  const conversation = Messages.find((item) => item.id === userMessageId)
+  const messages = Messages.filter(
+    (item) =>
+      (item.senderId === userMessageId && profile._id === item.receiverId) ||
+      (item.receiverId === userMessageId && profile._id === item.senderId)
+  )
+
+  console.log(messages)
 
   return (
     <div className='w-full flex flex-col h-screen bg-light dark:bg-[#0C0F1D] flex-1'>
+      <Link to='/message'>
+        <Button>Back</Button>
+      </Link>
       <header className='flex items-center justify-between px-6 my-5'>
-        <User
-          username={conversation?.receiverUsername || ''}
+        {/* <User
+          username={messages?.receiverUsername || ''}
           source={conversation?.receiverAvatarColor || ''}
           alt={conversation?.receiverUsername || ''}
           presence='active'
         >
           <span className='text-xs text-dark font-normal'>Online</span>
-        </User>
+        </User> */}
         <div className='flex items-center gap-4'>
           <span>
             <SearchSvg width='24px' height='24px' />
@@ -43,17 +56,17 @@ const SingleChatBox = () => {
       {/* Chat Box */}
       <div className='flex flex-col h-full overflow-auto px-6'>
         <div className='flex flex-col gap-4'>
-          {conversation?.contents.map((message, index) => (
+          {messages.map((message) => (
             <div
-              key={index}
+              key={message.id}
               className={clsx(
                 'rounded-full px-4 py-2 w-max text-sm font-normal',
-                conversation.senderId
+                message.senderId === profile._id
                   ? 'ml-auto style-bg-main text-light'
                   : 'mr-auto dark:bg-messageDark bg-messageLight text-dark dark:text-light'
               )}
             >
-              {message}
+              {message.content}
             </div>
           ))}
         </div>

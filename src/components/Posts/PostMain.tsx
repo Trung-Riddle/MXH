@@ -48,6 +48,7 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
   // # states
   const [content, setContent] = useState('')
   // # Selectors
+  const profile = useSelector((state: RootState) => state.user.profile)
   const mainModalIsOpen = useSelector((state: RootState) => state.modal.mainModalIsOpen)
   const privacyModalIsOpen = useSelector((state: RootState) => state.modal.privacyModalIsOpen)
   const feelingModalIsOpen = useSelector((state: RootState) => state.modal.feelingModalIsOpen)
@@ -103,7 +104,7 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
           <div className='border-linear-color w-3/4 mx-auto'></div>
 
           <div className='flex flex-col gap-4 my-4'>
-            <User source={user.avatarColor} username={user.username} alt='Avatar User' feeling={feeling}>
+            <User source={profile.profilePicture} username={profile.username} alt='Avatar User' feeling={feeling}>
               <Button
                 className='flex items-center py-0.5 px-2 gap-2 text-xs font-normal w-max'
                 rounded='rounded-lg'
