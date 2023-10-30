@@ -12,7 +12,7 @@ const initialState: InitialState = {
   bgColor: '',
   post: '',
   commentCount: '',
-  imgPost: '',
+  imagePost: '',
   imgId: '',
   videoPost: '',
   videoId: '',
@@ -40,8 +40,11 @@ const PostSlice = createSlice({
 
     changeFeelingPost: (state, action) => {
       state.feelings = action.payload
+    },
+    updatePostItem: (state, action) => {
+      return { ...state, ...action.payload }
     }
   }
 })
-export const { resetPost, changePrivacyPost, changeFeelingPost, changeBgColor } = PostSlice.actions
+export const { resetPost, changePrivacyPost, changeFeelingPost, changeBgColor, updatePostItem } = PostSlice.actions
 export default PostSlice.reducer

@@ -1,5 +1,5 @@
 import { Article, Metric } from '../..'
-import { NavLink, useLocation } from 'react-router-dom'
+import { Link, NavLink, useLocation } from 'react-router-dom'
 import { IsActive, NotActive } from 'src/styles'
 import AppSettings from 'src/configs/appsettings'
 import { useTheme } from 'src/hooks/useTheme'
@@ -51,7 +51,7 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
   return (
     <div className='md:flex hidden flex-shrink-0 flex-col max-w-1/5 sticky inherits-h-header base-hidden-scroll overflow-y-auto overflow-x-hidden gap-3 py-3'>
       <Article className='p-3 flex flex-col items-center justify-center gap-4'>
-        <div className='flex flex-col justify-center items-center gap-2 my-2'>
+        <Link to={'/profile'} className='flex flex-col justify-center items-center gap-2 my-2'>
           <div className='rounded-full relative w-20 h-20 overflow-hidden'>
             <img
               className='absolute inset-0 object-cover w-full h-full max-w-full'
@@ -61,7 +61,7 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
           </div>
 
           <h5 className='text-sm text-dark dark:text-light font-bold'>Hồ Minh Thành</h5>
-        </div>
+        </Link>
         <div className='flex items-center justify-between flex-row w-full'>
           {Metrics.map(({ count, id, label }) => (
             <Metric key={id} count={count} label={label} />

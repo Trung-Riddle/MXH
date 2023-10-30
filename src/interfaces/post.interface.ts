@@ -8,7 +8,7 @@ export interface PostDocuments {
   bgColor: string
   post: string
   commentCount: string
-  imgPost: string
+  imagePost: string
   imgId?: string
   videoPost: string
   videoId?: string

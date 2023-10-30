@@ -33,6 +33,7 @@ import { Button, User } from '..'
 import Form from './Form/Form'
 import Options from './Options/Options'
 import { PostDocuments } from 'src/interfaces/post.interface'
+import { ImageUtils } from 'src/services/utilities/image.utils'
 
 // # mock user data
 const user = {
@@ -73,7 +74,7 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
   }
 
   // # Functions handle submit and dispatch
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const post: PostDocuments = {
       privacy: privacy || '',
       feelings: feeling || '',
@@ -82,7 +83,7 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
       username: user.username,
       profilePicture: '',
       avatarColor: user.avatarColor,
-      imgPost: '',
+      imagePost: '',
       videoPost: '',
       gifUrl: '',
       commentCount: '',
