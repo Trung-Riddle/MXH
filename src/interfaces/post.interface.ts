@@ -6,9 +6,9 @@ export interface PostDocuments {
   avatarColor: string
   profilePicture: string
   bgColor: string
-  post?: string
-  commentCount?: string
-  imgPost?: string
+  post: string
+  commentCount: string
+  imagePost: string
   imgId?: string
   videoPost?: string
   videoId?: string
