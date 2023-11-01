@@ -1,25 +1,16 @@
-import { PostDocuments } from 'src/interfaces/post.interface'
 import { Avatar } from '..'
 import { CommentSvg, LikeSvg, ShareSvg } from '../icons/posts'
 import { RootState } from 'src/store'
 import { useAppSelector } from 'src/hooks/useRedux'
-import { PostList as PostListMocks } from 'src/services/utilities/static.data'
-import { useEffect, useState } from 'react'
+import ListPostSkeleton from './skeletons/ListPostSkeleton'
 
 interface PostListProps {
-  allList: PostDocuments[]
-  postLoading: boolean
+  allPosts: any[]
+  isLoading: boolean
 }
 
-const PostList = ({ allList, postLoading }: PostListProps) => {
-  const [loading, setLoading] = useState(true)
-  const [postList, setPostList] = useState<PostDocuments[]>([])
+const PostList = ({ allPosts, isLoading }: PostListProps) => {
   const profile = useAppSelector((state: RootState) => state.user.profile)
-
-  useEffect(() => {
-    setPostList(allList)
-    setLoading(postLoading)
-  }, [allList, postLoading])
 
   const handleCheckPrivacy = (profile: any, post: any) => {
     const isPrivate = post?.privacy === 'Private' && post?.userId === profile?._id
@@ -27,20 +18,20 @@ const PostList = ({ allList, postLoading }: PostListProps) => {
     return isPrivate || isPublic
   }
 
-  if (loading) {
-    return <h1>...Loading</h1>
+  if (isLoading) {
+    return <ListPostSkeleton />
   }
 
-  if (PostList.length > 0 && !loading) {
-    return PostListMocks.map(
+  if (allPosts.length > 0) {
+    return allPosts.map(
       (post) =>
         handleCheckPrivacy(profile, post) && (
           <div key={post.id} className='bg-light shadow-shadowMain w-full dark:bg-dark rounded-md px-3 py-4 mb-3'>
             <div className='flex flex-col gap-2 md:gap-4'>
-              <Avatar avatar={post.avatar} subs={post.quote} fullName={post.fullName} size='md' />
+              <Avatar avatar={post.profilePicture} subs={post.quote} fullName={post.username} size='md' />
 
               <div className='rounded-xl md:rounded-md overflow-hidden'>
-                <img src={post.imgPost} className='w-full h-[250px] md:h-[400px] object-cover' alt='' />
+                <img src={post.imagePost} className='w-full h-[250px] md:h-[400px] object-cover' alt='' />
               </div>
 
               <div className='flex items-center md:justify-between'>
@@ -72,7 +63,7 @@ const PostList = ({ allList, postLoading }: PostListProps) => {
     )
   }
 
-  return <div> Deo co con cat gi het</div>
+  return <div>Error Boundary</div>
 }
 
 export default PostList

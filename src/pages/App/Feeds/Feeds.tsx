@@ -1,11 +1,70 @@
-import { Avatar, Button, Story } from 'src/components'
-import { CommentSvg, LikeSvg, ShareSvg } from 'src/components/icons/posts'
+import { Button } from 'src/components'
 import { Link } from 'react-router-dom'
 import WatchAllSvg from 'src/assets/icons/components/WatchAllSvg'
-import { AddSvg } from 'src/components/icons'
-import { PostList, StoryList } from 'src/services/utilities/static.data'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import ListPostSkeleton from 'src/components/Posts/skeletons/ListPostSkeleton'
+import StoryListSkeleton from 'src/components/Stories/skeleton/StoryListSkeleton'
+import useEffectOnce from 'src/hooks/useEffectOnce'
+import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
+import { getAllPostThunk } from 'src/store/api/posts'
+import { toast } from 'react-toastify'
+import postService from 'src/services/api/post/post.service'
+import useInfiniteScroll from 'src/hooks/useInfiniteScroll'
+import { uniqBy, orderBy } from 'lodash'
+
+const LazyPostList = lazy(() => import('src/components/Posts/PostList'))
+const LazyStortList = lazy(() => import('src/components/Stories/StoryList'))
+
+const PAGE_SIZE = 8
 
 const Feeds = () => {
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const [postList, setPostList] = useState<any[]>([])
+  const [totalPostCount, setTotalPostCount] = useState(0)
+  const dispatch = useAppDispatch()
+
+  const { isLoading, posts } = useAppSelector((state) => state.allPost)
+
+  const addPostRef = useRef<any[]>([])
+  const bodyRef = useRef<any | null>(null)
+  const bottomLineRef = useRef<any | null>(null)
+
+  const getAllPost = async () => {
+    try {
+      const res = await postService.getAllPostImage(currentPage)
+
+      if (res.data.posts.length > 0) {
+        addPostRef.current = [...res.data.posts, ...postList]
+        const allPostById = uniqBy(addPostRef.current, '_id')
+        const orderByPost = orderBy(allPostById, ['createdAt'], ['desc'])
+        setPostList(orderByPost)
+      }
+    } catch (error: any) {
+      toast.error(error.response.data.message)
+    }
+  }
+
+  const fetchPostData = async () => {
+    let pageNumber = currentPage
+
+    if (currentPage <= Math.round(totalPostCount / PAGE_SIZE)) {
+      pageNumber += 1
+      setCurrentPage(pageNumber)
+      await getAllPost()
+    }
+  }
+
+  useEffectOnce(() => {
+    dispatch(getAllPostThunk())
+  })
+
+  useEffect(() => {
+    setPostList([...posts])
+  }, [posts])
+
+  useInfiniteScroll(bodyRef, bottomLineRef, fetchPostData)
+
   return (
     <div className='w-full md:max-w-[60%] flex h-full flex-col flex-shrink p-3'>
       <div className='md:flex hidden items-center justify-between select-none mb-3'>
@@ -19,28 +78,14 @@ const Feeds = () => {
       <div className='w-full'>
         <div className='base-hidden-scroll flex flex-col flex-shrink-0 overflow-x-scroll bg-light rounded-md dark:bg-dark md:p-3 md:shadow-shadowMain'>
           <div className='relative flex items-center p-[2px] justify-between gap-2 md:gap-5'>
-            <Story
-              size='lg'
-              justPostNow={true}
-              username='Add Story'
-              className='w-full h-full flex items-center justify-center'
-            >
-              <AddSvg width='20' height='20' className='-m-[2px]' />
-            </Story>
-            {StoryList.map((story) => (
-              <Story
-                key={story.id}
-                size='lg'
-                avatar={story.avatar}
-                justPostNow={story.justPostedNow}
-                username={story.username}
-              />
-            ))}
+            <Suspense fallback={<StoryListSkeleton />}>
+              <LazyStortList />
+            </Suspense>
           </div>
         </div>
       </div>
 
-      <div className='mt-3 flex flex-col'>
+      <div ref={bodyRef} className='mt-3 flex flex-col'>
         <div className='md:flex hidden items-center justify-between mb-3'>
           <h2 className='text-lg font-bold'>Feeds</h2>
 
@@ -52,41 +97,15 @@ const Feeds = () => {
           </div>
         </div>
 
-        {PostList.map((post) => (
-          <div key={post.id} className='bg-light shadow-shadowMain w-full dark:bg-dark rounded-md px-3 py-4 mb-3'>
-            <div className='flex flex-col gap-2 md:gap-4'>
-              <Avatar avatar={post.avatar} subs={post.quote} fullName={post.fullName} size='md' />
+        <Suspense
+          fallback={[1, 2, 3, 4, 5].map((num) => (
+            <ListPostSkeleton key={num} />
+          ))}
+        >
+          <LazyPostList allPosts={postList} isLoading={isLoading} />
+        </Suspense>
 
-              <div className='rounded-xl md:rounded-md overflow-hidden'>
-                <img src={post.imgPost} className='w-full h-[250px] md:h-[400px] object-cover' alt='' />
-              </div>
-
-              <div className='flex items-center md:justify-between'>
-                <div className='flex flex-row gap-2 mr-4'>
-                  <LikeSvg className='md:w-8 md:h-8 w-6 h-6' />
-                  <span className='flex items-center gap-2 text-xs md:text-sm'>
-                    280.4k
-                    <span className='hidden md:block'>like</span>
-                  </span>
-                </div>
-                <div className='flex flex-row gap-2 md:mr-0'>
-                  <CommentSvg className='md:w-8 md:h-8 w-6 h-6' />
-                  <span className='flex items-center gap-2 text-xs md:text-sm'>
-                    88 <span className='hidden md:block'>comment</span>
-                  </span>
-                </div>
-                <div className='flex flex-row gap-2 md:ml-0 ml-auto'>
-                  <ShareSvg className='md:w-8 md:h-8 w-6 h-6' />
-                  <span className='hidden md:block'>12 share</span>
-                </div>
-              </div>
-            </div>
-
-            {/* <div className='flex items-center w-full'>
-              <InputComment placeholder='Write your comment...' />
-            </div> */}
-          </div>
-        ))}
+        <div ref={bottomLineRef}></div>
       </div>
     </div>
   )

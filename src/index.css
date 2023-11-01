@@ -75,6 +75,11 @@
     @apply m-0;
   }
 
+
+  .test:focus + .hiddenfocus {
+    display: block !important;
+  }
+
  
 
   .border-linear-color {

@@ -3,13 +3,15 @@ import userSlice from './slices/user/user.slice'
 import modalSlice from './slices/modal/modal.slice'
 import postSlice from './slices/post/post.slice'
 import allPostSlice from './slices/post/posts.slice'
+import allStorySlice from './slices/story/stories.slice'
 
 export const store = configureStore({
   reducer: {
     user: userSlice,
     modal: modalSlice,
     post: postSlice,
-    allPost: allPostSlice
+    allPost: allPostSlice,
+    allStory: allStorySlice
   }
 })
 
