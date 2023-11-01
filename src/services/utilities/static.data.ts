@@ -88,10 +88,12 @@ export const FeelingList = [
 
 export const PostList = [
   {
+    post: 'Lợi thật xinh đẹp như nàng tiên cá',
     id: 1,
     fullName: 'Ngô Lê Lợi',
-    avatar: '',
+    profilePicture: '',
     quote: 'Hải phòng không lòng vòng',
+    privacy: 'Public',
     imgPost:
       'https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/362998647_1199336594072065_3860460511219135481_n.jpg?stp=c0.119.1440.1440a_dst-jpg_s552x414&_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Lz7LMuawixEAX-Dne4g&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfAjpBfnXf4hMxqylzNsLhx7blElnEOCNXKgvUCmd_rVSw&oe=653FAA16'
   },
@@ -99,8 +101,9 @@ export const PostList = [
     id: 2,
     fullName: 'Lê Thị Mỹ Tho',
     quote: 'Bé iu của bảo',
+    privacy: 'Public',
     imgPost: 'https://i.pinimg.com/474x/9e/93/ed/9e93eda9ebdca2b9e612c52187207287.jpg',
-    avatar: 'https://i.pinimg.com/474x/52/1f/7e/521f7e14bf2032715aefc35245f95d2b.jpg'
+    profilePicture: 'https://i.pinimg.com/474x/52/1f/7e/521f7e14bf2032715aefc35245f95d2b.jpg'
   }
 ]
 

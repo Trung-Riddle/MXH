@@ -1,6 +1,6 @@
 export interface PostDocuments {
   id?: string
-  userId: string
+  userId?: string
   username: string
   email: string
   avatarColor: string
@@ -10,11 +10,11 @@ export interface PostDocuments {
   commentCount: string
   imagePost: string
   imgId?: string
-  videoPost: string
+  videoPost?: string
   videoId?: string
-  feelings: string
-  gifUrl: string
-  privacy: string
+  feelings?: string
+  gifUrl?: string
+  privacy?: string
   reactions?: number
   createdAt?: Date
 }

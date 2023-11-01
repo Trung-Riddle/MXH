@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllPostThunk } from 'src/store/api/posts'
+import { getAllPostFaker, getAllPostThunk } from 'src/store/api/posts'
 // import { PostDocuments } from 'src/interfaces/post.interface'
 interface IAllPosts {
   posts: any[]
@@ -30,7 +30,15 @@ const AllPostSlice = createSlice({
         const { posts, totalPosts } = action.payload
         state.posts = [...posts]
         state.totalPostsCount = totalPosts
-      })
+      }),
+      builder
+        .addCase(getAllPostFaker.pending, (state) => {
+          state.isLoading = true
+        })
+        .addCase(getAllPostFaker.fulfilled, (state, action) => {
+          state.isLoading = false
+          state.posts = [...action.payload!]
+        })
   }
 })
 export const { addToPosts } = AllPostSlice.actions

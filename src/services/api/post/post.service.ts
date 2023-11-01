@@ -5,6 +5,10 @@ class PostService {
     const response = await http.get(`/post/all/${page}`)
     return response
   }
+  async getAllPostImage(page: number): Promise<any> {
+    const response = await http.get(`/post/all-image/${page}`)
+    return response
+  }
   async createPost(data: any): Promise<any> {
     const response = await http.post('/post/create', data)
     return response

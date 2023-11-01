@@ -7,7 +7,7 @@ export { default as Button } from './Button/Button'
 export { default as Article } from './Article/Article'
 export { default as Avatar } from './Avatar/Avatar'
 export { default as Metric } from './Metric/Metric'
-export { default as Story } from './Story/Story'
+export { default as Story } from './Stories/Story'
 export { default as InputComment } from './Input/InputComment'
 
 export { default as User } from './User/User'
