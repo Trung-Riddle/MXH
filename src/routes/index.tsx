@@ -53,13 +53,11 @@ export default function AppRoutes() {
           children: [
             {
               path: 'message',
-              element: <Message />,
-              children: [
-                {
-                  path: ':userMessageId',
-                  element: <SingleChatBox />
-                }
-              ]
+              element: <Message />
+            },
+            {
+              path: 'message/:receiverId',
+              element: <SingleChatBox />
             },
             {
               path: '',

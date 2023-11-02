@@ -1,18 +1,16 @@
 import { Button } from 'src/components'
 import { Link } from 'react-router-dom'
 import WatchAllSvg from 'src/assets/icons/components/WatchAllSvg'
-import { lazy, Suspense } from 'react'
 import StoryListSkeleton from 'src/components/Stories/skeleton/StoryListSkeleton'
 import useEffectOnce from 'src/hooks/useEffectOnce'
 import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import { getAllPostThunk } from 'src/store/api/posts'
 import PostList from 'src/components/Posts/PostList'
+import StoryList from 'src/components/Stories/StoryList'
 // import { toast } from 'react-toastify'
 // import postService from 'src/services/api/post/post.service'
 // import useInfiniteScroll from 'src/hooks/useInfiniteScroll'
 // import { uniqBy, orderBy } from 'lodash'
-
-const LazyStortList = lazy(() => import('src/components/Stories/StoryList'))
 
 // const PAGE_SIZE = 8
 
@@ -73,9 +71,7 @@ const Feeds = () => {
       <div className='w-full'>
         <div className='base-hidden-scroll flex flex-col flex-shrink-0 overflow-x-scroll bg-light rounded-md dark:bg-dark md:p-3 md:shadow-shadowMain'>
           <div className='relative flex items-center p-[2px] justify-between gap-2 md:gap-5'>
-            <Suspense fallback={<StoryListSkeleton />}>
-              <LazyStortList />
-            </Suspense>
+            <StoryList />
           </div>
         </div>
       </div>
