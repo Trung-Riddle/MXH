@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, startTransition } from 'react'
 import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import { RootState } from 'src/store'
 import { getAllStoryFaker } from 'src/store/api/stories'
@@ -11,7 +11,9 @@ const StoryList = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(getAllStoryFaker())
+    startTransition(() => {
+      dispatch(getAllStoryFaker())
+    })
   }, [dispatch])
 
   if (isLoading) {

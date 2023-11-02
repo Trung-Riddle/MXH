@@ -15,7 +15,7 @@ interface AvatarProps {
 
 const Avatar = ({ fullName, avatar, size = 'sm', subs }: AvatarProps) => {
   return (
-    <div className='flex items-center gap-2 text-dark dark:text-light'>
+    <div className='flex items-center gap-3 text-dark dark:text-light'>
       <div className={`${avatarSizes[size]}`}>
         <div className='rounded-full overflow-hidden relative pt-[100%]'>
           <img src={avatar} className='absolute w-full h-full object-cover inset-0' alt='' />

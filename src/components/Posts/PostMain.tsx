@@ -32,18 +32,9 @@ import { animatePostMain } from './animations'
 import { Button, User } from '..'
 import Form from './Form/Form'
 import Options from './Options/Options'
-import { PostDocuments } from 'src/interfaces/post.interface'
-import { ImageUtils } from 'src/services/utilities/image.utils'
+import postService from 'src/services/api/post/post.service'
 
 // # mock user data
-const user = {
-  profilePicture: '',
-  username: 'Hồ Minh Thành',
-  email: 'mint03sanzz@gmail.com ',
-  id: 'userId',
-  avatarColor:
-    'https://images.unsplash.com/photo-1695782098642-b71604fcb72a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw0fHx8ZW58MHx8fHx8&auto=format&fit=crop&w=500&q=60'
-}
 
 const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
   // # states
@@ -58,6 +49,9 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
   const privacy = useSelector((state: RootState) => state.post.privacy)
   const feeling = useSelector((state: RootState) => state.post.feelings)
   const bgColor = useSelector((state: RootState) => state.post.bgColor)
+  const imagePost = useSelector((state: RootState) => state.post.imagePost)
+  const videoPost = useSelector((state: RootState) => state.post.videoPost)
+  const gifUrl = useSelector((state: RootState) => state.post.gifUrl)
 
   // # Functions handle modals and posts
   const handleCloseMainModal = useCallback(() => {
@@ -75,23 +69,35 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
 
   // # Functions handle submit and dispatch
   const handleSubmit = async () => {
-    const post: PostDocuments = {
+    const post = {
       privacy: privacy || '',
       feelings: feeling || '',
       bgColor: bgColor || '',
       post: content || '',
-      username: user.username,
-      profilePicture: '',
-      avatarColor: user.avatarColor,
-      imagePost: '',
-      videoPost: '',
-      gifUrl: '',
-      commentCount: '',
-      email: user.email,
-      userId: user.id
+      profilePicture: profile.profilePicture,
+      imagePost: imagePost || '',
+      videoPost: videoPost || '',
+      gifUrl: gifUrl || ''
     }
 
-    console.log(post)
+    if (post.post && !post.bgColor && !post.imagePost && !post.videoPost) {
+      delete post.imagePost
+      delete post.videoPost
+      await postService.createPost(post)
+    } else if (post?.post && post.bgColor) {
+      delete post.imagePost
+      delete post.videoPost
+      await postService.createPost(post)
+    } else if (post?.post && post?.imagePost && !post.bgColor) {
+      delete post.videoPost
+      await postService.createPostWithImage(post)
+    } else if (post?.post && post.imagePost && !post.bgColor && !post.videoPost) {
+      delete post.imagePost
+      await postService.createPostWithImage(post)
+    }
+
+    dispatch(toggleOpenMainModal())
+    dispatch(resetPost())
   }
 
   if (mainModalIsOpen) {

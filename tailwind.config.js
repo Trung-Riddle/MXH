@@ -9,7 +9,8 @@ export default {
         light: '#FFFFFF'
       },
       boxShadow: {
-        shadowMain: '0px 1px 8px 1px rgba(0, 0, 0, 0.10)'
+        shadowMain: '0px 1px 8px 1px rgba(0, 0, 0, 0.10)',
+        shadowInner: 'inset 0px 1px 8px 1px rgba(0, 0, 0, 0.10)'
       },
       aspectRatio: {
         '2/1': '2 / 1'
