@@ -4,6 +4,7 @@ import modalSlice from './slices/modal/modal.slice'
 import postSlice from './slices/post/post.slice'
 import allPostSlice from './slices/post/posts.slice'
 import allStorySlice from './slices/story/stories.slice'
+import exploreSlice from './slices/modal/explore.slice'
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
     modal: modalSlice,
     post: postSlice,
     allPost: allPostSlice,
-    allStory: allStorySlice
+    allStory: allStorySlice,
+    explore: exploreSlice
   }
 })
 

@@ -1,7 +1,6 @@
 import { Button } from 'src/components'
 import { Link } from 'react-router-dom'
 import WatchAllSvg from 'src/assets/icons/components/WatchAllSvg'
-import StoryListSkeleton from 'src/components/Stories/skeleton/StoryListSkeleton'
 import useEffectOnce from 'src/hooks/useEffectOnce'
 import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import { getAllPostThunk } from 'src/store/api/posts'

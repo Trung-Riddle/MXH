@@ -18,6 +18,8 @@ import ProtectedRoutes from 'src/pages/ProtectedRoutes'
 import LayoutMobile from 'src/pages/Layouts/LayoutMobile'
 import NotFound from 'src/pages/Error/NotFound'
 import { Suspense, lazy } from 'react'
+import VideoExplore from 'src/pages/App/Explore/VideoExplore'
+import Test from 'src/test'
 const LazyPageFeeds = lazy(() => import('src/pages/App/Feeds/Feeds'))
 
 export default function AppRoutes() {
@@ -66,6 +68,10 @@ export default function AppRoutes() {
                 {
                   path: 'explore',
                   element: <Explore />
+                },
+                {
+                  path: 'explore/:id',
+                  element: <VideoExplore />
                 },
                 {
                   path: 'friends',
@@ -126,6 +132,10 @@ export default function AppRoutes() {
           ]
         }
       ]
+    },
+    {
+      path: '/test',
+      element: <Test />
     },
     {
       path: '*',
