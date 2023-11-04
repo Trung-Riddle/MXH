@@ -60,7 +60,7 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
             />
           </div>
 
-          <h5 className='text-sm text-dark dark:text-light font-bold'>Hồ Minh Thành</h5>
+          <h5 className='text-sm text-dark dark:text-light font-bold'>{profile.username}</h5>
         </Link>
         <div className='flex items-center justify-between flex-row w-full'>
           {Metrics.map(({ count, id, label }) => (

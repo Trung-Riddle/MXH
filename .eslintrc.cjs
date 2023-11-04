@@ -33,6 +33,21 @@ module.exports = {
     node: true
   },
   rules: {
+    'jsx-a11y/mouse-events-have-key-events': [
+      'error',
+      {
+        hoverInHandlers: ['onMouseOver', 'onMouseEnter', 'onPointerOver', 'onPointerEnter'],
+        hoverOutHandlers: ['onMouseOut', 'onMouseLeave', 'onPointerOut', 'onPointerLeave']
+      }
+    ],
+    'jsx-a11y/media-has-caption': [
+      2,
+      {
+        audio: ['Audio'],
+        video: ['Video'],
+        track: ['Track']
+      }
+    ],
     // Note: you must disable the base rule as it can report incorrect errors
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',

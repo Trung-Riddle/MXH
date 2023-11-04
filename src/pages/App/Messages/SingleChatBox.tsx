@@ -1,11 +1,11 @@
 import clsx from 'clsx'
-import { Link, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import MoreSvg from 'src/assets/icons/components/MoreSvg'
 import CallSvg from 'src/assets/icons/components/messages/CallSvg'
 import IconSvg from 'src/assets/icons/components/messages/IconSvg'
 import LinkSvg from 'src/assets/icons/components/messages/LinkSvg'
 import PhoneSvg from 'src/assets/icons/components/messages/PhoneSvg'
-import { Button } from 'src/components'
 import { SearchSvg, SendSvg } from 'src/components/icons'
 import { useAppSelector } from 'src/hooks/useRedux'
 import { Messages } from 'src/mocks/data/message'
@@ -13,22 +13,36 @@ import { RootState } from 'src/store'
 
 const SingleChatBox = () => {
   const profile = useAppSelector((state: RootState) => state.user.profile)
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+  const navigate = useNavigate()
 
-  const { userMessageId } = useParams()
+  const { receiverId } = useParams()
 
   const messages = Messages.filter(
     (item) =>
-      (item.senderId === userMessageId && profile._id === item.receiverId) ||
-      (item.receiverId === userMessageId && profile._id === item.senderId)
+      (item.senderId === receiverId && profile._id === item.receiverId) ||
+      (item.receiverId === receiverId && profile._id === item.senderId)
   )
 
-  console.log(messages)
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth)
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (windowWidth > 567) {
+      navigate('/message')
+    }
+  }, [windowWidth, navigate])
 
   return (
     <div className='w-full flex flex-col h-screen bg-light dark:bg-[#0C0F1D] flex-1'>
-      <Link to='/message'>
-        <Button>Back</Button>
-      </Link>
       <header className='flex items-center justify-between px-6 my-5'>
         {/* <User
           username={messages?.receiverUsername || ''}

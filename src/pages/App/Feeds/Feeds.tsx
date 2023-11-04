@@ -1,69 +1,61 @@
 import { Button } from 'src/components'
 import { Link } from 'react-router-dom'
 import WatchAllSvg from 'src/assets/icons/components/WatchAllSvg'
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
-import ListPostSkeleton from 'src/components/Posts/skeletons/ListPostSkeleton'
-import StoryListSkeleton from 'src/components/Stories/skeleton/StoryListSkeleton'
 import useEffectOnce from 'src/hooks/useEffectOnce'
 import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import { getAllPostThunk } from 'src/store/api/posts'
-import { toast } from 'react-toastify'
-import postService from 'src/services/api/post/post.service'
-import useInfiniteScroll from 'src/hooks/useInfiniteScroll'
-import { uniqBy, orderBy } from 'lodash'
+import PostList from 'src/components/Posts/PostList'
+import StoryList from 'src/components/Stories/StoryList'
+// import { toast } from 'react-toastify'
+// import postService from 'src/services/api/post/post.service'
+// import useInfiniteScroll from 'src/hooks/useInfiniteScroll'
+// import { uniqBy, orderBy } from 'lodash'
 
-const LazyPostList = lazy(() => import('src/components/Posts/PostList'))
-const LazyStortList = lazy(() => import('src/components/Stories/StoryList'))
-
-const PAGE_SIZE = 8
+// const PAGE_SIZE = 8
 
 const Feeds = () => {
-  const [currentPage, setCurrentPage] = useState(1)
+  // const [currentPage, setCurrentPage] = useState(1)
 
-  const [postList, setPostList] = useState<any[]>([])
-  const [totalPostCount, setTotalPostCount] = useState(0)
+  // const [postList, setPostList] = useState<any[]>([])
+  // const [totalPostCount, setTotalPostCount] = useState(0)
   const dispatch = useAppDispatch()
 
   const { isLoading, posts } = useAppSelector((state) => state.allPost)
 
-  const addPostRef = useRef<any[]>([])
-  const bodyRef = useRef<any | null>(null)
-  const bottomLineRef = useRef<any | null>(null)
+  // const addPostRef = useRef<any[]>([])
+  // const bodyRef = useRef<any | null>(null)
+  // const bottomLineRef = useRef<any | null>(null)
 
-  const getAllPost = async () => {
-    try {
-      const res = await postService.getAllPostImage(currentPage)
+  // const getAllPost = async () => {
+  //   try {
+  //     const res = await postService.getAllPostImage(currentPage)
 
-      if (res.data.posts.length > 0) {
-        addPostRef.current = [...res.data.posts, ...postList]
-        const allPostById = uniqBy(addPostRef.current, '_id')
-        const orderByPost = orderBy(allPostById, ['createdAt'], ['desc'])
-        setPostList(orderByPost)
-      }
-    } catch (error: any) {
-      toast.error(error.response.data.message)
-    }
-  }
+  //     if (res.data.posts.length > 0) {
+  //       addPostRef.current = [...res.data.posts, ...postList]
+  //       const allPostById = uniqBy(addPostRef.current, '_id')
+  //       const orderByPost = orderBy(allPostById, ['createdAt'], ['desc'])
+  //       setPostList(orderByPost)
+  //     }
+  //   } catch (error: any) {
+  //     toast.error(error.response.data.message)
+  //   }
+  // }
 
-  const fetchPostData = async () => {
-    let pageNumber = currentPage
+  // const fetchPostData = async () => {
+  //   let pageNumber = currentPage
 
-    if (currentPage <= Math.round(totalPostCount / PAGE_SIZE)) {
-      pageNumber += 1
-      setCurrentPage(pageNumber)
-      await getAllPost()
-    }
-  }
+  //   if (currentPage <= Math.round(totalPostCount / PAGE_SIZE)) {
+  //     pageNumber += 1
+  //     setCurrentPage(pageNumber)
+  //     await getAllPost()
+  //   }
+  // }
 
   useEffectOnce(() => {
     dispatch(getAllPostThunk())
   })
 
-  useEffect(() => {
-    setPostList([...posts])
-  }, [posts])
-
-  useInfiniteScroll(bodyRef, bottomLineRef, fetchPostData)
+  // useInfiniteScroll(bodyRef, bottomLineRef, fetchPostData)
 
   return (
     <div className='w-full md:max-w-[60%] flex h-full flex-col flex-shrink p-3'>
@@ -78,14 +70,12 @@ const Feeds = () => {
       <div className='w-full'>
         <div className='base-hidden-scroll flex flex-col flex-shrink-0 overflow-x-scroll bg-light rounded-md dark:bg-dark md:p-3 md:shadow-shadowMain'>
           <div className='relative flex items-center p-[2px] justify-between gap-2 md:gap-5'>
-            <Suspense fallback={<StoryListSkeleton />}>
-              <LazyStortList />
-            </Suspense>
+            <StoryList />
           </div>
         </div>
       </div>
 
-      <div ref={bodyRef} className='mt-3 flex flex-col'>
+      <div className='mt-3 flex flex-col'>
         <div className='md:flex hidden items-center justify-between mb-3'>
           <h2 className='text-lg font-bold'>Feeds</h2>
 
@@ -97,15 +87,9 @@ const Feeds = () => {
           </div>
         </div>
 
-        <Suspense
-          fallback={[1, 2, 3, 4, 5].map((num) => (
-            <ListPostSkeleton key={num} />
-          ))}
-        >
-          <LazyPostList allPosts={postList} isLoading={isLoading} />
-        </Suspense>
+        <PostList allPosts={posts} isLoading={isLoading} />
 
-        <div ref={bottomLineRef}></div>
+        {/* <div ref={bottomLineRef}></div> */}
       </div>
     </div>
   )

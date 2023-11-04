@@ -26,8 +26,7 @@ const Form = ({ onChangeContent }: FormProps) => {
     } else {
       contentEditableRef.current!.style.fontSize = '16px'
     }
-    text.length > 100 ? setContent(text.substring(0, 100)) : setContent(text)
-
+    setContent(text)
     onChangeContent(text)
   }
   const handleFocus = () => {

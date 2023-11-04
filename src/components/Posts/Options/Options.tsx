@@ -15,7 +15,7 @@ const Options = () => {
   const inputFileIsOpen = useAppSelector((state: RootState) => state.modal.inputFileIsOpen)
 
   return (
-    <div className='border-[#B2A3A3] border flex items-center rounded-lg py-4 px-6 justify-between select-none'>
+    <div className='border-dark/10 dark:border-light/10 shadow-shadowMain border flex items-center rounded-lg py-4 px-6 justify-between select-none'>
       <p className='text-sm text-dark dark:text-light font-normal'>Thêm vào bài viết</p>
       <div className='flex items-center gap-4'>
         <button

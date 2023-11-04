@@ -5,8 +5,9 @@ import Swal from 'sweetalert2'
 
 export const getAllPostThunk = createAsyncThunk('post/getPosts', async () => {
   try {
-    const response = await postService.getAllPostImage(1)
-    return response.data
+    const responesePost = await postService.getAllPost(1)
+
+    return responesePost.data
   } catch (error: any) {
     Swal.fire('Thông báo', error.message, 'error')
   }

@@ -108,6 +108,14 @@
     scroll-snap-align: center;
     flex: none;
   }
+  
+  /* .video-explore video {
+    @apply absolute inset-0 w-full h-auto z-0 opacity-0
+  }
+
+  .video-explore:hover video {
+    @apply hover:opacity-100 hover:z-20
+  } */
 }
 
 /* width */
@@ -199,3 +207,5 @@
     transform: rotate(360deg);
   }
 }
+
+

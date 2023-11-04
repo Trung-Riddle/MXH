@@ -2,7 +2,7 @@ import http from 'src/services/http'
 
 class PostService {
   async getAllPost(page: number): Promise<any> {
-    const response = await http.get(`/post/all/${page}`)
+    const response = await http.get(`/post/all-post/${page}`)
     return response
   }
   async getAllPostImage(page: number): Promise<any> {
@@ -10,15 +10,15 @@ class PostService {
     return response
   }
   async createPost(data: any): Promise<any> {
-    const response = await http.post('/post/create', data)
+    const response = await http.post('/post/add', data)
     return response
   }
   async createPostWithImage(data: any): Promise<any> {
-    const response = await http.post('/post/create/image', data)
+    const response = await http.post('/post/add-image', data)
     return response
   }
   async createPostWithVideo(data: any): Promise<any> {
-    const response = await http.post('/post/create/video', data)
+    const response = await http.post('/post/add-video', data)
     return response
   }
   // update

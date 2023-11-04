@@ -1,14 +1,13 @@
-import React from 'react'
-import { Images } from 'src/mocks/data/images'
 import { updatePostItem } from 'src/store/slices/post/post.slice'
 import Swal from 'sweetalert2'
+import { Dispatch } from '@reduxjs/toolkit'
 
 interface AddFiletoRedux {
-  event: any
-  post: string
-  dispatch: any
+  file: File
+  dispatch: Dispatch
   type: string
 }
+
 export class ImageUtils {
   static validateFile(file: File, type: string) {
     if (type === 'image') {
@@ -50,14 +49,15 @@ export class ImageUtils {
       reader.readAsDataURL(file)
     })
   }
-  static addFiletoRedux({ event, post, dispatch, type }: AddFiletoRedux) {
-    const file = event.target.files[0]
+  static async addFiletoRedux({ file, dispatch, type }: AddFiletoRedux) {
     ImageUtils.checkFile(file, type)
+
+    const base64 = await ImageUtils.readFileToBase64(file)
+
     dispatch(
       updatePostItem({
-        imagePost: type === 'image' ? URL.createObjectURL(file) : '',
-        videoPost: type === 'video' ? URL.createObjectURL(file) : '',
-        post
+        imagePost: type === 'image' ? base64 : '',
+        videoPost: type === 'video' ? base64 : ''
       })
     )
   }
