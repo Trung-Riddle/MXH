@@ -5,6 +5,7 @@ import postSlice from './slices/post/post.slice'
 import allPostSlice from './slices/post/posts.slice'
 import allStorySlice from './slices/story/stories.slice'
 import exploreSlice from './slices/modal/explore.slice'
+import chatSlice from './slices/chat/chat.slice'
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
     post: postSlice,
     allPost: allPostSlice,
     allStory: allStorySlice,
-    explore: exploreSlice
+    explore: exploreSlice,
+    chat: chatSlice
   }
 })
 

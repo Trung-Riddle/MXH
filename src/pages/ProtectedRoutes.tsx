@@ -10,6 +10,7 @@ import useEffectOnce from 'src/hooks/useEffectOnce'
 import { Navigate } from 'react-router-dom'
 import withBaseComponent from 'src/hooks/withBaseComponent'
 import { toast } from 'react-toastify'
+import { getConversationList } from 'src/store/api/chat'
 
 interface IProtectedRoutes extends IHocProps {
   children: React.ReactNode
@@ -27,6 +28,7 @@ const ProtectedRoutes = ({ children, navigate, dispatch }: IProtectedRoutes) => 
   const checkUser = useCallback(async () => {
     try {
       const response = await userService.checkCurrentUser()
+      dispatch(getConversationList())
       setUserData(response.data.user)
       setTokenIsValid(true)
       dispatch(addUser({ token: response.data.token, profile: response.data.user }))
