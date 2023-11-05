@@ -6,7 +6,7 @@ import './test.css'
 import { usePlayerAction } from 'src/hooks/usePlayerAction'
 import { toggleOpenModalExplore } from 'src/store/slices/modal/explore.slice'
 import { useEffect, useRef } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 const listTest = [
   {
     id: 'vqv1yhjoa6o1ttiyslw8'
@@ -25,8 +25,17 @@ const listTest = [
 const ModalExplore = () => {
   const exploreModalIsOpen = useAppSelector((state: RootState) => state.explore.exploreModalIsOpen)
   const dispatch = useAppDispatch()
-  const [, setSearchParams] = useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
   const containerRef = useRef<HTMLDivElement | null>(null)
+  const videoId = searchParams.get('modal_id')
+  const videoRef = useRef<HTMLDivElement | null>(null)
+
+  useEffect(() => {
+    if (videoId && videoRef.current) {
+      // Sử dụng `scrollIntoView` để cuộn đến phần tử có ID tương ứng
+      videoRef.current.scrollIntoView({ behavior: 'smooth' })
+    }
+  }, [videoId])
 
   useEffect(() => {
     const container = containerRef.current
@@ -54,28 +63,27 @@ const ModalExplore = () => {
   if (exploreModalIsOpen) {
     return (
       <div className='fixed modal-explore inset-0 w-full h-full z-50 bg-[#20212c] overflow-y-hidden overflow-x-hidden'>
-        {/* <div className='sticky bg-transparent top-5 left-5 p-2 z-[9999] cursor-pointer w-max'>
-          <button onClick={() => dispatch(toggleOpenModalExplore())} className='p-2'>
-            <svg
-              width='18'
-              height='18'
-              fill='none'
-              xmlns='http://www.w3.org/2000/svg'
-              className='mcc8KhCO'
-              viewBox='0 0 18 18'
-            >
-              <path
-                d='M17.448 17.448a1.886 1.886 0 01-2.668 0L9 11.668l-5.78 5.78A1.886 1.886 0 11.552 14.78L6.332 9 .552 3.22A1.886 1.886 0 113.22.552L9 6.332l5.78-5.78a1.886 1.886 0 112.668 2.668L11.668 9l5.78 5.78a1.886 1.886 0 010 2.668z'
-                fill='#fff'
-              ></path>
-            </svg>
-          </button>
-        </div> */}
-
         <div ref={containerRef} className='w-full h-full snap-mandatory snap-y overflow-y-scroll'>
+          <div className='sticky bg-transparent top-5 left-5 p-2 z-[9999] cursor-pointer w-max'>
+            <button onClick={() => dispatch(toggleOpenModalExplore())} className='p-2'>
+              <svg
+                width='18'
+                height='18'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+                className='mcc8KhCO'
+                viewBox='0 0 18 18'
+              >
+                <path
+                  d='M17.448 17.448a1.886 1.886 0 01-2.668 0L9 11.668l-5.78 5.78A1.886 1.886 0 11.552 14.78L6.332 9 .552 3.22A1.886 1.886 0 113.22.552L9 6.332l5.78-5.78a1.886 1.886 0 112.668 2.668L11.668 9l5.78 5.78a1.886 1.886 0 010 2.668z'
+                  fill='#fff'
+                ></path>
+              </svg>
+            </button>
+          </div>
           {listTest.map((item) => (
             <div key={item.id} className={`flex items-center justify-center w-full h-full snap-start item-${item.id}`}>
-              <PlayerVideo videoId={item.id} />
+              <PlayerVideo videoRef={item.id === videoId ? videoRef : null} videoId={item.id} />
             </div>
           ))}
         </div>
@@ -88,14 +96,15 @@ const ModalExplore = () => {
 
 interface PlayerVideoProps {
   videoId: string
+  videoRef: React.MutableRefObject<HTMLDivElement | null> | null
 }
 
-const PlayerVideo = ({ videoId }: PlayerVideoProps) => {
+const PlayerVideo = ({ videoId, videoRef }: PlayerVideoProps) => {
   const { ref, progress, togglePlay, play, handleTimeUpdate } = usePlayerAction()
 
   return (
     <>
-      <div className='h-full w-full relative z-[100]'>
+      <div ref={videoRef} className='h-full w-full relative z-[100]'>
         <video ref={ref} className='h-[calc(100%_-_48px)] w-full' onTimeUpdate={handleTimeUpdate} playsInline loop>
           <track kind='captions'></track>
           <source
@@ -129,10 +138,10 @@ const PlayerVideo = ({ videoId }: PlayerVideoProps) => {
             </button>
           </div>
         </div>
-      </div>
 
-      <div className='absolute inset-0 z-0 overflow-hidden w-full h-full test'>
-        <AdvancedImage cldImg={cld.image(`videos/${videoId}`).setAssetType('video').format('auto:image')} />
+        <div className='absolute inset-0 -z-10 overflow-hidden w-full h-auto test'>
+          <AdvancedImage cldImg={cld.image(`videos/${videoId}`).setAssetType('video').format('auto:image')} />
+        </div>
       </div>
     </>
   )

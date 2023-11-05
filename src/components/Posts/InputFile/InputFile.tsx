@@ -67,13 +67,8 @@ const InputFile = withBaseComponent(({ dispatch }) => {
           )}
 
           {imagePreview.preview && (
-            <div
-              className={`relative group hover:before:bg-dark/40 before:bg-transparent text-xl text-light before:absolute before:z-10 before:inset-0`}
-            >
+            <div className={`relativetext-xl text-light`}>
               <img src={imagePreview.preview} className='w-full h-auto object-contain' alt='' />
-              <div className='group-hover:opacity-100 opacity-0 absolute top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4 text-sm truncate z-50 transition-all duration-100 ease-linear'>
-                {imagePreview.name}
-              </div>
             </div>
           )}
         </div>
