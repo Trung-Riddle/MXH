@@ -16,7 +16,7 @@ const AppSettings = {
       label: 'Feeds'
     },
     {
-      pathname: '/message',
+      pathname: '/chat',
       icon: Icons.Navigations.Message,
       label: 'Messages'
     },

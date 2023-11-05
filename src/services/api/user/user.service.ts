@@ -9,6 +9,10 @@ class UserService {
     const response = await http.put('user', data)
     return response
   }
+  async searchUsers(query: string) {
+    const response = await http.get(`/user/profile/search/${query}`)
+    return response
+  }
   async checkCurrentUser() {
     const response = await http.get('currentuser')
     return response

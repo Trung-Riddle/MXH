@@ -14,3 +14,6 @@ export { default as User } from './User/User'
 
 export { default as SidebarLeftHome } from './Sidebar/home/SidebarLeft'
 export { default as SidebarRightHome } from './Sidebar/home/SidebarRight'
+
+// chat
+export { default as ChatList } from './Chat/list/ChatList'

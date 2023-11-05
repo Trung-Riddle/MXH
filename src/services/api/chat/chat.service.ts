@@ -2,7 +2,7 @@ import http from 'src/services/http'
 
 class ChatService {
   async getConversationList() {
-    const response = await http.get('/chat/message/conversation-list')
+    const response = await http.get('chat/conversation-list')
     return response
   }
   async getChatMessages(receiverId: any) {
@@ -10,11 +10,15 @@ class ChatService {
     return response
   }
   async addUsersChat(data: any) {
-    const response = await http.post(`/chat/message/add-chat-users`, data)
+    const response = await http.post(`chat/add-chat-users`, data)
     return response
   }
-  async markMessageAsSeen(senderId: string, receiverId: string) {
-    const response = await http.put(`/chat/message/mark-as-seen`, { senderId, receiverId })
+  async removeChatUsers(body: any) {
+    const response = await http.post('chat/remove-chat-users', body)
+    return response
+  }
+  async markMessagesAsRead(senderId: string, receiverId: string) {
+    const response = await http.put(`chat/mark-as-read`, { senderId, receiverId })
     return response
   }
   async saveChatMessage(data: any) {

@@ -1,11 +1,12 @@
 import { useRoutes } from 'react-router-dom'
 import { Feeds, Friends } from 'src/pages/App'
 import Explore from 'src/pages/App/Explore/Explore'
-import Message from 'src/pages/App/Messages/Message'
-import SingleChatBox from 'src/pages/App/Messages/SingleChatBox'
+// import Message from 'src/pages/App/Messages/Message'
+// import SingleChatBox from 'src/pages/App/Messages/SingleChatBox'
 import Profile from 'src/pages/App/Profile/Profile'
 import { AuthTabs } from 'src/pages/Auth'
 import { LayoutMain, LayoutMessage } from 'src/pages/Layouts'
+import { Chat } from 'src/pages/App'
 import LayoutChildren from 'src/pages/Layouts/LayoutChildren'
 
 // Pages child profile
@@ -54,13 +55,13 @@ export default function AppRoutes() {
           ),
           children: [
             {
-              path: 'message',
-              element: <Message />
+              path: 'chat',
+              element: <Chat />
             },
-            {
-              path: 'message/:receiverId',
-              element: <SingleChatBox />
-            },
+            // {
+            //   path: 'message/:receiverId',
+            //   element: <SingleChatBox />
+            // },
             {
               path: '',
               element: <LayoutChildren />,

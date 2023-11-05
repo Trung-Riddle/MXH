@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 interface InitialState {
-  token: string
+  token: any
   profile: any
 }
 const initialState: InitialState = {
