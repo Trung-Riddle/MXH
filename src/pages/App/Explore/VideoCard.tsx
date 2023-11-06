@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import { useSearchParams } from 'react-router-dom'
 import { usePlayerAction } from 'src/hooks/usePlayerAction'
@@ -37,7 +38,8 @@ const VideoCard = ({ publicId, url }: VideoCardProps) => {
     }
   }
   return (
-    <button
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+    <div
       onClick={() => {
         dispatch(toggleOpenModalExplore())
         setSearchParams({ modal_id: publicId })
@@ -111,7 +113,7 @@ const VideoCard = ({ publicId, url }: VideoCardProps) => {
         <p className='text-sm text-dark dark:text-light mb-1'>Play piano with girl friend</p>
         <span className='text-dark dark:text-light font-normal text-xs'>@minthanhh</span>
       </div>
-    </button>
+    </div>
   )
 }
 

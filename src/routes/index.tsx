@@ -18,10 +18,8 @@ import { PhotoResource, VideoResource } from 'src/pages/App/Profile/Resources'
 import ProtectedRoutes from 'src/pages/ProtectedRoutes'
 import LayoutMobile from 'src/pages/Layouts/LayoutMobile'
 import NotFound from 'src/pages/Error/NotFound'
-import { Suspense, lazy } from 'react'
 import VideoExplore from 'src/pages/App/Explore/VideoExplore'
 import Test from 'src/test'
-const LazyPageFeeds = lazy(() => import('src/pages/App/Feeds/Feeds'))
 
 export default function AppRoutes() {
   const elements = useRoutes([
@@ -42,7 +40,7 @@ export default function AppRoutes() {
           children: [
             {
               path: 'feeds',
-              element: <LazyPageFeeds />
+              element: <Feeds />
             }
           ]
         },
