@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import { getAllPostThunk } from 'src/store/api/posts'
 import PostList from 'src/components/Posts/PostList'
 import StoryList from 'src/components/Stories/StoryList'
+import { useEffect, useMemo, useState } from 'react'
+import { RootState } from 'src/store'
 // import { toast } from 'react-toastify'
 // import postService from 'src/services/api/post/post.service'
 // import useInfiniteScroll from 'src/hooks/useInfiniteScroll'
@@ -18,10 +20,31 @@ const Feeds = () => {
 
   // const [postList, setPostList] = useState<any[]>([])
   // const [totalPostCount, setTotalPostCount] = useState(0)
+
+  const profile = useAppSelector((state: RootState) => state.user.profile)
   const dispatch = useAppDispatch()
+  const { isLoading, posts } = useAppSelector((state: RootState) => state.allPost)
+  const [sortType, setSortType] = useState<string>(localStorage.getItem('sortType')! || 'none')
 
-  const { isLoading, posts } = useAppSelector((state) => state.allPost)
+  const sortedPosts = useMemo(() => {
+    if (sortType === 'time') {
+      return [...posts].sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      })
+    }
+    if (sortType === 'popular') {
+      return [...posts].filter((postItem) => postItem.userId === profile._id)
+    }
+    return posts
+  }, [posts, sortType, profile._id])
 
+  useEffect(() => {
+    localStorage.setItem('sortType', sortType)
+  }, [sortType])
+
+  useEffectOnce(() => {
+    dispatch(getAllPostThunk())
+  })
   // const addPostRef = useRef<any[]>([])
   // const bodyRef = useRef<any | null>(null)
   // const bottomLineRef = useRef<any | null>(null)
@@ -51,9 +74,9 @@ const Feeds = () => {
   //   }
   // }
 
-  useEffectOnce(() => {
-    dispatch(getAllPostThunk())
-  })
+  // const handleClickPostLatest = () => {
+  //   postList.filter((item) => item.createdAt)
+  // }
 
   // useInfiniteScroll(bodyRef, bottomLineRef, fetchPostData)
 
@@ -80,14 +103,21 @@ const Feeds = () => {
           <h2 className='text-lg font-bold'>Feeds</h2>
 
           <div className='flex items-center gap-2'>
-            <Button className='py-2 px-5 shadow-md' textColor='text-dark dark:text-light' bg='bg-light dark:bg-dark'>
+            <Button
+              onClick={() => setSortType('time')}
+              className='py-2 px-5 shadow-md'
+              textColor='text-dark dark:text-light'
+              bg='bg-light dark:bg-dark'
+            >
               Latest
             </Button>
-            <Button className='py-2 px-5 shadow-md'>Popular</Button>
+            <Button onClick={() => setSortType('popular')} className='py-2 px-5 shadow-md'>
+              Popular
+            </Button>
           </div>
         </div>
 
-        <PostList allPosts={posts} isLoading={isLoading} />
+        <PostList allPosts={sortedPosts} isLoading={isLoading} />
 
         {/* <div ref={bottomLineRef}></div> */}
       </div>
