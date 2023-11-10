@@ -8,12 +8,12 @@ export class ChatUtils {
   static chatUsers: any[] = []
 
   static usersOnline(setOnlineUsers: any) {
-    socketService?.socket?.on('user online', (data) => {
+    socketService?.socket?.on('user online', (data: any) => {
       setOnlineUsers(data)
     })
   }
   static usersOnChatPage() {
-    socketService?.socket?.on('add chat users', (data) => {
+    socketService?.socket?.on('add chat users', (data: any) => {
       ChatUtils.chatUsers = [...data]
     })
   }
@@ -96,7 +96,7 @@ export class ChatUtils {
   }
 
   static socketIOChatList(profile: any, chatMessageList: any, setChatMessageList: any) {
-    socketService?.socket?.on('chat list', (data) => {
+    socketService?.socket?.on('chat list', (data: any) => {
       if (data.senderUsername === profile?.username || data.receiverUsername === profile?.username) {
         const messageIndex = findIndex(chatMessageList, ['conversationId', data.conversationId])
         chatMessageList = cloneDeep(chatMessageList)
@@ -114,7 +114,7 @@ export class ChatUtils {
 
   static socketIOMessageReceived(chatMessages: any, username: string, setConversationId: any, setChatMessages: any) {
     chatMessages = cloneDeep(chatMessages)
-    socketService?.socket?.on('message received', (data) => {
+    socketService?.socket?.on('message received', (data: any) => {
       if (data.senderUsername.toLowerCase() === username || data.receiverUsername.toLowerCase() === username) {
         setConversationId(data.conversationId)
         ChatUtils.privateChatMessages.push(data)
@@ -123,7 +123,7 @@ export class ChatUtils {
       }
     })
 
-    socketService?.socket?.on('message read', (data) => {
+    socketService?.socket?.on('message read', (data: any) => {
       if (data.senderUsername.toLowerCase() === username || data.receiverUsername.toLowerCase() === username) {
         const findMessageIndex = findIndex(ChatUtils.privateChatMessages, ['_id', data._id])
         if (findMessageIndex > -1) {
@@ -136,7 +136,7 @@ export class ChatUtils {
   }
 
   static socketIOMessageReaction(chatMessages: any, username: string, setConversationId: any, setChatMessages: any) {
-    socketService?.socket?.on('message reaction', (data) => {
+    socketService?.socket?.on('message reaction', (data: any) => {
       if (data.senderUsername.toLowerCase() === username || data.receiverUsername.toLowerCase() === username) {
         chatMessages = cloneDeep(chatMessages)
         setConversationId(data.conversationId)

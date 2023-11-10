@@ -24,7 +24,7 @@ export default function Header() {
 
         <Button
           onClick={() => dispatch(toggleOpenMainModal())}
-          className='md:flex hidden items-center flex-shrink-0 justify-center gap-2 px-3 py-1 ml-20 text-sm font-normal'
+          className='md:flex hidden items-center flex-shrink-0 justify-center gap-2 px-3 py-1 md:ml-5 lg:ml-20 text-sm font-normal'
         >
           <AddSvg width='24' height='24' />
           Create new post

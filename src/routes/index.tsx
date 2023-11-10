@@ -20,6 +20,9 @@ import LayoutMobile from 'src/pages/Layouts/LayoutMobile'
 import NotFound from 'src/pages/Error/NotFound'
 import VideoExplore from 'src/pages/App/Explore/VideoExplore'
 import Test from 'src/test'
+import { lazy } from 'react'
+
+const LazyFeeds = lazy(() => import('../pages/App/Feeds/Feeds'))
 
 export default function AppRoutes() {
   const elements = useRoutes([
@@ -40,7 +43,7 @@ export default function AppRoutes() {
           children: [
             {
               path: 'feeds',
-              element: <Feeds />
+              element: <LazyFeeds />
             }
           ]
         },

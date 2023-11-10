@@ -1,9 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import AddFriend from 'src/assets/icons/components/AddFriend'
 import MoreSvg from 'src/assets/icons/components/MoreSvg'
 import SearchMessageSvg from 'src/assets/icons/components/SearchMessageSvg'
-import { Avatar, User } from 'src/components'
 import UserPresence from 'src/components/User/UserPresence'
 import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import SearchList from './search-list/SearchList'
@@ -15,8 +14,7 @@ import userService from 'src/services/api/user/user.service'
 import { ChatUtils } from 'src/services/utilities/chat.utils'
 import { setSelectedChatUser } from 'src/store/slices/chat/chat.slice'
 import chatService from 'src/services/api/chat/chat.service'
-import { timeAgo } from 'src/services/utilities/timeago'
-import ChatListBody from './ChatListBody'
+import ChatBox from '../ChatBox/ChatBox'
 
 const ChatList = () => {
   const { profile } = useAppSelector((state) => state.user)
@@ -49,6 +47,7 @@ const ChatList = () => {
       toast(error?.response?.data?.message)
     }
   }, [])
+
   const addSelectedUserToList = useCallback(
     (user: any) => {
       const newUser = {
@@ -81,6 +80,7 @@ const ChatList = () => {
     },
     [chatList, chatMessageList, dispatch, searchParams, profile]
   )
+
   const removeSelectedUserFromList = (event: any) => {
     event.stopPropagation()
     chatMessageList = cloneDeep(chatMessageList)
@@ -140,7 +140,6 @@ const ChatList = () => {
       addSelectedUserToList(selectedUser)
     }
   }, [addSelectedUserToList, componentType, selectedUser])
-
   useEffect(() => {
     setChatMessageList(chatList)
   }, [chatList])
@@ -154,15 +153,6 @@ const ChatList = () => {
     <>
       <div className='w-full flex-col sm:w-[350px] bg-light dark:bg-darkMessage shadow-lg h-screen overflow-y-auto flex-shrink-0'>
         {/* Avatar User */}
-        <User
-          alt='User'
-          username={profile.username}
-          sloggan='itterasshai eren'
-          className='my-5 px-6'
-          source={profile.profilePicture}
-        />
-        <div className='after:m-0 base-border-main h-[1px]'></div>
-
         <div className='flex items-start flex-col w-full my-5 h-[80%]'>
           {/* Frients Presence */}
           <div className='w-full mb-5 px-6'>
@@ -230,52 +220,59 @@ const ChatList = () => {
               <div className='flex flex-col w-full'>
                 {chatMessageList.map((data: any, index: number) => (
                   // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-                  <div
+                  <ChatBox
                     key={index}
-                    className={`conversation-item ${
-                      searchParams.get('username') === data?.receiverUsername.toLowerCase() ||
-                      searchParams.get('username') === data?.senderUsername.toLowerCase()
-                        ? 'bg-rose-400'
-                        : ''
-                    }`}
                     onClick={() => addUsernameToUrlQuery(data)}
-                  >
-                    <div className='avatar w-full'>
-                      <Avatar
-                        fullName={
-                          data.receiverUsername !== profile?.username ? data.receiverUsername : data?.senderUsername
-                        }
-                        avatar={
-                          data.receiverName !== profile?.username
-                            ? data.receiverProfilePicture
-                            : data?.senderProfilePicture
-                        }
-                      />
-                      {data?.createdAt && <span>{timeAgo.transform(data?.createdAt)}</span>}
-                      {!data?.body && (
-                        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-                        <div className='cursor-pointer' onClick={removeSelectedUserFromList}>
-                          &#x2715;
-                        </div>
-                      )}
-                      {data?.body && !data?.deleteForMe && !data.deleteForEveryone && (
-                        <ChatListBody data={data} profile={profile} />
-                      )}
-                      {data?.deleteForMe && data?.deleteForEveryone && (
-                        <div className='conversation-message'>
-                          <span className='message-deleted'>message deleted</span>
-                        </div>
-                      )}
-                      {data?.deleteForMe && !data.deleteForEveryone && data.senderUsername !== profile?.username && (
-                        <div className='conversation-message'>
-                          <span className='message-deleted'>message deleted</span>
-                        </div>
-                      )}
-                      {data?.deleteForMe && !data.deleteForEveryone && data.receiverUsername !== profile?.username && (
-                        <ChatListBody data={data} profile={profile} />
-                      )}
-                    </div>
-                  </div>
+                    username={data.receiverUsername}
+                    avatar={data.receiverProfilePicture}
+                  />
+
+                  // <div
+                  //   key={index}
+                  //   className={`conversation-item ${
+                  //     searchParams.get('username') === data?.receiverUsername.toLowerCase() ||
+                  //     searchParams.get('username') === data?.senderUsername.toLowerCase()
+                  //       ? 'bg-rose-400'
+                  //       : ''
+                  //   }`}
+                  //   onClick={() => addUsernameToUrlQuery(data)}
+                  // >
+                  //   <div className='avatar w-full'>
+                  //     <Avatar
+                  //       fullName={
+                  //         data.receiverUsername !== profile?.username ? data.receiverUsername : data?.senderUsername
+                  //       }
+                  //       avatar={
+                  //         data.receiverName !== profile?.username
+                  //           ? data.receiverProfilePicture
+                  //           : data?.senderProfilePicture
+                  //       }
+                  //     />
+                  //     {data?.createdAt && <span>{timeAgo.transform(data?.createdAt)}</span>}
+                  //     {!data?.body && (
+                  //       // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                  //       <div className='cursor-pointer' onClick={removeSelectedUserFromList}>
+                  //         &#x2715;
+                  //       </div>
+                  //     )}
+                  //     {data?.body && !data?.deleteForMe && !data.deleteForEveryone && (
+                  //       <ChatListBody data={data} profile={profile} />
+                  //     )}
+                  //     {data?.deleteForMe && data?.deleteForEveryone && (
+                  //       <div className='conversation-message'>
+                  //         <span className='message-deleted'>message deleted</span>
+                  //       </div>
+                  //     )}
+                  //     {data?.deleteForMe && !data.deleteForEveryone && data.senderUsername !== profile?.username && (
+                  //       <div className='conversation-message'>
+                  //         <span className='message-deleted'>message deleted</span>
+                  //       </div>
+                  //     )}
+                  //     {data?.deleteForMe && !data.deleteForEveryone && data.receiverUsername !== profile?.username && (
+                  //       <ChatListBody data={data} profile={profile} />
+                  //     )}
+                  //   </div>
+                  // </div>
                 ))}
               </div>
             )}
