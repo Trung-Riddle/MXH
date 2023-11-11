@@ -1,48 +1,11 @@
 import { Link } from 'react-router-dom'
-import { Article, Button, Story } from 'src/components'
+import { Article, Button } from 'src/components'
 import PostList from 'src/components/Posts/PostList'
 import StoryList from 'src/components/Stories/StoryList'
 import useEffectOnce from 'src/hooks/useEffectOnce'
 import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import { getAllPostThunk } from 'src/store/api/posts'
 
-const UserSuggestions = [
-  {
-    id: 1,
-    avatar: 'https://24365withblinks.com/images/about/profile_jisoo.jpg',
-    name: 'Kim Jisoo'
-  },
-  {
-    id: 2,
-    avatar: 'https://24365withblinks.com/images/about/profile_jennie.jpg',
-    name: 'Jennie Kim'
-  },
-  {
-    id: 3,
-    avatar: 'https://24365withblinks.com/images/about/profile_rose.jpg',
-    name: 'Roseanne Park'
-  },
-  {
-    id: 4,
-    avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
-    name: 'Lalisa Manoban'
-  },
-  {
-    id: 5,
-    avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
-    name: 'Lalisa Manoban'
-  },
-  {
-    id: 6,
-    avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
-    name: 'Lalisa Manoban'
-  },
-  {
-    id: 7,
-    avatar: 'https://24365withblinks.com/images/about/profile_lisa.jpg',
-    name: 'Lalisa Manoban'
-  }
-]
 const ProfilePost = () => {
   const dispatch = useAppDispatch()
 
