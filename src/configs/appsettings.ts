@@ -66,10 +66,6 @@ const AppSettings = {
     {
       pathname: 'about-family-and-relationships',
       label: 'Gia đình & mối quan hệ'
-    },
-    {
-      pathname: 'about-contact-and-basic-info',
-      label: 'Thông tin liên hệ và cơ bản '
     }
   ],
   RoutesProfileFriends: [

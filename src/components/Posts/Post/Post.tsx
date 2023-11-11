@@ -43,8 +43,10 @@ const Post = ({
 
   if (bgColor !== '') {
     content = (
-      <div className={`rounded-xl md:rounded-md overflow-hidden h-[350px] flex items-center justify-center ${bgColor}`}>
-        <p className='font-semibold text-xl text-light'>{post}</p>
+      <div
+        className={`rounded-xl md:rounded-md overflow-hidden h-[200px] sm:h-[350px] flex items-center justify-center ${bgColor}`}
+      >
+        <p className='font-semibold text-base sm:text-xl text-center text-light'>{post}</p>
       </div>
     )
   }
@@ -54,7 +56,7 @@ const Post = ({
     content = (
       <>
         <div className='group/text'>
-          <p className={`text-sm ${postSeeMore ? '' : 'line-clamp-3'}`}>{post}</p>
+          <p className={`text-xs font-medium sm:text-sm ${postSeeMore ? '' : 'line-clamp-3'}`}>{post}</p>
           {post!.length > 200 && (
             <motion.button
               onClick={() => setPostSeeMore((v) => !v)}
@@ -68,7 +70,7 @@ const Post = ({
         </div>
 
         <div className='rounded-xl md:rounded-md overflow-hidden'>
-          <img src={imageUrl} className='w-full h-[250px] md:h-auto object-contain' alt='' />
+          <img src={imageUrl} className='w-full h-auto object-contain' alt='' />
         </div>
       </>
     )
@@ -77,7 +79,7 @@ const Post = ({
   return (
     <div
       ref={postRef}
-      className='bg-light shadow-shadowMain w-full dark:bg-dark rounded-md px-3 py-4 mb-6 last:mb-0 relative overflow-hidden'
+      className='bg-light shadow-shadowMain w-full dark:bg-dark rounded-md px-3 py-4 mb-3 sm:mb-6 last:mb-0 relative overflow-hidden'
     >
       <div className='flex flex-col gap-2 md:gap-4'>
         <div className='flex items-center justify-between'>
