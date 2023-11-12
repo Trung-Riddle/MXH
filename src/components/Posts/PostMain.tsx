@@ -34,6 +34,7 @@ import Form from './Form/Form'
 import Options from './Options/Options'
 import postService from 'src/services/api/post/post.service'
 import { getAllPostThunk } from 'src/store/api/posts'
+import socketService from 'src/services/socket/socket.service'
 
 // # mock user data
 
@@ -87,17 +88,17 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
     if (post.post && !post.bgColor && !post.imagePost && !post.videoPost) {
       delete post.imagePost
       delete post.videoPost
-      await postService.createPost(post)
+      await postService.createPost({ ...post })
     } else if (post?.post && post.bgColor) {
       delete post.imagePost
       delete post.videoPost
-      await postService.createPost(post)
+      await postService.createPost({ ...post })
     } else if (post?.post && post?.imagePost && !post.bgColor) {
       delete post.videoPost
-      await postService.createPostWithImage(post)
+      await postService.createPostWithImage({ ...post })
     } else if (post?.post && post.imagePost && !post.bgColor && !post.videoPost) {
       delete post.imagePost
-      await postService.createPostWithImage(post)
+      await postService.createPostWithImage({ ...post })
     }
 
     dispatch(toggleOpenMainModal())

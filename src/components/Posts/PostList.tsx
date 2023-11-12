@@ -72,6 +72,8 @@ const PostList = ({ allPosts, isLoading }: PostListProps) => {
             handleCheckPrivacy(profile, post) && (
               <Post
                 key={index}
+                userId={post.userId}
+                postId={post._id}
                 bgColor={post.bgColor}
                 post={post.post}
                 imagePost={post.imagePost}

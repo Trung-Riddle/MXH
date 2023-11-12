@@ -2,11 +2,16 @@ import { Avatar } from 'src/components'
 import { CommentSvg, LikeSvg, ShareSvg } from 'src/components/icons/posts'
 import Utils from 'src/services/utilities/utils'
 import { AnimatePresence, motion, useScroll } from 'framer-motion'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import MoreSvg from 'src/assets/icons/components/MoreSvg'
 import { useCollapse } from 'react-collapsed'
 import { Link } from 'react-router-dom'
 import SendSvg from 'src/assets/icons/components/messages/SendSvg'
+import postService from 'src/services/api/post/post.service'
+import { RootState } from 'src/store'
+import { useAppSelector } from 'src/hooks/useRedux'
+import socketService from 'src/services/socket/socket.service'
+import useEffectOnce from 'src/hooks/useEffectOnce'
 
 interface PostProps {
   profilePicture: string
@@ -20,6 +25,8 @@ interface PostProps {
 
   imgVersion?: string
   imgId?: string
+  postId?: string
+  userId?: string
 }
 
 const Post = ({
@@ -30,6 +37,8 @@ const Post = ({
   bgColor,
   gifUrl,
   post,
+  postId,
+  userId,
   videoPost,
   imgId,
   imgVersion
@@ -37,6 +46,73 @@ const Post = ({
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
   const [postSeeMore, setPostSeeMore] = useState(false)
   const postRef = useRef<HTMLDivElement | null>(null)
+  const profile = useAppSelector((state: RootState) => state.user.profile)
+  const [comment, setComment] = useState('')
+  const [reaction, setReaction] = useState({
+    count: 0,
+    reactions: []
+  })
+
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    socketService.socket?.on('add post', (data: any) => {
+      console.log(data)
+    })
+  }, [])
+
+  const getAllReactionOfPost = async (postId: string) => {
+    try {
+      const result = await postService.getAllReaction(postId)
+      setReaction({ count: result.data.count, reactions: result.data.reactions })
+      setCount(result.data.count)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getAllCommentOfPost = async (postId: string) => {
+    try {
+      const result = await postService.getAllCommentOfPost(postId)
+      // console.log(result)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffectOnce(() => {
+    getAllReactionOfPost(postId as string)
+    getAllCommentOfPost(postId as string)
+  })
+
+  const handleReactionPost = async () => {
+    setCount((v) => v + 1)
+
+    await postService.addReactionToPost({
+      userTo: userId,
+      postId,
+      type: 'like',
+      previousReaction: '',
+      postReactions: { like: 1, love: 0, happy: 0, sad: 0, wow: 0, angry: 0 },
+      profilePicture: profile.profilePicture
+    })
+  }
+
+  const handleCommentPost = async () => {
+    if (comment === '') return
+
+    try {
+      const result = await postService.addCommentToPost({
+        userTo: userId,
+        postId: postId,
+        comment: comment,
+        profilePicture: profile.profilePicture
+      })
+      console.log(result)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   let imageUrl: string = ''
   let content = <div>{post}</div>
@@ -92,9 +168,11 @@ const Post = ({
         {content}
         <div className='flex items-center md:justify-between select-none'>
           <div className='flex flex-row gap-2 mr-4'>
-            <LikeSvg className='md:w-8 md:h-8 w-6 h-6' />
+            <button onClick={handleReactionPost}>
+              <LikeSvg username={profile.username} reactions={reaction.reactions} className='md:w-8 md:h-8 w-6 h-6' />
+            </button>
             <span className='flex items-center gap-2 text-xs md:text-sm'>
-              280.4k
+              {count}
               <span className='hidden md:block'>like</span>
             </span>
           </div>
@@ -312,8 +390,15 @@ const Post = ({
             />
 
             <div className='flex items-center bg-slate-400/10 rounded-2xl py-1.5 px-3 w-full'>
-              <input type='text' className='outline-none flex-1 bg-transparent' placeholder='Write comment...' />
-              <SendSvg width='20' height='20' />
+              <input
+                onChange={(e) => setComment(e.target.value)}
+                type='text'
+                className='outline-none flex-1 bg-transparent'
+                placeholder='Write comment...'
+              />
+              <button onClick={handleCommentPost} className='outline-none'>
+                <SendSvg width='20' height='20' />
+              </button>
             </div>
           </motion.div>
         </AnimatePresence>

@@ -2,7 +2,7 @@ import { NavLink, Outlet } from 'react-router-dom'
 import { Article } from 'src/components'
 import AppSettings from 'src/configs/appsettings'
 
-const IsActice = 'text-dark dark:text-light font-medium text-sm bg-[#F5F5F5] px-3 py-2 rounded-md'
+const IsActice = 'text-dark dark:text-light font-medium text-sm dark:bg-black/10 bg-[#F5F5F5] px-3 py-2 rounded-md'
 const NotActive = 'text-dark dark:text-light font-medium text-sm px-3 py-2'
 
 const About = () => {
