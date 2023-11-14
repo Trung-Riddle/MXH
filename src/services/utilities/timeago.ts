@@ -10,9 +10,9 @@ class TimeAgo {
     const date = typeof value === 'string' ? new Date(value) : value
     const yesterday = subDays(new Date(), 1)
     if (isSameDay(date, new Date())) {
-      return 'Today'
+      return 'Hôm nay'
     } else if (isSameDay(date, yesterday)) {
-      return 'Yesterday'
+      return 'Hôm qua'
     } else if (getISOWeek(new Date()) === getISOWeek(date) || getISOWeek(new Date()) - getISOWeek(date) === 1) {
       return format(date, 'EEEE')
     } else {
@@ -56,25 +56,25 @@ class TimeAgo {
 
   secondsAgo(elapsed: any) {
     if (Math.round(elapsed / 1000) <= 1) {
-      return 'a second ago'
+      return '1 giây trước'
     } else {
-      return `${Math.round(elapsed / 1000)} seconds ago`
+      return `${Math.round(elapsed / 1000)} giây trước`
     }
   }
 
   minutesAgo(elapsed: any, msPerMinute: any) {
     if (Math.round(elapsed / msPerMinute) <= 1) {
-      return 'a minute ago'
+      return '1 phút phước'
     } else {
-      return `${Math.round(elapsed / msPerMinute)} minutes ago`
+      return `${Math.round(elapsed / msPerMinute)} phút trước`
     }
   }
 
   hoursAgo(elapsed: any, msPerHour: any) {
     if (Math.round(elapsed / msPerHour) <= 1) {
-      return 'an hour ago'
+      return '1 giờ trước'
     } else {
-      return `${Math.round(elapsed / msPerHour)} hours ago`
+      return `${Math.round(elapsed / msPerHour)} giờ trước`
     }
   }
 

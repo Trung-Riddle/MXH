@@ -11,6 +11,7 @@ import { cloneDeep } from 'lodash'
 import socketService from 'src/services/socket/socket.service'
 import { SocketContext } from 'src/context/socket.context'
 
+
 interface PostListProps {
   allPosts: any[]
   isLoading: boolean
@@ -30,7 +31,13 @@ const PostList = ({ allPosts, isLoading }: PostListProps) => {
     const isPublic = post?.privacy === 'public'
     return isPrivate || isPublic
   }
-
+  const socketIOPost = (statePosts: any, setStatePost: any) => {
+    statePosts = cloneDeep(statePosts)
+    socketService?.socket?.on('add post', (post: any) => {
+      statePosts = [post, ...statePosts]
+      setStatePost(statePosts)
+    })
+  }
   useEffect(() => setPostList(allPosts), [allPosts])
 
   const socketIOPost = (statePosts: any, setStatePost: any) => {
@@ -47,8 +54,6 @@ const PostList = ({ allPosts, isLoading }: PostListProps) => {
       console.log(post)
     })
   }, [socket])
-
-  console.log(socket)
 
   const getAllPost = async () => {
     try {

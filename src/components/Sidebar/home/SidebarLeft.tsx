@@ -38,8 +38,8 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
     Swal.fire({
       title: 'Bạn có chắc là muốn đăng xuất?',
       showCancelButton: true,
-      confirmButtonText: 'Save',
-      denyButtonText: `Don't save`
+      confirmButtonText: 'Đăng Xuất',
+      denyButtonText: `Không!`
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(clearUser())
