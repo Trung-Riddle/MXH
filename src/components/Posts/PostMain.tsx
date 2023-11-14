@@ -87,17 +87,17 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
     if (post.post && !post.bgColor && !post.imagePost && !post.videoPost) {
       delete post.imagePost
       delete post.videoPost
-      await postService.createPost(post)
+      await postService.createPost({ ...post })
     } else if (post?.post && post.bgColor) {
       delete post.imagePost
       delete post.videoPost
-      await postService.createPost(post)
+      await postService.createPost({ ...post })
     } else if (post?.post && post?.imagePost && !post.bgColor) {
       delete post.videoPost
-      await postService.createPostWithImage(post)
+      await postService.createPostWithImage({ ...post })
     } else if (post?.post && post.imagePost && !post.bgColor && !post.videoPost) {
       delete post.imagePost
-      await postService.createPostWithImage(post)
+      await postService.createPostWithImage({ ...post })
     }
 
     dispatch(toggleOpenMainModal())

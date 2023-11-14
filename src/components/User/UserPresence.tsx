@@ -6,7 +6,7 @@ const avatarSizes: Record<AvatarSizes, string> = {
   md: '',
   lg: 'w-16 h-16',
   sm: 'w-12 h-12',
-  xl: 'w-36 h-36 after:-m-[4px]'
+  xl: 'md:w-36 md:h-36 after:-m-[4px] w-24 h-24'
 }
 
 const borderSizes: Record<AvatarSizes, string> = {

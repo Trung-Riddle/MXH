@@ -4,13 +4,17 @@ import { Button } from 'src/components'
 import User from 'src/components/User/User'
 import { AddSvg } from 'src/components/icons'
 import AppSettings from 'src/configs/appsettings'
+import { useAppSelector } from 'src/hooks/useRedux'
+import { RootState } from 'src/store'
 
-const IsActive = 'text-dark dark:text-light text-sm font-medium'
-const NotActive = 'text-dark dark:text-light text-sm font-medium'
+const IsActive = 'text-dark text-xs font-semibold whitespace-nowrap dark:text-light sm:text-sm'
+const NotActive = 'text-dark text-xs font-semibold whitespace-nowrap dark:text-light sm:text-sm'
 
 const Profile = () => {
+  const profile = useAppSelector((state: RootState) => state.user.profile)
+
   return (
-    <div className='w-full h-full text-dark dark:text-light bg-lightMain dark:bg-darkMain'>
+    <div className='w-full h-full text-dark dark:text-light bg-lightMain dark:bg-darkMain mb-8'>
       <div className='-mt-[72px] h-96 relative'>
         <img
           src='https://images.unsplash.com/photo-1694544484120-ec99280802a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80'
@@ -19,18 +23,18 @@ const Profile = () => {
         />
       </div>
 
-      <div className='bg-light shadow-shadowMain dark:bg-dark -mt-24 py-4 rounded-md mb-5'>
+      <div className='bg-light shadow-shadowMain dark:bg-dark -mt-16 px-3 sm:-mt-24 py-4 rounded-md mb-5'>
         <div className='z-40 relative max-w-7xl mx-auto flex items-center'>
           <User
             size='xl'
             alt=''
-            source='https://images.unsplash.com/photo-1695200194179-532a62a35b4a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1887&q=80'
-            username='Hồ Minh Thành'
-            styleText='text-white font-semibold text-xl'
-            styleContent='gap-10 ml-4'
+            source={profile.profilePicture}
+            username={profile.username}
+            styleText='text-white font-semibold text-lg sm:text-xl'
+            styleContent='gap-1 sm:gap-10 sm:ml-4'
           >
             <div className='flex items-center text-dark'>
-              <nav className='flex items-center gap-6'>
+              <nav className='flex items-center gap-2 sm:gap-6 mt-8 -ml-2 sm:ml-0 sm:mt-0'>
                 {AppSettings.RoutesProfile.map((route, index) => (
                   <NavLink
                     key={index}
@@ -44,7 +48,7 @@ const Profile = () => {
             </div>
           </User>
 
-          <div className='flex items-end flex-1 flex-col gap-10 relative z-50'>
+          <div className='sm:flex items-end flex-1 flex-col gap-10 relative z-50 hidden'>
             <div className='flex items-center gap-6'>
               <div className='flex items-center gap-6'>
                 <div className='flex items-center gap-3'>
@@ -73,7 +77,7 @@ const Profile = () => {
         </div>
       </div>
 
-      <div className='max-w-7xl mx-auto mb-6'>
+      <div className='max-w-7xl mx-auto mb-6 px-3'>
         <Outlet />
       </div>
     </div>

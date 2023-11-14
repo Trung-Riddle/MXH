@@ -2,11 +2,16 @@ import { Avatar } from 'src/components'
 import { CommentSvg, LikeSvg, ShareSvg } from 'src/components/icons/posts'
 import Utils from 'src/services/utilities/utils'
 import { AnimatePresence, motion, useScroll } from 'framer-motion'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import MoreSvg from 'src/assets/icons/components/MoreSvg'
 import { useCollapse } from 'react-collapsed'
 import { Link } from 'react-router-dom'
 import SendSvg from 'src/assets/icons/components/messages/SendSvg'
+import postService from 'src/services/api/post/post.service'
+import { RootState } from 'src/store'
+import { useAppSelector } from 'src/hooks/useRedux'
+import socketService from 'src/services/socket/socket.service'
+import useEffectOnce from 'src/hooks/useEffectOnce'
 
 interface PostProps {
   profilePicture: string
@@ -20,6 +25,8 @@ interface PostProps {
 
   imgVersion?: string
   imgId?: string
+  postId?: string
+  userId?: string
 }
 
 const Post = ({
@@ -30,6 +37,8 @@ const Post = ({
   bgColor,
   gifUrl,
   post,
+  postId,
+  userId,
   videoPost,
   imgId,
   imgVersion
@@ -37,14 +46,77 @@ const Post = ({
   const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
   const [postSeeMore, setPostSeeMore] = useState(false)
   const postRef = useRef<HTMLDivElement | null>(null)
+  const profile = useAppSelector((state: RootState) => state.user.profile)
+  const [comment, setComment] = useState('')
+  const [reaction, setReaction] = useState({
+    count: 0,
+    reactions: []
+  })
+
+  const [count, setCount] = useState(0)
+
+  const getAllReactionOfPost = async (postId: string) => {
+    try {
+      const result = await postService.getAllReaction(postId)
+      setReaction({ count: result.data.count, reactions: result.data.reactions })
+      setCount(result.data.count)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getAllCommentOfPost = async (postId: string) => {
+    try {
+      const result = await postService.getAllCommentOfPost(postId)
+      // console.log(result)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffectOnce(() => {
+    getAllReactionOfPost(postId as string)
+    getAllCommentOfPost(postId as string)
+  })
+
+  const handleReactionPost = async () => {
+    setCount((v) => v + 1)
+
+    await postService.addReactionToPost({
+      userTo: userId,
+      postId,
+      type: 'like',
+      previousReaction: '',
+      postReactions: { like: 1, love: 0, happy: 0, sad: 0, wow: 0, angry: 0 },
+      profilePicture: profile.profilePicture
+    })
+  }
+
+  const handleCommentPost = async () => {
+    if (comment === '') return
+
+    try {
+      const result = await postService.addCommentToPost({
+        userTo: userId,
+        postId: postId,
+        comment: comment,
+        profilePicture: profile.profilePicture
+      })
+      console.log(result)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   let imageUrl: string = ''
   let content = <div>{post}</div>
 
   if (bgColor !== '') {
     content = (
-      <div className={`rounded-xl md:rounded-md overflow-hidden h-[350px] flex items-center justify-center ${bgColor}`}>
-        <p className='font-semibold text-xl text-light'>{post}</p>
+      <div
+        className={`rounded-xl md:rounded-md overflow-hidden h-[200px] sm:h-[350px] flex items-center justify-center ${bgColor}`}
+      >
+        <p className='font-semibold text-base sm:text-xl text-center text-light'>{post}</p>
       </div>
     )
   }
@@ -54,7 +126,7 @@ const Post = ({
     content = (
       <>
         <div className='group/text'>
-          <p className={`text-sm ${postSeeMore ? '' : 'line-clamp-3'}`}>{post}</p>
+          <p className={`text-xs font-medium sm:text-sm ${postSeeMore ? '' : 'line-clamp-3'}`}>{post}</p>
           {post!.length > 200 && (
             <motion.button
               onClick={() => setPostSeeMore((v) => !v)}
@@ -68,7 +140,7 @@ const Post = ({
         </div>
 
         <div className='rounded-xl md:rounded-md overflow-hidden'>
-          <img src={imageUrl} className='w-full h-[250px] md:h-auto object-contain' alt='' />
+          <img src={imageUrl} className='w-full h-auto object-contain' alt='' />
         </div>
       </>
     )
@@ -77,7 +149,7 @@ const Post = ({
   return (
     <div
       ref={postRef}
-      className='bg-light shadow-shadowMain w-full dark:bg-dark rounded-md px-3 py-4 mb-6 last:mb-0 relative overflow-hidden'
+      className='bg-light shadow-shadowMain w-full dark:bg-dark rounded-md px-3 py-4 mb-3 sm:mb-6 last:mb-0 relative overflow-hidden'
     >
       <div className='flex flex-col gap-2 md:gap-4'>
         <div className='flex items-center justify-between'>
@@ -90,9 +162,11 @@ const Post = ({
         {content}
         <div className='flex items-center md:justify-between select-none'>
           <div className='flex flex-row gap-2 mr-4'>
-            <LikeSvg className='md:w-8 md:h-8 w-6 h-6' />
+            <button onClick={handleReactionPost}>
+              <LikeSvg username={profile.username} reactions={reaction.reactions} className='md:w-8 md:h-8 w-6 h-6' />
+            </button>
             <span className='flex items-center gap-2 text-xs md:text-sm'>
-              280.4k
+              {count}
               <span className='hidden md:block'>like</span>
             </span>
           </div>
@@ -310,8 +384,15 @@ const Post = ({
             />
 
             <div className='flex items-center bg-slate-400/10 rounded-2xl py-1.5 px-3 w-full'>
-              <input type='text' className='outline-none flex-1 bg-transparent' placeholder='Write comment...' />
-              <SendSvg width='20' height='20' />
+              <input
+                onChange={(e) => setComment(e.target.value)}
+                type='text'
+                className='outline-none flex-1 bg-transparent'
+                placeholder='Write comment...'
+              />
+              <button onClick={handleCommentPost} className='outline-none'>
+                <SendSvg width='20' height='20' />
+              </button>
             </div>
           </motion.div>
         </AnimatePresence>
