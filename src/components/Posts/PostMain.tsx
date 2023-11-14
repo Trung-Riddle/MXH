@@ -33,7 +33,6 @@ import { Button, User } from '..'
 import Form from './Form/Form'
 import Options from './Options/Options'
 import postService from 'src/services/api/post/post.service'
-import { getAllPostThunk } from 'src/store/api/posts'
 
 // # mock user data
 
@@ -103,7 +102,6 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
     dispatch(toggleOpenMainModal())
     dispatch(resetPost())
     setLoading(false)
-    dispatch(getAllPostThunk())
   }
 
   if (mainModalIsOpen) {

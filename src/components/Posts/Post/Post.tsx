@@ -12,6 +12,8 @@ import { RootState } from 'src/store'
 import { useAppSelector } from 'src/hooks/useRedux'
 import socketService from 'src/services/socket/socket.service'
 import useEffectOnce from 'src/hooks/useEffectOnce'
+import clsx from 'clsx'
+import { cloneDeep } from 'lodash'
 
 interface PostProps {
   profilePicture: string
@@ -52,8 +54,8 @@ const Post = ({
     count: 0,
     reactions: []
   })
-
   const [count, setCount] = useState(0)
+  const [listComment, setListComment] = useState<any[]>([])
 
   const getAllReactionOfPost = async (postId: string) => {
     try {
@@ -68,16 +70,28 @@ const Post = ({
   const getAllCommentOfPost = async (postId: string) => {
     try {
       const result = await postService.getAllCommentOfPost(postId)
-      // console.log(result)
+      setListComment(result.data.comments)
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const socketIOComment = (stateComments: any, setStateComments: any) => {
+    stateComments = cloneDeep(stateComments)
+    socketService.socket?.on('add comment', (comment: any) => {
+      stateComments = [...stateComments, comment]
+      setStateComments(stateComments)
+    })
   }
 
   useEffectOnce(() => {
     getAllReactionOfPost(postId as string)
     getAllCommentOfPost(postId as string)
   })
+
+  useEffect(() => {
+    socketIOComment(listComment, setListComment)
+  }, [listComment])
 
   const handleReactionPost = async () => {
     setCount((v) => v + 1)
@@ -95,17 +109,13 @@ const Post = ({
   const handleCommentPost = async () => {
     if (comment === '') return
 
-    try {
-      const result = await postService.addCommentToPost({
-        userTo: userId,
-        postId: postId,
-        comment: comment,
-        profilePicture: profile.profilePicture
-      })
-      console.log(result)
-    } catch (error) {
-      console.log(error)
-    }
+    await postService.addCommentToPost({
+      userTo: userId,
+      postId: postId,
+      comment: comment,
+      profilePicture: profile.profilePicture
+    })
+    setComment('')
   }
 
   let imageUrl: string = ''
@@ -184,188 +194,39 @@ const Post = ({
       </div>
 
       <div {...getCollapseProps()} className='relative'>
-        <div className='h-[400px] overflow-y-scroll mb-12'>
-          <Link to='' className='flex flex-col mt-4'>
-            <div className='flex gap-2 items-start'>
-              <img
-                src='https://scontent.fsgn16-1.fna.fbcdn.net/v/t39.30808-1/355326753_982786799627215_3244822015486104293_n.jpg?stp=cp6_dst-jpg_p48x48&_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=sR5PjEfWfvUAX91cxmC&_nc_ht=scontent.fsgn16-1.fna&oh=00_AfDOh8DDOD5li46YiWza_0vWAtCy_7w3xS06JXBvHIe_cg&oe=654FFEE5'
-                alt=''
-                className='rounded-full object-cover w-8 h-8'
-              />
+        {listComment.length > 0 && (
+          <div className='h-auto max-h-[400px] overflow-y-scroll mb-12'>
+            {listComment.map((comment) => (
+              <Link
+                key={comment._id + Math.random()}
+                to=''
+                className={clsx(
+                  'flex flex-col mt-4',
+                  profile.username === comment.username ? 'items-end' : 'items-start'
+                )}
+              >
+                <div className='flex gap-2 items-start'>
+                  <img src={comment.profilePicture} alt='' className='rounded-full object-cover w-8 h-8' />
 
-              <div className='flex flex-col'>
-                <div className='flex flex-col bg-slate-300/25 rounded-2xl py-2 px-3'>
-                  <span className='text-xs font-semibold'>Hồ Minh Thành</span>
-                  <span className='text-sm leading-4 font-normal'>Hello</span>
+                  <div className='flex flex-col'>
+                    <div className='flex flex-col bg-slate-300/25 rounded-2xl py-2 px-3'>
+                      <span className='text-xs font-semibold'>{comment.username}</span>
+                      <span className='text-sm leading-4 font-normal'>{comment.comment}</span>
+                    </div>
+                    <div className='flex items-center gap-4 ml-2 mt-1'>
+                      <span className='text-xs font-semibold'>Like</span>
+                      <span className='text-xs font-semibold'>Respone</span>
+                    </div>
+                  </div>
                 </div>
-                <div className='flex items-center gap-4 ml-2 mt-1'>
-                  <span className='text-xs font-semibold'>Like</span>
-                  <span className='text-xs font-semibold'>Respone</span>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to='' className='flex flex-col mt-4'>
-            <div className='flex gap-2 items-start'>
-              <img
-                src='https://scontent.fsgn16-1.fna.fbcdn.net/v/t39.30808-1/355326753_982786799627215_3244822015486104293_n.jpg?stp=cp6_dst-jpg_p48x48&_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=sR5PjEfWfvUAX91cxmC&_nc_ht=scontent.fsgn16-1.fna&oh=00_AfDOh8DDOD5li46YiWza_0vWAtCy_7w3xS06JXBvHIe_cg&oe=654FFEE5'
-                alt=''
-                className='rounded-full object-cover w-8 h-8'
-              />
+              </Link>
+            ))}
+          </div>
+        )}
 
-              <div className='flex flex-col'>
-                <div className='flex flex-col bg-slate-300/25 rounded-2xl py-2 px-3'>
-                  <span className='text-xs font-semibold'>Hồ Minh Thành</span>
-                  <span className='text-sm leading-4 font-normal'>Hello</span>
-                </div>
-                <div className='flex items-center gap-4 ml-2 mt-1'>
-                  <span className='text-xs font-semibold'>Like</span>
-                  <span className='text-xs font-semibold'>Respone</span>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to='' className='flex flex-col mt-4'>
-            <div className='flex gap-2 items-start'>
-              <img
-                src='https://scontent.fsgn16-1.fna.fbcdn.net/v/t39.30808-1/355326753_982786799627215_3244822015486104293_n.jpg?stp=cp6_dst-jpg_p48x48&_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=sR5PjEfWfvUAX91cxmC&_nc_ht=scontent.fsgn16-1.fna&oh=00_AfDOh8DDOD5li46YiWza_0vWAtCy_7w3xS06JXBvHIe_cg&oe=654FFEE5'
-                alt=''
-                className='rounded-full object-cover w-8 h-8'
-              />
-
-              <div className='flex flex-col'>
-                <div className='flex flex-col bg-slate-300/25 rounded-2xl py-2 px-3'>
-                  <span className='text-xs font-semibold'>Hồ Minh Thành</span>
-                  <span className='text-sm leading-4 font-normal'>Hello</span>
-                </div>
-                <div className='flex items-center gap-4 ml-2 mt-1'>
-                  <span className='text-xs font-semibold'>Like</span>
-                  <span className='text-xs font-semibold'>Respone</span>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to='' className='flex flex-col mt-4'>
-            <div className='flex gap-2 items-start'>
-              <img
-                src='https://scontent.fsgn16-1.fna.fbcdn.net/v/t39.30808-1/355326753_982786799627215_3244822015486104293_n.jpg?stp=cp6_dst-jpg_p48x48&_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=sR5PjEfWfvUAX91cxmC&_nc_ht=scontent.fsgn16-1.fna&oh=00_AfDOh8DDOD5li46YiWza_0vWAtCy_7w3xS06JXBvHIe_cg&oe=654FFEE5'
-                alt=''
-                className='rounded-full object-cover w-8 h-8'
-              />
-
-              <div className='flex flex-col'>
-                <div className='flex flex-col bg-slate-300/25 rounded-2xl py-2 px-3'>
-                  <span className='text-xs font-semibold'>Hồ Minh Thành</span>
-                  <span className='text-sm leading-4 font-normal'>Hello</span>
-                </div>
-                <div className='flex items-center gap-4 ml-2 mt-1'>
-                  <span className='text-xs font-semibold'>Like</span>
-                  <span className='text-xs font-semibold'>Respone</span>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to='' className='flex flex-col mt-4'>
-            <div className='flex gap-2 items-start'>
-              <img
-                src='https://scontent.fsgn16-1.fna.fbcdn.net/v/t39.30808-1/355326753_982786799627215_3244822015486104293_n.jpg?stp=cp6_dst-jpg_p48x48&_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=sR5PjEfWfvUAX91cxmC&_nc_ht=scontent.fsgn16-1.fna&oh=00_AfDOh8DDOD5li46YiWza_0vWAtCy_7w3xS06JXBvHIe_cg&oe=654FFEE5'
-                alt=''
-                className='rounded-full object-cover w-8 h-8'
-              />
-
-              <div className='flex flex-col'>
-                <div className='flex flex-col bg-slate-300/25 rounded-2xl py-2 px-3'>
-                  <span className='text-xs font-semibold'>Hồ Minh Thành</span>
-                  <span className='text-sm leading-4 font-normal'>Hello</span>
-                </div>
-                <div className='flex items-center gap-4 ml-2 mt-1'>
-                  <span className='text-xs font-semibold'>Like</span>
-                  <span className='text-xs font-semibold'>Respone</span>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to='' className='flex flex-col mt-4'>
-            <div className='flex gap-2 items-start'>
-              <img
-                src='https://scontent.fsgn16-1.fna.fbcdn.net/v/t39.30808-1/355326753_982786799627215_3244822015486104293_n.jpg?stp=cp6_dst-jpg_p48x48&_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=sR5PjEfWfvUAX91cxmC&_nc_ht=scontent.fsgn16-1.fna&oh=00_AfDOh8DDOD5li46YiWza_0vWAtCy_7w3xS06JXBvHIe_cg&oe=654FFEE5'
-                alt=''
-                className='rounded-full object-cover w-8 h-8'
-              />
-
-              <div className='flex flex-col'>
-                <div className='flex flex-col bg-slate-300/25 rounded-2xl py-2 px-3'>
-                  <span className='text-xs font-semibold'>Hồ Minh Thành</span>
-                  <span className='text-sm leading-4 font-normal'>Hello</span>
-                </div>
-                <div className='flex items-center gap-4 ml-2 mt-1'>
-                  <span className='text-xs font-semibold'>Like</span>
-                  <span className='text-xs font-semibold'>Respone</span>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to='' className='flex flex-col mt-4'>
-            <div className='flex gap-2 items-start'>
-              <img
-                src='https://scontent.fsgn16-1.fna.fbcdn.net/v/t39.30808-1/355326753_982786799627215_3244822015486104293_n.jpg?stp=cp6_dst-jpg_p48x48&_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=sR5PjEfWfvUAX91cxmC&_nc_ht=scontent.fsgn16-1.fna&oh=00_AfDOh8DDOD5li46YiWza_0vWAtCy_7w3xS06JXBvHIe_cg&oe=654FFEE5'
-                alt=''
-                className='rounded-full object-cover w-8 h-8'
-              />
-
-              <div className='flex flex-col'>
-                <div className='flex flex-col bg-slate-300/25 rounded-2xl py-2 px-3'>
-                  <span className='text-xs font-semibold'>Hồ Minh Thành</span>
-                  <span className='text-sm leading-4 font-normal'>Hello</span>
-                </div>
-                <div className='flex items-center gap-4 ml-2 mt-1'>
-                  <span className='text-xs font-semibold'>Like</span>
-                  <span className='text-xs font-semibold'>Respone</span>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to='' className='flex flex-col mt-4'>
-            <div className='flex gap-2 items-start'>
-              <img
-                src='https://scontent.fsgn16-1.fna.fbcdn.net/v/t39.30808-1/355326753_982786799627215_3244822015486104293_n.jpg?stp=cp6_dst-jpg_p48x48&_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=sR5PjEfWfvUAX91cxmC&_nc_ht=scontent.fsgn16-1.fna&oh=00_AfDOh8DDOD5li46YiWza_0vWAtCy_7w3xS06JXBvHIe_cg&oe=654FFEE5'
-                alt=''
-                className='rounded-full object-cover w-8 h-8'
-              />
-
-              <div className='flex flex-col'>
-                <div className='flex flex-col bg-slate-300/25 rounded-2xl py-2 px-3'>
-                  <span className='text-xs font-semibold'>Hồ Minh Thành</span>
-                  <span className='text-sm leading-4 font-normal'>Hello</span>
-                </div>
-                <div className='flex items-center gap-4 ml-2 mt-1'>
-                  <span className='text-xs font-semibold'>Like</span>
-                  <span className='text-xs font-semibold'>Respone</span>
-                </div>
-              </div>
-            </div>
-          </Link>
-          <Link to='' className='flex flex-col mt-4'>
-            <div className='flex gap-2 items-start'>
-              <img
-                src='https://scontent.fsgn16-1.fna.fbcdn.net/v/t39.30808-1/355326753_982786799627215_3244822015486104293_n.jpg?stp=cp6_dst-jpg_p48x48&_nc_cat=110&ccb=1-7&_nc_sid=5f2048&_nc_ohc=sR5PjEfWfvUAX91cxmC&_nc_ht=scontent.fsgn16-1.fna&oh=00_AfDOh8DDOD5li46YiWza_0vWAtCy_7w3xS06JXBvHIe_cg&oe=654FFEE5'
-                alt=''
-                className='rounded-full object-cover w-8 h-8'
-              />
-
-              <div className='flex flex-col'>
-                <div className='flex flex-col bg-slate-300/25 rounded-2xl py-2 px-3'>
-                  <span className='text-xs font-semibold'>Hồ Minh Thành</span>
-                  <span className='text-sm leading-4 font-normal'>Hello</span>
-                </div>
-                <div className='flex items-center gap-4 ml-2 mt-1'>
-                  <span className='text-xs font-semibold'>Like</span>
-                  <span className='text-xs font-semibold'>Respone</span>
-                </div>
-              </div>
-            </div>
-          </Link>
-        </div>
+        {listComment.length === 0 && (
+          <div className='mb-12 mt-2 text-center py-2 border-t border-slate-400/25 font-semibold'>No comments</div>
+        )}
       </div>
 
       {isExpanded && (
@@ -389,6 +250,8 @@ const Post = ({
                 type='text'
                 className='outline-none flex-1 bg-transparent'
                 placeholder='Write comment...'
+                value={comment}
+                id={'comment' + postId}
               />
               <button onClick={handleCommentPost} className='outline-none'>
                 <SendSvg width='20' height='20' />

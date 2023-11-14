@@ -5,30 +5,33 @@ import PostMain from './components/Posts/PostMain'
 import { ToastContainer } from 'react-toastify'
 import ModalExplore from './pages/App/Explore/ModalExplore'
 import ModalUpload from './pages/App/Explore/ModalUpload'
-import { SocketProvider } from './context/SocketProvider'
+import { useEffect } from 'react'
+import socketService from './services/socket/socket.service'
 
 export default function App() {
+  useEffect(() => {
+    socketService.setupSocketConnection()
+  }, [])
+
   return (
     <AnimatePresence>
       <BrowserRouter>
-        <SocketProvider>
-          <AppRoutes />
-          <PostMain />
-          <ModalExplore />
-          <ModalUpload />
-          <ToastContainer
-            position='top-center'
-            autoClose={4000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme='light'
-          />
-        </SocketProvider>
+        <AppRoutes />
+        <PostMain />
+        <ModalExplore />
+        <ModalUpload />
+        <ToastContainer
+          position='top-center'
+          autoClose={4000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme='light'
+        />
       </BrowserRouter>
     </AnimatePresence>
   )

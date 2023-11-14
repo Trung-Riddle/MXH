@@ -5,25 +5,9 @@ import { toggleOpenMainModal } from 'src/store/slices/modal/modal.slice'
 import FangHeadSvg from 'src/assets/icons/components/navigations/FangHeadSvg'
 import ToggleTheme from '../Toggle/ToggleTheme'
 import { Link } from 'react-router-dom'
-import { useEffect } from 'react'
-import notifyService from 'src/services/api/notifications/notify.service'
 
 export default function Header() {
   const dispatch = useAppDispatch()
-
-  const getNotifications = async () => {
-    try {
-      const result = await notifyService.getAllNotifications()
-      console.log(result)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  useEffect(() => {
-    getNotifications()
-  }, [])
-
   return (
     <header className='py-2 md:shadow-md w-full flex items-center md:px-6 px-3 bg-light dark:bg-dark flex-shrink-0 z-10 sticky h-header top-0'>
       <span className='md:hidden'>
@@ -55,11 +39,10 @@ export default function Header() {
             <HeartSvg width='20' height='20' />
           </Button>
         </li>
-        <li className='relative'>
+        <li className=''>
           <Button className='p-2'>
             <NotifySvg width='20' height='20' />
           </Button>
-
           <div className='absolute top-0 right-0 w-[250px] shadow bg-light dark:bg-dark'></div>
         </li>
         <li>
