@@ -55,12 +55,6 @@ const Post = ({
 
   const [count, setCount] = useState(0)
 
-  useEffect(() => {
-    socketService.socket?.on('add post', (data: any) => {
-      console.log(data)
-    })
-  }, [])
-
   const getAllReactionOfPost = async (postId: string) => {
     try {
       const result = await postService.getAllReaction(postId)

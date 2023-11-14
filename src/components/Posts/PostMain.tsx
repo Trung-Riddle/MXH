@@ -34,7 +34,6 @@ import Form from './Form/Form'
 import Options from './Options/Options'
 import postService from 'src/services/api/post/post.service'
 import { getAllPostThunk } from 'src/store/api/posts'
-import socketService from 'src/services/socket/socket.service'
 
 // # mock user data
 

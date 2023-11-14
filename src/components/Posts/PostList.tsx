@@ -4,9 +4,12 @@ import ListPostSkeleton from './skeletons/ListPostSkeleton'
 import Post from './Post/Post'
 import postService from 'src/services/api/post/post.service'
 import { toast } from 'react-toastify'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import InfiniteScroll from './InfiniteScroll'
 import { AnimatePresence, motion } from 'framer-motion'
+import { cloneDeep } from 'lodash'
+import socketService from 'src/services/socket/socket.service'
+import { SocketContext } from 'src/context/socket.context'
 
 interface PostListProps {
   allPosts: any[]
@@ -19,6 +22,8 @@ const PostList = ({ allPosts, isLoading }: PostListProps) => {
   const [hasMore, setHasMore] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [pageSize, setPageSize] = useState(0)
+  const [testState, setTestState] = useState<any>()
+  const { socket } = useContext(SocketContext)
 
   const handleCheckPrivacy = (profile: any, post: any) => {
     const isPrivate = post?.privacy === 'private' && post?.userId === profile?._id
@@ -27,6 +32,23 @@ const PostList = ({ allPosts, isLoading }: PostListProps) => {
   }
 
   useEffect(() => setPostList(allPosts), [allPosts])
+
+  const socketIOPost = (statePosts: any, setStatePost: any) => {
+    statePosts = cloneDeep(statePosts)
+    socketService?.socket?.on('add post', (post: any) => {
+      statePosts = [post, ...statePosts]
+      setStatePost(statePosts)
+    })
+  }
+
+  useEffect(() => {
+    socket?.on('add post', (post: any) => {
+      // setTestState(post)
+      console.log(post)
+    })
+  }, [socket])
+
+  console.log(socket)
 
   const getAllPost = async () => {
     try {
