@@ -18,7 +18,7 @@ export const store = configureStore({
     allStory: allStorySlice,
     explore: exploreSlice,
     chat: chatSlice,
-    allExplore: allExploreSlice
+    // allExplore: allExploreSlice
   }
 })
 

@@ -7,6 +7,8 @@ import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import InfiniteScroll from './InfiniteScroll'
 import { AnimatePresence, motion } from 'framer-motion'
+import { cloneDeep } from 'lodash'
+import socketService from 'src/services/socket/socket.service'
 
 interface PostListProps {
   allPosts: any[]
@@ -25,9 +27,15 @@ const PostList = ({ allPosts, isLoading }: PostListProps) => {
     const isPublic = post?.privacy === 'public'
     return isPrivate || isPublic
   }
-
+  const socketIOPost = (statePosts: any, setStatePost: any) => {
+    statePosts = cloneDeep(statePosts)
+    socketService?.socket?.on('add post', (post: any) => {
+      statePosts = [post, ...statePosts]
+      setStatePost(statePosts)
+    })
+  }
   useEffect(() => setPostList(allPosts), [allPosts])
-
+  useEffect(() => socketIOPost(allPosts, setPostList), [allPosts])
   const getAllPost = async () => {
     try {
       const res = await postService.getAllPost(currentPage)

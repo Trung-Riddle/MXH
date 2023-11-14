@@ -8,6 +8,8 @@ import PostList from 'src/components/Posts/PostList'
 import StoryList from 'src/components/Stories/StoryList'
 import { useEffect, useMemo, useState } from 'react'
 import { RootState } from 'src/store'
+import { io } from 'socket.io-client'
+
 // import { toast } from 'react-toastify'
 // import postService from 'src/services/api/post/post.service'
 // import useInfiniteScroll from 'src/hooks/useInfiniteScroll'
@@ -20,66 +22,31 @@ const Feeds = () => {
 
   // const [postList, setPostList] = useState<any[]>([])
   // const [totalPostCount, setTotalPostCount] = useState(0)
-
   const profile = useAppSelector((state: RootState) => state.user.profile)
   const dispatch = useAppDispatch()
   const { isLoading, posts } = useAppSelector((state: RootState) => state.allPost)
   const [sortType, setSortType] = useState<string>(localStorage.getItem('sortType')! || 'none')
 
-  const sortedPosts = useMemo(() => {
-    if (sortType === 'time') {
-      return [...posts].sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      })
-    }
-    if (sortType === 'popular') {
-      return [...posts].filter((postItem) => postItem.userId === profile._id)
-    }
-    return posts
-  }, [posts, sortType, profile._id])
-
+  // const sortedPosts = useMemo(() => {
+  //   if (sortType === 'time') {
+  //     return [...posts].sort((a, b) => {
+  //       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  //     })
+  //   }
+  //   if (sortType === 'popular') {
+  //     return [...posts].filter((postItem) => postItem.userId === profile._id)
+  //   }
+  //   return posts
+  // }, [posts, sortType, profile._id])
+  
   useEffect(() => {
     localStorage.setItem('sortType', sortType)
   }, [sortType])
-
+  
   useEffectOnce(() => {
     dispatch(getAllPostThunk())
   })
-  // const addPostRef = useRef<any[]>([])
-  // const bodyRef = useRef<any | null>(null)
-  // const bottomLineRef = useRef<any | null>(null)
-
-  // const getAllPost = async () => {
-  //   try {
-  //     const res = await postService.getAllPostImage(currentPage)
-
-  //     if (res.data.posts.length > 0) {
-  //       addPostRef.current = [...res.data.posts, ...postList]
-  //       const allPostById = uniqBy(addPostRef.current, '_id')
-  //       const orderByPost = orderBy(allPostById, ['createdAt'], ['desc'])
-  //       setPostList(orderByPost)
-  //     }
-  //   } catch (error: any) {
-  //     toast.error(error.response.data.message)
-  //   }
-  // }
-
-  // const fetchPostData = async () => {
-  //   let pageNumber = currentPage
-
-  //   if (currentPage <= Math.round(totalPostCount / PAGE_SIZE)) {
-  //     pageNumber += 1
-  //     setCurrentPage(pageNumber)
-  //     await getAllPost()
-  //   }
-  // }
-
-  // const handleClickPostLatest = () => {
-  //   postList.filter((item) => item.createdAt)
-  // }
-
-  // useInfiniteScroll(bodyRef, bottomLineRef, fetchPostData)
-
+  
   return (
     <div className='w-full md:max-w-[60%] flex h-full flex-col flex-shrink p-3'>
       <div className='md:flex hidden items-center justify-between select-none mb-3'>
@@ -117,7 +84,7 @@ const Feeds = () => {
           </div>
         </div>
 
-        <PostList allPosts={sortedPosts} isLoading={isLoading} />
+        <PostList allPosts={posts} isLoading={isLoading} />
 
         {/* <div ref={bottomLineRef}></div> */}
       </div>
