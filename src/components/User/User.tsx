@@ -26,7 +26,7 @@ const User = ({
   ...props
 }: UserProps) => {
   return (
-    <div {...props} className={clsx('flex items-center gap-3 ', props.className)}>
+    <div {...props} className={clsx('flex items-center gap-2 sm:gap-3 ', props.className)}>
       <UserPresence alt={alt} presence={presence} source={source} size={size} />
 
       {/* User informations */}

@@ -13,7 +13,7 @@ import LayoutChildren from 'src/pages/Layouts/LayoutChildren'
 import { About, Friend, Resource, Post } from 'src/pages/App/Profile'
 
 // Pages child about
-import { ContactAndBasics, FamilyAndRelationships, Overview, WorkAndEducation } from 'src/pages/App/Profile/Abouts'
+import { FamilyAndRelationships, Overview, WorkAndEducation } from 'src/pages/App/Profile/Abouts'
 import { PhotoResource, VideoResource } from 'src/pages/App/Profile/Resources'
 import ProtectedRoutes from 'src/pages/ProtectedRoutes'
 import LayoutMobile from 'src/pages/Layouts/LayoutMobile'
@@ -102,10 +102,6 @@ export default function AppRoutes() {
                         {
                           path: 'about-family-and-relationships',
                           element: <FamilyAndRelationships />
-                        },
-                        {
-                          path: 'about-contact-and-basic-info',
-                          element: <ContactAndBasics />
                         }
                       ]
                     },

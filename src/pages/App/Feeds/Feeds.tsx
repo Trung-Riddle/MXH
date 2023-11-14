@@ -8,8 +8,6 @@ import PostList from 'src/components/Posts/PostList'
 import StoryList from 'src/components/Stories/StoryList'
 import { useEffect, useMemo, useState } from 'react'
 import { RootState } from 'src/store'
-import { io } from 'socket.io-client'
-
 // import { toast } from 'react-toastify'
 // import postService from 'src/services/api/post/post.service'
 // import useInfiniteScroll from 'src/hooks/useInfiniteScroll'
