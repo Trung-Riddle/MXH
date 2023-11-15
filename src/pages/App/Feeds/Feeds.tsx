@@ -2,30 +2,15 @@ import { Button } from 'src/components'
 import { Link } from 'react-router-dom'
 import WatchAllSvg from 'src/assets/icons/components/WatchAllSvg'
 import useEffectOnce from 'src/hooks/useEffectOnce'
-import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
+import { useAppDispatch } from 'src/hooks/useRedux'
 import { getAllPostThunk } from 'src/store/api/posts'
 import PostList from 'src/components/Posts/PostList'
 import StoryList from 'src/components/Stories/StoryList'
-import { useEffect, useMemo, useState } from 'react'
-import { RootState } from 'src/store'
+import { useEffect, useState } from 'react'
 
 const Feeds = () => {
-  const profile = useAppSelector((state: RootState) => state.user.profile)
   const dispatch = useAppDispatch()
-  const { isLoading, posts } = useAppSelector((state: RootState) => state.allPost)
   const [sortType, setSortType] = useState<string>(localStorage.getItem('sortType')! || 'none')
-
-  const sortedPosts = useMemo(() => {
-    if (sortType === 'time') {
-      return [...posts].sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      })
-    }
-    if (sortType === 'popular') {
-      return [...posts].filter((postItem) => postItem.userId === profile._id)
-    }
-    return posts
-  }, [posts, sortType, profile._id])
 
   useEffect(() => {
     localStorage.setItem('sortType', sortType)
@@ -72,7 +57,7 @@ const Feeds = () => {
           </div>
         </div>
 
-        <PostList allPosts={sortedPosts} isLoading={isLoading} />
+        <PostList sortType={sortType} />
       </div>
     </div>
   )

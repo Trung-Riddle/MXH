@@ -84,10 +84,10 @@ const Post = ({
     })
   }
 
-  useEffectOnce(() => {
+  useEffect(() => {
     getAllReactionOfPost(postId as string)
     getAllCommentOfPost(postId as string)
-  })
+  }, [postId])
 
   useEffect(() => {
     socketIOComment(listComment, setListComment)
