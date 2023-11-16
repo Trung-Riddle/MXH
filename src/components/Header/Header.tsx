@@ -5,9 +5,28 @@ import { toggleOpenMainModal } from 'src/store/slices/modal/modal.slice'
 import FangHeadSvg from 'src/assets/icons/components/navigations/FangHeadSvg'
 import ToggleTheme from '../Toggle/ToggleTheme'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import notifyService from 'src/services/api/notifications/notify.service'
 
 export default function Header() {
   const dispatch = useAppDispatch()
+  const [showNotify, setShowNotify] = useState(false)
+  const [listNotify, setListNotify] = useState<any[]>([])
+
+  const getAllNotify = async () => {
+    const result = await notifyService.getAllNotifications()
+    setListNotify(result.data.notifications)
+  }
+
+  useEffect(() => {
+    let mount = true
+    getAllNotify()
+
+    return () => {
+      mount = false
+    }
+  }, [])
+
   return (
     <header className='py-2 md:shadow-md w-full flex items-center md:px-6 px-3 bg-light dark:bg-dark flex-shrink-0 z-10 sticky h-header top-0'>
       <span className='md:hidden'>
@@ -39,11 +58,26 @@ export default function Header() {
             <HeartSvg width='20' height='20' />
           </Button>
         </li>
-        <li className=''>
-          <Button className='p-2'>
+        <li className='relative'>
+          <Button onClick={() => setShowNotify((n) => !n)} className='p-2'>
             <NotifySvg width='20' height='20' />
           </Button>
-          <div className='absolute top-0 right-0 w-[250px] shadow bg-light dark:bg-dark'></div>
+          {showNotify && (
+            <div className='absolute top-full right-0 w-[300px] base-hidden-scroll max-h-[300px] overflow-y-scroll shadow-shadowMain rounded-md bg-light dark:bg-dark flex flex-col p-2'>
+              <h3 className='font-bold text-lg'>Thông báo</h3>
+              {listNotify.length === 0 && <div>No Notifications</div>}
+              {listNotify.map((notify) => (
+                <div
+                  className='flex gap-2 hover:bg-slate-400/25 cursor-pointer transition-all ease-linear duration-150 rounded-md p-2'
+                  key={notify._id}
+                >
+                  <img className='w-14 h-14 rounded-full' src={notify.userFrom.profilePicture} alt='' />
+
+                  <p className='text-sm'>{notify.message}</p>
+                </div>
+              ))}
+            </div>
+          )}
         </li>
         <li>
           <Link to='/message'>

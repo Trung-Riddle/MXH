@@ -37,6 +37,11 @@ class PostService {
     return response
   }
 
+  async removeReactionOfPost(postId: string, previousReaction: string, postReactions: any) {
+    const response = await http.delete(`post/reaction/${postId}/${previousReaction}/${JSON.stringify(postReactions)}`)
+    return response
+  }
+
   async getAllCommentOfPost(postId: string) {
     const response = await http.get(`post/comments/${postId}`)
     return response
