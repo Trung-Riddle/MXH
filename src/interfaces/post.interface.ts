@@ -1,5 +1,5 @@
 export interface PostDocuments {
-  id?: string
+  _id?: string
   userId?: string
   username: string
   email: string
@@ -15,6 +15,7 @@ export interface PostDocuments {
   feelings?: string
   gifUrl?: string
   privacy?: string
+  imgVersion?: string
   reactions?: number
   createdAt?: Date
 }

@@ -2,17 +2,27 @@ import { motion } from 'framer-motion'
 import { FeelingList } from 'src/services/utilities/static.data'
 
 // Redux
-import { useAppDispatch } from 'src/hooks/useRedux'
+import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import { toggleOpenFeelingsModal } from 'src/store/slices/modal/modal.slice'
 import { changeFeelingPost } from 'src/store/slices/post/post.slice'
+import { useCallback } from 'react'
+import { updatePostEdit } from 'src/store/slices/post/postEdit.slice'
 
 const ModalFeeling = () => {
   const dispatch = useAppDispatch()
+  const editModalIsOpen = useAppSelector((state) => state.modal.editModalIsOpen)
 
-  const handleAddFeelings = (feeling: string) => {
-    dispatch(changeFeelingPost(feeling))
-    dispatch(toggleOpenFeelingsModal())
-  }
+  const handleAddFeelings = useCallback(
+    (feeling: string) => {
+      if (editModalIsOpen) {
+        dispatch(updatePostEdit({ feelings: feeling }))
+      } else {
+        dispatch(changeFeelingPost(feeling))
+      }
+      dispatch(toggleOpenFeelingsModal())
+    },
+    [dispatch, editModalIsOpen]
+  )
 
   return (
     <motion.div

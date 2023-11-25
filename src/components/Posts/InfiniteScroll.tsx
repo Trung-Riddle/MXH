@@ -8,6 +8,7 @@ interface InfiniteScrollProps {
   next: () => void
   currentPage: number
   pageSize: number
+  itemsLength: number
 }
 
 const InfiniteScroll = ({
@@ -17,7 +18,8 @@ const InfiniteScroll = ({
   endMessage,
   hasMore,
   next,
-  loader
+  loader,
+  itemsLength
 }: InfiniteScrollProps) => {
   const pageEndRef = useRef<HTMLDivElement | null>(null)
 
@@ -31,7 +33,9 @@ const InfiniteScroll = ({
           const isLastItem = itemCount === children ? 0 : React.Children.count(children)
           const isNinthOrEighthItem = itemCount - isLastItem <= -8
 
-          if (isLastItem || isNinthOrEighthItem) {
+          console.log(itemCount)
+
+          if ((isLastItem || isNinthOrEighthItem) && itemsLength >= 10) {
             next()
           }
         }
@@ -47,13 +51,13 @@ const InfiniteScroll = ({
         }
       }
     }
-  }, [hasMore, next, children, currentPage, pageSize])
+  }, [hasMore, next, children, currentPage, pageSize, itemsLength])
 
   return (
     <div>
       {children}
 
-      {hasMore ? <div ref={pageEndRef}>{loader}</div> : endMessage}
+      {hasMore && itemsLength >= 10 ? <div ref={pageEndRef}>{loader}</div> : endMessage}
     </div>
   )
 }

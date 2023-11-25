@@ -1,11 +1,13 @@
 import { updatePostItem } from 'src/store/slices/post/post.slice'
 import Swal from 'sweetalert2'
 import { Dispatch } from '@reduxjs/toolkit'
+import { updatePostEdit } from 'src/store/slices/post/postEdit.slice'
 
 interface AddFiletoRedux {
   file: File
   dispatch: Dispatch
   type: string
+  editModalIsOpen: boolean
 }
 
 export class ImageUtils {
@@ -49,16 +51,25 @@ export class ImageUtils {
       reader.readAsDataURL(file)
     })
   }
-  static async addFiletoRedux({ file, dispatch, type }: AddFiletoRedux) {
+  static async addFiletoRedux({ file, dispatch, type, editModalIsOpen }: AddFiletoRedux) {
     ImageUtils.checkFile(file, type)
 
     const base64 = await ImageUtils.readFileToBase64(file)
 
-    dispatch(
-      updatePostItem({
-        imagePost: type === 'image' ? base64 : '',
-        videoPost: type === 'video' ? base64 : ''
-      })
-    )
+    if (editModalIsOpen) {
+      dispatch(
+        updatePostEdit({
+          imagePost: type === 'image' ? base64 : '',
+          videoPost: type === 'video' ? base64 : ''
+        })
+      )
+    } else {
+      dispatch(
+        updatePostItem({
+          imagePost: type === 'image' ? base64 : '',
+          videoPost: type === 'video' ? base64 : ''
+        })
+      )
+    }
   }
 }

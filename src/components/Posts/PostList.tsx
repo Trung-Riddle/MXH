@@ -2,22 +2,34 @@ import { RootState } from 'src/store'
 import { useAppSelector } from 'src/hooks/useRedux'
 import ListPostSkeleton from './skeletons/ListPostSkeleton'
 import Post from './Post/Post'
+import { useCallback, useEffect, useState } from 'react'
+import { cloneDeep } from 'lodash'
+import socketService from 'src/services/socket/socket.service'
+import InfiniteScroll from './InfiniteScroll'
 import postService from 'src/services/api/post/post.service'
 import { toast } from 'react-toastify'
-import { useContext, useEffect, useState } from 'react'
-import InfiniteScroll from './InfiniteScroll'
 import { AnimatePresence, motion } from 'framer-motion'
 
 interface PostListProps {
-  allPosts: any[]
-  isLoading: boolean
+  sortType: string
+  allPosts?: any[]
 }
 
-const PostList = ({ allPosts, isLoading }: PostListProps) => {
+function sortList(list: any[], sortType: string) {
+  if (sortType === 'time') {
+    return [...list].sort((a, b) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    })
+  }
+  return list
+}
+
+const PostList = ({ sortType, allPosts }: PostListProps) => {
+  const { isLoading, posts } = useAppSelector((state: RootState) => state.allPost)
   const profile = useAppSelector((state: RootState) => state.user.profile)
   const [postList, setPostList] = useState<any[]>([])
   const [hasMore, setHasMore] = useState(true)
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(2)
   const [pageSize, setPageSize] = useState(0)
   const [testState, setTestState] = useState<any>()
 
@@ -26,6 +38,42 @@ const PostList = ({ allPosts, isLoading }: PostListProps) => {
     const isPublic = post?.privacy === 'public'
     return isPrivate || isPublic
   }
+  const socketIOPost = (statePosts: any[], setStatePosts: any, sortType: string) => {
+    statePosts = cloneDeep(statePosts)
+    socketService.socket?.on('add post', (post: any) => {
+      statePosts = [post, ...statePosts]
+      setStatePosts(sortList(statePosts, sortType))
+    })
+  }
+
+  useEffect(() => {
+    socketService.socket?.on('update post', (data: any) => {
+      setPostList(sortList([data, ...postList.filter((post) => post._id !== data._id)], sortType))
+    })
+  }, [postList, sortType])
+
+  useEffect(() => {
+    socketService.socket?.on('delete post', (postId: string) => {
+      setPostList(
+        sortList(
+          postList.filter((post) => post._id !== postId),
+          sortType
+        )
+      )
+    })
+  }, [sortType, postList])
+
+  useEffect(() => {
+    if (allPosts) {
+      setPostList(sortList(allPosts, sortType))
+    } else {
+      setPostList(sortList(posts, sortType))
+    }
+  }, [posts, sortType, allPosts])
+
+  useEffect(() => {
+    socketIOPost(postList, setPostList, sortType)
+  }, [postList, sortType])
 
   const getAllPost = async () => {
     try {
@@ -52,6 +100,7 @@ const PostList = ({ allPosts, isLoading }: PostListProps) => {
         currentPage={currentPage}
         pageSize={pageSize}
         next={getAllPost}
+        itemsLength={postList.length}
         hasMore={hasMore}
         loader={<ListPostSkeleton />}
         endMessage={
@@ -76,6 +125,7 @@ const PostList = ({ allPosts, isLoading }: PostListProps) => {
                 bgColor={post.bgColor}
                 post={post.post}
                 imagePost={post.imagePost}
+                currentPost={post}
                 username={post.username}
                 profilePicture={post.profilePicture}
                 imgVersion={post.imgVersion}
@@ -87,7 +137,7 @@ const PostList = ({ allPosts, isLoading }: PostListProps) => {
     )
   }
 
-  return <div>Error Boundary</div>
+  return <div className='basis-1 w-full bg-light dark:bg-dark rounded-md text-center py-6'>There are no posts yet</div>
 }
 
 export default PostList

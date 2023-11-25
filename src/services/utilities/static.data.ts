@@ -565,3 +565,12 @@ export const ListFollow = [
     ]
   }
 ]
+
+export const reactionsMap: any = {
+  like,
+  love,
+  wow,
+  sad,
+  happy,
+  angry
+}

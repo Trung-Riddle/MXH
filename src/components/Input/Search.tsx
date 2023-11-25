@@ -1,14 +1,8 @@
-import { ListFriendMocks } from 'src/mocks/data/message'
 import { SearchSvg } from '../icons'
 import { useEffect, useRef, useState } from 'react'
 import LoadingSmall from '../Global/SearchLoading'
 import { debounce } from 'lodash'
-
-const fetchUsers = async (searchTerm: string) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
-  return ListFriendMocks.filter((result) => result.fullName.toLowerCase().includes(searchTerm.toLowerCase()))
-}
+import userService from 'src/services/api/user/user.service'
 
 const Search = () => {
   const [loading, setLoading] = useState(false)
@@ -31,8 +25,9 @@ const Search = () => {
       if (searchTerm === '') {
         setListUser([])
       } else {
+        const response = await userService.searchUsers(searchTerm)
         setLoading(true)
-        setListUser(await fetchUsers(searchTerm))
+        setListUser(response.data.search)
         setLoading(false)
       }
     }, 500)
@@ -121,7 +116,7 @@ const Search = () => {
                 </div>
 
                 <div className='flex flex-col'>
-                  <div className='text-sm font-bold'>{user.fullName}</div>
+                  <div className='text-sm font-bold'>{user.username}</div>
                   <div className=''></div>
                 </div>
               </div>
