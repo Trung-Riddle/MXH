@@ -62,7 +62,7 @@ export class ChatUtils {
       receiverUsername: receiver?.username,
       receiverAvatarColor: receiver?.avatarColor,
       receiverProfilePicture: receiver?.profilePicture,
-      body: message.trim(),
+      content: message.trim(),
       isRead,
       gifUrl,
       selectedImage
@@ -112,7 +112,7 @@ export class ChatUtils {
     })
   }
 
-  static socketIOMessageReceived(chatMessages: any, username: string, setConversationId: any, setChatMessages: any) {
+  static socketIOMessageReceived(chatMessages: any, username: any, setConversationId: any, setChatMessages: any) {
     chatMessages = cloneDeep(chatMessages)
     socketService?.socket?.on('message received', (data: any) => {
       if (data.senderUsername.toLowerCase() === username || data.receiverUsername.toLowerCase() === username) {
@@ -135,7 +135,7 @@ export class ChatUtils {
     })
   }
 
-  static socketIOMessageReaction(chatMessages: any, username: string, setConversationId: any, setChatMessages: any) {
+  static socketIOMessageReaction(chatMessages: any, username: any, setConversationId: any, setChatMessages: any) {
     socketService?.socket?.on('message reaction', (data: any) => {
       if (data.senderUsername.toLowerCase() === username || data.receiverUsername.toLowerCase() === username) {
         chatMessages = cloneDeep(chatMessages)

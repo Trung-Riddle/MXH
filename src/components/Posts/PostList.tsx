@@ -31,13 +31,13 @@ const PostList = ({ sortType, allPosts }: PostListProps) => {
   const [hasMore, setHasMore] = useState(true)
   const [currentPage, setCurrentPage] = useState(2)
   const [pageSize, setPageSize] = useState(0)
+  const [testState, setTestState] = useState<any>()
 
   const handleCheckPrivacy = (profile: any, post: any) => {
     const isPrivate = post?.privacy === 'private' && post?.userId === profile?._id
     const isPublic = post?.privacy === 'public'
     return isPrivate || isPublic
   }
-
   const socketIOPost = (statePosts: any[], setStatePosts: any, sortType: string) => {
     statePosts = cloneDeep(statePosts)
     socketService.socket?.on('add post', (post: any) => {
@@ -45,8 +45,6 @@ const PostList = ({ sortType, allPosts }: PostListProps) => {
       setStatePosts(sortList(statePosts, sortType))
     })
   }
-
-  console.log(postList)
 
   useEffect(() => {
     socketService.socket?.on('update post', (data: any) => {

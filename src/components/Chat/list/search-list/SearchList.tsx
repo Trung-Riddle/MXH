@@ -35,26 +35,30 @@ const SearchList = ({
     setSearchResult([])
   }
   return (
-    <div className='overflow-y-scroll h-[800px] w-full'>
-      <div className='p-0 w-full'>
+    <div className='overflow-y-scroll base-hidden-scroll w-full p-2'>
+      <div className='w-full flex items-center justify-center flex-col gap-2'>
         {!isSearching && result.length > 0 && (
           <>
             {result.map((user) => (
               // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-              <div className='w-full' key={user._id} onClick={() => addUsernameToUrlQuery(user)}>
-                <Avatar avatar={user.profilePicture} fullName={user.username} />
+              <div
+                className='w-full bg-gray-100 shadow-md p-2 rounded-lg capitalize'
+                key={user._id}
+                onClick={() => addUsernameToUrlQuery(user)}
+              >
+                <Avatar style={{color: '#333'}} avatar={user.profilePicture} fullName={user.username} />
               </div>
             ))}
           </>
         )}
         {searchTerm && isSearching && result.length === 0 && (
           <div>
-            <span>Searching...</span>
+            <span>Đang Tìm kiếm...</span>
           </div>
         )}
         {searchTerm && !isSearching && result.length === 0 && (
-          <div>
-            <span>Hông tìm thấy gì hết á ba.</span>
+          <div className='text-white'>
+            <span>Hông tìm thấy người nào.</span>
             <p>Không tìm thấy cho từ khoá {searchTerm}</p>
           </div>
         )}
