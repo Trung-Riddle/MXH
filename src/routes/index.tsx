@@ -13,15 +13,16 @@ import LayoutChildren from 'src/pages/Layouts/LayoutChildren'
 import { About, Friend, Resource, Post } from 'src/pages/App/Profile'
 
 // Pages child about
-import { ContactAndBasics, FamilyAndRelationships, Overview, WorkAndEducation } from 'src/pages/App/Profile/Abouts'
+import { FamilyAndRelationships, Overview, WorkAndEducation } from 'src/pages/App/Profile/Abouts'
 import { PhotoResource, VideoResource } from 'src/pages/App/Profile/Resources'
 import ProtectedRoutes from 'src/pages/ProtectedRoutes'
 import LayoutMobile from 'src/pages/Layouts/LayoutMobile'
 import NotFound from 'src/pages/Error/NotFound'
-import { Suspense, lazy } from 'react'
 import VideoExplore from 'src/pages/App/Explore/VideoExplore'
 import Test from 'src/test'
-const LazyPageFeeds = lazy(() => import('src/pages/App/Feeds/Feeds'))
+import { lazy } from 'react'
+
+const LazyFeeds = lazy(() => import('../pages/App/Feeds/Feeds'))
 
 export default function AppRoutes() {
   const elements = useRoutes([
@@ -42,7 +43,7 @@ export default function AppRoutes() {
           children: [
             {
               path: 'feeds',
-              element: <LazyPageFeeds />
+              element: <LazyFeeds />
             }
           ]
         },
@@ -101,10 +102,6 @@ export default function AppRoutes() {
                         {
                           path: 'about-family-and-relationships',
                           element: <FamilyAndRelationships />
-                        },
-                        {
-                          path: 'about-contact-and-basic-info',
-                          element: <ContactAndBasics />
                         }
                       ]
                     },

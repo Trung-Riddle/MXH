@@ -1,11 +1,17 @@
 import clsx from 'clsx'
 
-interface ArticleProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface ArticleProps extends React.HTMLAttributes<HTMLDivElement> {
+  margin?: string
+}
 
-export default function Article({ children, className, ...props }: ArticleProps) {
+export default function Article({ children, className, margin, ...props }: ArticleProps) {
   return (
     <div
-      className={clsx('bg-light dark:bg-dark shadow-shadowMain rounded-md flex flex-col flex-grow mx-2', className)}
+      className={clsx(
+        'bg-light dark:bg-dark shadow-shadowMain rounded-md flex flex-col flex-grow',
+        className,
+        margin ? margin : 'mx-2'
+      )}
       {...props}
     >
       {children}

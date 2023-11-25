@@ -4,10 +4,10 @@ import { ListFollow } from 'src/services/utilities/static.data'
 
 const Friends = () => {
   return (
-    <div className='flex w-full h-full flex-col px-6'>
+    <div className='flex w-full h-full flex-col px-3 sm:px-6'>
       <h2 className='text-base font-bold mb-4 block text-dark dark:text-light'>Tất cả người theo dõi</h2>
 
-      <div className='flex items-center flex-wrap -mx-1'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2'>
         {ListFollow.map((follow) => (
           <CardFriend key={follow.id} avatar={follow.avatar} friends={follow.friends} fullName={follow.fullName} />
         ))}
@@ -23,7 +23,7 @@ const Friends = () => {
 
       <h2 className='text-base font-bold mb-4 block mt-6 text-dark dark:text-light'>Những người bạn có thể biết</h2>
 
-      <div className='flex items-center flex-wrap -mx-1'>
+      <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2'>
         {ListFollow.map((follow) => (
           <CardFriend key={follow.id} avatar={follow.avatar} friends={follow.friends} fullName={follow.fullName} />
         ))}

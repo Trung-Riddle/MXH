@@ -1,20 +1,20 @@
 import { FaCheck, FaCircle } from 'react-icons/fa'
-import { FaReadme } from 'react-icons/fa'
+import { AiOutlineCheck } from 'react-icons/ai'
 
 const ChatListBody = ({ data, profile }: any) => {
   return (
-    <div className='conversation-message'>
-      <span>{data.body}</span>
+    <div className='flex gap-2 items-center'>
+      <p className='text-sm opacity-90 w-28 whitespace-nowrap overflow-hidden overflow-ellipsis'>{data.content}</p>
       {!data.isRead ? (
         <>
           {data.receiverUsername === profile?.username ? (
-            <FaCircle className='icon' />
+            <FaCircle size={12} className='icon' />
           ) : (
-            <FaCheck className='icon not-read' />
+            <FaCheck size={12} className='icon not-read' />
           )}
         </>
       ) : (
-        <>{data.senderUsername === profile?.username && <FaReadme />}</>
+        <>{data.senderUsername === profile?.username && <AiOutlineCheck />}</>
       )}
     </div>
   )

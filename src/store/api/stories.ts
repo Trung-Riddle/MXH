@@ -10,3 +10,19 @@ export const getAllStoryFaker = createAsyncThunk('story/getAllStoryFaker', async
     Swal.fire('Thông báo', error.message, 'error')
   }
 })
+
+export const getAllStory = createAsyncThunk('stories/getAllStory', async (_, thunk) => {
+  try {
+    console.log('test')
+  } catch (error: any) {
+    return thunk.rejectWithValue(error)
+  }
+})
+
+export const addStory = createAsyncThunk('stories/addStory', async (data, thunk) => {
+  try {
+    console.log(data)
+  } catch (error: any) {
+    return thunk.rejectWithValue(error)
+  }
+})

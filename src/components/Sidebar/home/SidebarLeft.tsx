@@ -38,8 +38,8 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
     Swal.fire({
       title: 'Bạn có chắc là muốn đăng xuất?',
       showCancelButton: true,
-      confirmButtonText: 'Save',
-      denyButtonText: `Don't save`
+      confirmButtonText: 'Đăng Xuất',
+      denyButtonText: `Không!`
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(clearUser())
@@ -50,9 +50,9 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
   }
   return (
     <div className='md:flex hidden flex-shrink-0 flex-col max-w-1/5 sticky inherits-h-header base-hidden-scroll overflow-y-auto overflow-x-hidden gap-3 py-3'>
-      <Article className='p-3 flex flex-col items-center justify-center gap-4'>
-        <Link to={'/profile'} className='flex flex-col justify-center items-center gap-2 my-2'>
-          <div className='rounded-full relative w-20 h-20 overflow-hidden'>
+      <Article className='p-3 flex flex-col items-center justify-center md:flex-grow-0 md:gap-0 lg:gap-2 xl:gap-4'>
+        <Link to={'/profile'} className='flex flex-col justify-center items-center md:gap-1 xl:gap-2 my-2'>
+          <div className='rounded-full relative sm:w-10 sm:h-10 md:w-14 md:h-14 lg:w-20 lg:h-20 overflow-hidden'>
             <img
               className='absolute inset-0 object-cover w-full h-full max-w-full'
               src={profile.profilePicture}
@@ -60,7 +60,7 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
             />
           </div>
 
-          <h5 className='text-sm text-dark dark:text-light font-bold'>{profile.username}</h5>
+          <h5 className='md:text-xs lg:text-sm text-dark dark:text-light font-bold'>{profile.username}</h5>
         </Link>
         <div className='flex items-center justify-between flex-row w-full'>
           {Metrics.map(({ count, id, label }) => (
@@ -69,7 +69,7 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
         </div>
       </Article>
 
-      <Article className='flex flex-col justify-center items-start gap-3 py-5'>
+      <Article className='flex flex-col lg:justify-center md:justify-start md:flex-grow-0 items-start lg:gap-3 md:gap-0 py-5 md:py-2'>
         {AppSettings.Routes.map((route, index) => (
           <div key={index} className='relative overflow-hidden'>
             <NavLink to={route.pathname} className={({ isActive }) => (isActive ? IsActive : NotActive)}>
@@ -81,14 +81,14 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
               />
               {route.label}
               {route.pathname === location.pathname && (
-                <div className='linear-gradient-activated h-10 w-2.5 absolute -left-[3%] top-2/4 rounded-lg -translate-y-2/4'></div>
+                <div className='linear-gradient-activated md:h-8 lg:h-10 md:w-1.5 lg:w-2.5 absolute -left-[3%] top-2/4 rounded-lg -translate-y-2/4'></div>
               )}
             </NavLink>
           </div>
         ))}
       </Article>
 
-      <Article className='flex flex-col gap-5 items-start py-5 justify-center'>
+      <Article className='flex flex-col lg:gap-5 items-start lg:py-5 md:flex-grow-0 lg:justify-center'>
         <NavLink to={'/home/settings'} className={({ isActive }) => (isActive ? IsActive : NotActive)}>
           <SettingSvg height='28' width='28' />
           Settings
@@ -99,7 +99,7 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
         </button>
       </Article>
 
-      <Article className='p-3 flex flex-col justify-center'>
+      <Article className='p-3 flex flex-col lg:justify-center md:flex-grow-0'>
         <h2 className='font-bold text-base mb-2 text-center'>Contact us</h2>
         <address className='text-xs mb-1'>lime8@gmail.com</address>
         <p className='whitespace-pre-wrap break-words text-xs'>Copyright © COGNOSPHERE. All Rights Reserved.</p>

@@ -6,7 +6,7 @@ class ChatService {
     return response
   }
   async getChatMessages(receiverId: any) {
-    const response = await http.get(`/chat/message/user/${receiverId}`)
+    const response = await http.get(`chat/user/${receiverId}`)
     return response
   }
   async addUsersChat(data: any) {
@@ -22,7 +22,7 @@ class ChatService {
     return response
   }
   async saveChatMessage(data: any) {
-    const response = await http.put(`/chat/message`, data)
+    const response = await http.post(`chat/message`, data)
     return response
   }
 }

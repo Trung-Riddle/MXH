@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import { getAllPostThunk } from 'src/store/api/posts'
 import PostList from 'src/components/Posts/PostList'
 import StoryList from 'src/components/Stories/StoryList'
+import { useEffect, useMemo, useState } from 'react'
+import { RootState } from 'src/store'
 // import { toast } from 'react-toastify'
 // import postService from 'src/services/api/post/post.service'
 // import useInfiniteScroll from 'src/hooks/useInfiniteScroll'
@@ -18,45 +20,31 @@ const Feeds = () => {
 
   // const [postList, setPostList] = useState<any[]>([])
   // const [totalPostCount, setTotalPostCount] = useState(0)
+  const profile = useAppSelector((state: RootState) => state.user.profile)
   const dispatch = useAppDispatch()
+  const { isLoading, posts } = useAppSelector((state: RootState) => state.allPost)
+  const [sortType, setSortType] = useState<string>(localStorage.getItem('sortType')! || 'none')
 
-  const { isLoading, posts } = useAppSelector((state) => state.allPost)
-
-  // const addPostRef = useRef<any[]>([])
-  // const bodyRef = useRef<any | null>(null)
-  // const bottomLineRef = useRef<any | null>(null)
-
-  // const getAllPost = async () => {
-  //   try {
-  //     const res = await postService.getAllPostImage(currentPage)
-
-  //     if (res.data.posts.length > 0) {
-  //       addPostRef.current = [...res.data.posts, ...postList]
-  //       const allPostById = uniqBy(addPostRef.current, '_id')
-  //       const orderByPost = orderBy(allPostById, ['createdAt'], ['desc'])
-  //       setPostList(orderByPost)
-  //     }
-  //   } catch (error: any) {
-  //     toast.error(error.response.data.message)
+  // const sortedPosts = useMemo(() => {
+  //   if (sortType === 'time') {
+  //     return [...posts].sort((a, b) => {
+  //       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  //     })
   //   }
-  // }
-
-  // const fetchPostData = async () => {
-  //   let pageNumber = currentPage
-
-  //   if (currentPage <= Math.round(totalPostCount / PAGE_SIZE)) {
-  //     pageNumber += 1
-  //     setCurrentPage(pageNumber)
-  //     await getAllPost()
+  //   if (sortType === 'popular') {
+  //     return [...posts].filter((postItem) => postItem.userId === profile._id)
   //   }
-  // }
-
+  //   return posts
+  // }, [posts, sortType, profile._id])
+  
+  useEffect(() => {
+    localStorage.setItem('sortType', sortType)
+  }, [sortType])
+  
   useEffectOnce(() => {
     dispatch(getAllPostThunk())
   })
-
-  // useInfiniteScroll(bodyRef, bottomLineRef, fetchPostData)
-
+  
   return (
     <div className='w-full md:max-w-[60%] flex h-full flex-col flex-shrink p-3'>
       <div className='md:flex hidden items-center justify-between select-none mb-3'>
@@ -80,10 +68,17 @@ const Feeds = () => {
           <h2 className='text-lg font-bold'>Feeds</h2>
 
           <div className='flex items-center gap-2'>
-            <Button className='py-2 px-5 shadow-md' textColor='text-dark dark:text-light' bg='bg-light dark:bg-dark'>
+            <Button
+              onClick={() => setSortType('time')}
+              className='py-2 px-5 shadow-md'
+              textColor='text-dark dark:text-light'
+              bg='bg-light dark:bg-dark'
+            >
               Latest
             </Button>
-            <Button className='py-2 px-5 shadow-md'>Popular</Button>
+            <Button onClick={() => setSortType('popular')} className='py-2 px-5 shadow-md'>
+              Popular
+            </Button>
           </div>
         </div>
 

@@ -17,6 +17,7 @@ import { setSelectedChatUser } from 'src/store/slices/chat/chat.slice'
 import chatService from 'src/services/api/chat/chat.service'
 import { timeAgo } from 'src/services/utilities/timeago'
 import ChatListBody from './ChatListBody'
+import { PiTrashLight } from 'react-icons/pi'
 
 const ChatList = () => {
   const { profile } = useAppSelector((state) => state.user)
@@ -221,18 +222,18 @@ const ChatList = () => {
               </label>
 
               <span className='cursor-pointer'>
-                <AddFriend width='24px' height='24px' />
+                <AddFriend fill='#fff' width='24px' height='24px' />
               </span>
             </div>
           </div>
           <div className='overflow-y-scroll h-[800px] w-full'>
             {!search && (
-              <div className='flex flex-col w-full'>
+              <div className='flex flex-col w-full text-white'>
                 {chatMessageList.map((data: any, index: number) => (
                   // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                   <div
                     key={index}
-                    className={`conversation-item ${
+                    className={`conversation-item px-2 py-3 flex items-center justify-between text-white ${
                       searchParams.get('username') === data?.receiverUsername.toLowerCase() ||
                       searchParams.get('username') === data?.senderUsername.toLowerCase()
                         ? 'bg-rose-400'
@@ -240,41 +241,51 @@ const ChatList = () => {
                     }`}
                     onClick={() => addUsernameToUrlQuery(data)}
                   >
-                    <div className='avatar w-full'>
-                      <Avatar
-                        fullName={
-                          data.receiverUsername !== profile?.username ? data.receiverUsername : data?.senderUsername
-                        }
-                        avatar={
-                          data.receiverName !== profile?.username
-                            ? data.receiverProfilePicture
-                            : data?.senderProfilePicture
-                        }
-                      />
-                      {data?.createdAt && <span>{timeAgo.transform(data?.createdAt)}</span>}
-                      {!data?.body && (
-                        // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-                        <div className='cursor-pointer' onClick={removeSelectedUserFromList}>
-                          &#x2715;
+                    <div className='avatar flex flex-col justify-end items-center'>
+                      <div className='flex gap-2 items-center'>
+                        <img
+                          className='w-12 h-12 rounded-full border border-sky-400 shadow-md'
+                          src={
+                            data.receiverName !== profile?.username
+                              ? data.receiverProfilePicture
+                              : data?.senderProfilePicture
+                          }
+                          alt=''
+                        />
+                        <div className='flex flex-col gap-1'>
+                          <p className='text-[16px] font-semibold'>
+                            {data.receiverUsername !== profile?.username ? data.receiverUsername : data?.senderUsername}
+                          </p>
+                          {data?.content && !data?.deleteForMe && !data.deleteForEveryone && (
+                            <ChatListBody data={data} profile={profile} />
+                          )}
                         </div>
-                      )}
-                      {data?.body && !data?.deleteForMe && !data.deleteForEveryone && (
-                        <ChatListBody data={data} profile={profile} />
-                      )}
-                      {data?.deleteForMe && data?.deleteForEveryone && (
-                        <div className='conversation-message'>
-                          <span className='message-deleted'>message deleted</span>
-                        </div>
-                      )}
-                      {data?.deleteForMe && !data.deleteForEveryone && data.senderUsername !== profile?.username && (
-                        <div className='conversation-message'>
-                          <span className='message-deleted'>message deleted</span>
-                        </div>
-                      )}
-                      {data?.deleteForMe && !data.deleteForEveryone && data.receiverUsername !== profile?.username && (
-                        <ChatListBody data={data} profile={profile} />
-                      )}
+                      </div>
                     </div>
+                    {data?.createdAt && (
+                      <span className='text-[12px] opacity-60'>{timeAgo.transform(data?.createdAt)}</span>
+                    )}
+
+                    {!data?.content && (
+                      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                      <div className='cursor-pointer p-1' onClick={removeSelectedUserFromList}>
+                        <PiTrashLight size={18} />
+                      </div>
+                    )}
+
+                    {data?.deleteForMe && data?.deleteForEveryone && (
+                      <div className='bg-red-300 h-12 w-full'>
+                        <span className='message-deleted'>Tin nhắn đã xoá</span>
+                      </div>
+                    )}
+                    {data?.deleteForMe && !data.deleteForEveryone && data.senderUsername !== profile?.username && (
+                      <div className='conversation-message'>
+                        <span className='message-deleted'>Tin nhắn đã xoá</span>
+                      </div>
+                    )}
+                    {data?.deleteForMe && !data.deleteForEveryone && data.receiverUsername !== profile?.username && (
+                      <ChatListBody data={data} profile={profile} />
+                    )}
                   </div>
                 ))}
               </div>
