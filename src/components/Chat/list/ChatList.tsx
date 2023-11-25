@@ -261,7 +261,7 @@ const ChatList = () => {
                           className='w-12 h-12 rounded-full border border-sky-400 shadow-md'
                           src={
                             data.receiverName !== profile?.username
-                              ? data.receiverProfilePicture
+                              ? data?.receiverProfilePicture
                               : data?.senderProfilePicture
                           }
                           alt=''
@@ -274,7 +274,7 @@ const ChatList = () => {
                             <ChatListBody data={data} profile={profile} />
                           )}
                         </div>
-                      </div>
+                      </div>{ /* */}
                     </div>
                     {data?.createdAt && (
                       <span className='text-[12px] opacity-60'>{timeAgo.transform(data?.createdAt)}</span>
