@@ -40,6 +40,7 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
   // # states
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(false)
+
   // # Selectors
   const profile = useSelector((state: RootState) => state.user.profile)
   const mainModalIsOpen = useSelector((state: RootState) => state.modal.mainModalIsOpen)
@@ -125,7 +126,7 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
               </Button>
             </User>
 
-            <Form onChangeContent={hanldeSetContent} />
+            <Form content={content} onChangeContent={hanldeSetContent} />
             <Options />
 
             <Button onClick={handleSubmit} className='w-full py-2 flex justify-center' rounded='rounded-lg'>

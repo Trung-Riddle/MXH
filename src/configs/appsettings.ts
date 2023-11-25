@@ -38,17 +38,17 @@ const AppSettings = {
       label: 'Bài viết'
     },
     {
-      pathname: '/profile/about',
+      pathname: 'about',
       icon: Icons.NavigationFriends.Friends,
       label: 'Giới thiệu'
     },
     {
-      pathname: '/profile/friends',
+      pathname: 'friends',
       icon: Icons.NavigationFriends.Friends,
       label: 'Bạn bè'
     },
     {
-      pathname: '/profile/resources',
+      pathname: 'resources',
       icon: Icons.NavigationFriends.Friends,
       label: 'Tài nguyên'
     }
@@ -57,15 +57,6 @@ const AppSettings = {
     {
       pathname: 'about',
       label: 'Tổng quan'
-    },
-    {
-      pathname: 'about-work-and-education',
-      label: 'Công việc và học vấn'
-    },
-
-    {
-      pathname: 'about-family-and-relationships',
-      label: 'Gia đình & mối quan hệ'
     }
   ],
   RoutesProfileFriends: [

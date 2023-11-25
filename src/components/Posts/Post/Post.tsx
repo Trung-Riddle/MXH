@@ -1,18 +1,21 @@
 import { Avatar } from 'src/components'
-import { CommentSvg, LikeSvg, ShareSvg } from 'src/components/icons/posts'
+import { CommentSvg, LikeSvg } from 'src/components/icons/posts'
 import Utils from 'src/services/utilities/utils'
-import { AnimatePresence, motion, useScroll } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import MoreSvg from 'src/assets/icons/components/MoreSvg'
 import { useCollapse } from 'react-collapsed'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import SendSvg from 'src/assets/icons/components/messages/SendSvg'
 import postService from 'src/services/api/post/post.service'
 import { RootState } from 'src/store'
-import { useAppSelector } from 'src/hooks/useRedux'
+import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import socketService from 'src/services/socket/socket.service'
 import clsx from 'clsx'
 import { cloneDeep } from 'lodash'
+import { toast } from 'react-toastify'
+import { toggleOpenEditModal } from 'src/store/slices/modal/modal.slice'
+import { updatePostEdit } from 'src/store/slices/post/postEdit.slice'
 
 interface PostProps {
   profilePicture: string
@@ -28,6 +31,7 @@ interface PostProps {
   imgId?: string
   postId?: string
   userId?: string
+  currentPost?: any
 }
 
 const Post = ({
@@ -41,6 +45,7 @@ const Post = ({
   postId,
   userId,
   videoPost,
+  currentPost,
   imgId,
   imgVersion
 }: PostProps) => {
@@ -50,7 +55,9 @@ const Post = ({
   const profile = useAppSelector((state: RootState) => state.user.profile)
   const [comment, setComment] = useState('')
   const [reactions, setReactions] = useState<any[]>([])
-
+  const [editPostPopup, setEditPostPopup] = useState(false)
+  const dispatch = useAppDispatch()
+  const editModalIsOpen = useAppSelector((state) => state.modal.editModalIsOpen)
   const [listComment, setListComment] = useState<any[]>([])
 
   const getAllReactionOfPost = async (postId: string) => {
@@ -74,8 +81,10 @@ const Post = ({
   const socketIOComment = (stateComments: any, setStateComments: any) => {
     stateComments = cloneDeep(stateComments)
     socketService.socket?.on('add comment', (comment: any) => {
-      stateComments = [...stateComments, comment]
-      setStateComments(stateComments)
+      if (comment.postId === postId) {
+        stateComments = [...stateComments, comment]
+        setStateComments(stateComments)
+      }
     })
   }
 
@@ -91,7 +100,6 @@ const Post = ({
   useEffect(() => {
     socketService.socket?.on('reaction', (r: any) => {
       if (r.postId === postId) {
-        console.log(r)
         setReactions([...reactions, r])
       }
     })
@@ -136,6 +144,13 @@ const Post = ({
       profilePicture: profile.profilePicture
     })
     setComment('')
+  }
+
+  const handleDeletePost = async (postId: string) => {
+    await postService.deletePost(postId)
+
+    setEditPostPopup(false)
+    toast.success('Bạn đã xóa bài đăng thành công')
   }
 
   let imageUrl: string = ''
@@ -184,11 +199,40 @@ const Post = ({
       >
         <div className='flex flex-col gap-2 md:gap-4'>
           <div className='flex items-center justify-between'>
-            <Avatar avatar={profilePicture} subs={quote} fullName={username} size='md' />
+            <Link to={`/profile/${userId}`}>
+              <Avatar avatar={profilePicture} subs={quote} fullName={username} size='md' />
+            </Link>
 
-            <button className='rounded-full py-3.5 px-1 hover:bg-slate-300/25'>
-              <MoreSvg width='25' />
-            </button>
+            {profile._id === userId && (
+              <div className='relative'>
+                <button
+                  className='rounded-full py-3.5 px-1 hover:bg-slate-300/25'
+                  onClick={() => setEditPostPopup((v) => !v)}
+                >
+                  <MoreSvg width='25' />
+                </button>
+                {editPostPopup && (
+                  <div className='absolute top-[120%] bg-light dark:bg-dark rounded-md shadow w-[150px] flex flex-col right-0 p-2'>
+                    <button
+                      onClick={() => {
+                        dispatch(toggleOpenEditModal())
+                        dispatch(updatePostEdit(currentPost))
+                        setEditPostPopup(false)
+                      }}
+                      className='rounded-md py-1 px-1 hover:bg-slate-300/25'
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className='rounded-md py-1 px-1 hover:bg-slate-300/25'
+                      onClick={() => handleDeletePost(postId as string)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           {content}
           <div className='flex items-center md:justify-between select-none'>
@@ -216,7 +260,7 @@ const Post = ({
               {listComment.map((comment) => (
                 <Link
                   key={comment._id + Math.random()}
-                  to=''
+                  to={`/profile/${userId}`}
                   className={clsx(
                     'flex flex-col mt-4',
                     profile.username === comment.username ? 'items-end' : 'items-start'

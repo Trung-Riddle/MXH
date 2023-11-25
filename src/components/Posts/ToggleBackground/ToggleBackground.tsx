@@ -1,9 +1,11 @@
 import { linearGradient } from 'src/mocks/linear-gradient-backgrounds'
 import { motion } from 'framer-motion'
-import { useCallback, useState } from 'react'
-import { useAppDispatch } from 'src/hooks/useRedux'
+import { useCallback, useEffect, useState } from 'react'
+import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import { changeBgColor } from 'src/store/slices/post/post.slice'
 import { toggleOpenBackground } from 'src/store/slices/modal/modal.slice'
+import { updatePostEdit } from 'src/store/slices/post/postEdit.slice'
+import useEffectOnce from 'src/hooks/useEffectOnce'
 
 interface ToggleBackgroundProps {
   onToggleBackground: React.Dispatch<React.SetStateAction<boolean>>
@@ -13,25 +15,54 @@ interface ToggleBackgroundProps {
 export default function ToggleBackground({ onToggleBackground, isToggle }: ToggleBackgroundProps) {
   const [isActive, setIsActive] = useState(-1)
   const dispatch = useAppDispatch()
+  const valuesPostEdit = useAppSelector((state) => state.postEdit)
+  const editModalIsOpen = useAppSelector((state) => state.modal.editModalIsOpen)
 
   const handleToggleBackground = useCallback(() => {
     onToggleBackground((v) => !v)
     dispatch(toggleOpenBackground())
     dispatch(changeBgColor(''))
+    dispatch(updatePostEdit({ bgColor: '' }))
     setIsActive(-1)
   }, [onToggleBackground, dispatch])
 
   const handleChangeBackground = useCallback(
     (linearColor: string, index: number) => {
-      if (isActive === index) {
-        return
+      if (editModalIsOpen) {
+        if (isActive === index) {
+          return
+        } else {
+          dispatch(updatePostEdit({ bgColor: linearColor }))
+          setIsActive(index)
+        }
       } else {
-        dispatch(changeBgColor(linearColor))
-        setIsActive(index)
+        if (isActive === index) {
+          return
+        } else {
+          dispatch(changeBgColor(linearColor))
+          setIsActive(index)
+        }
       }
     },
-    [isActive, dispatch]
+    [isActive, dispatch, editModalIsOpen]
   )
+
+  useEffect(() => {
+    if (!editModalIsOpen) {
+      dispatch(toggleOpenBackground())
+      setIsActive(-1)
+      dispatch(updatePostEdit({ bgColor: '' }))
+    }
+  }, [editModalIsOpen, dispatch])
+
+  useEffectOnce(() => {
+    if (valuesPostEdit && valuesPostEdit.bgColor) {
+      handleChangeBackground(
+        valuesPostEdit.bgColor,
+        linearGradient.findIndex(({ color }) => color === valuesPostEdit.bgColor)
+      )
+    }
+  })
 
   return (
     <div className={`flex items-center justify-between p-2 ${linearGradient[isActive] ? 'mt-0' : 'mt-auto'}`}>

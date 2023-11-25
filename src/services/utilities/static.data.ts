@@ -1,4 +1,10 @@
 import Icons from 'src/assets/icons'
+import like from 'src/assets/reactions/like.gif'
+import wow from 'src/assets/reactions/wow.gif'
+import happy from 'src/assets/reactions/care.svg'
+import sad from 'src/assets/reactions/sad.gif'
+import angry from 'src/assets/reactions/angry.gif'
+import love from 'src/assets/reactions/heart.gif'
 
 export const AvatarColor = [
   '#f44336',
@@ -550,3 +556,12 @@ export const ListFollow = [
     ]
   }
 ]
+
+export const reactionsMap: any = {
+  like,
+  love,
+  wow,
+  sad,
+  happy,
+  angry
+}

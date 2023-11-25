@@ -2,7 +2,7 @@ import { RootState } from 'src/store'
 import { useAppSelector } from 'src/hooks/useRedux'
 import ListPostSkeleton from './skeletons/ListPostSkeleton'
 import Post from './Post/Post'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { cloneDeep } from 'lodash'
 import socketService from 'src/services/socket/socket.service'
 import InfiniteScroll from './InfiniteScroll'
@@ -12,6 +12,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 
 interface PostListProps {
   sortType: string
+  allPosts?: any[]
 }
 
 function sortList(list: any[], sortType: string) {
@@ -23,7 +24,7 @@ function sortList(list: any[], sortType: string) {
   return list
 }
 
-const PostList = ({ sortType }: PostListProps) => {
+const PostList = ({ sortType, allPosts }: PostListProps) => {
   const { isLoading, posts } = useAppSelector((state: RootState) => state.allPost)
   const profile = useAppSelector((state: RootState) => state.user.profile)
   const [postList, setPostList] = useState<any[]>([])
@@ -45,9 +46,32 @@ const PostList = ({ sortType }: PostListProps) => {
     })
   }
 
+  console.log(postList)
+
   useEffect(() => {
-    setPostList(sortList(posts, sortType))
-  }, [posts, sortType])
+    socketService.socket?.on('update post', (data: any) => {
+      setPostList(sortList([data, ...postList.filter((post) => post._id !== data._id)], sortType))
+    })
+  }, [postList, sortType])
+
+  useEffect(() => {
+    socketService.socket?.on('delete post', (postId: string) => {
+      setPostList(
+        sortList(
+          postList.filter((post) => post._id !== postId),
+          sortType
+        )
+      )
+    })
+  }, [sortType, postList])
+
+  useEffect(() => {
+    if (allPosts) {
+      setPostList(sortList(allPosts, sortType))
+    } else {
+      setPostList(sortList(posts, sortType))
+    }
+  }, [posts, sortType, allPosts])
 
   useEffect(() => {
     socketIOPost(postList, setPostList, sortType)
@@ -103,6 +127,7 @@ const PostList = ({ sortType }: PostListProps) => {
                 bgColor={post.bgColor}
                 post={post.post}
                 imagePost={post.imagePost}
+                currentPost={post}
                 username={post.username}
                 profilePicture={post.profilePicture}
                 imgVersion={post.imgVersion}

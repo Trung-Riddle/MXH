@@ -5,17 +5,31 @@ import { PrivacyList } from 'src/services/utilities/static.data'
 import { Button } from 'src/components'
 import { RootState } from 'src/store'
 import { changePrivacyPost } from 'src/store/slices/post/post.slice'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { updatePostEdit } from 'src/store/slices/post/postEdit.slice'
 
 const ModalPrivacy = () => {
   const dispatch = useAppDispatch()
   const privacyValue = useAppSelector((state: RootState) => state.post.privacy)
+  const editPrivacy = useAppSelector((state) => state.postEdit.privacy)
   const [privacyState, setPrivacyState] = useState(privacyValue)
+  const editModalIsOpen = useAppSelector((state) => state.modal.editModalIsOpen)
+
+  useEffect(() => {
+    if (editModalIsOpen) {
+      setPrivacyState(editPrivacy)
+    }
+  }, [editModalIsOpen, editPrivacy])
 
   const handleSetPrivacy = useCallback(() => {
-    dispatch(changePrivacyPost(privacyState))
-    dispatch(toggleOpenPrivacyModal())
-  }, [dispatch, privacyState])
+    if (editModalIsOpen) {
+      dispatch(updatePostEdit({ privacy: privacyState }))
+      dispatch(toggleOpenPrivacyModal())
+    } else {
+      dispatch(changePrivacyPost(privacyState))
+      dispatch(toggleOpenPrivacyModal())
+    }
+  }, [dispatch, privacyState, editModalIsOpen])
 
   const handleTogglePrivacyModal = useCallback(() => {
     dispatch(toggleOpenPrivacyModal())

@@ -3,16 +3,26 @@ import { createSlice } from '@reduxjs/toolkit'
 interface InitialState {
   token: any
   profile: any
+  isOpenModalAvatar: boolean
+  isOpenModalBackground: boolean
 }
 const initialState: InitialState = {
   token: '',
-  profile: null
+  profile: null,
+  isOpenModalAvatar: false,
+  isOpenModalBackground: false
 }
 
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    toggleOpenModalAvatar: (state) => {
+      state.isOpenModalAvatar = !state.isOpenModalAvatar
+    },
+    toggleOpenModalBackground: (state) => {
+      state.isOpenModalBackground = !state.isOpenModalBackground
+    },
     addUser: (state, action) => {
       const { token, profile } = action.payload
       state.token = token
@@ -23,10 +33,13 @@ const userSlice = createSlice({
       state.profile = null
     },
     updateUserProfile: (state, action) => {
-      state.profile = action.payload
+      if (action.payload) {
+        state.profile = { ...state.profile, ...action.payload }
+      }
     }
   }
 })
 
-export const { addUser, clearUser, updateUserProfile } = userSlice.actions
+export const { addUser, clearUser, updateUserProfile, toggleOpenModalAvatar, toggleOpenModalBackground } =
+  userSlice.actions
 export default userSlice.reducer
