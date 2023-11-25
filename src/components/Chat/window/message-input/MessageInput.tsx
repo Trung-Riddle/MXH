@@ -43,7 +43,7 @@ export default function MessageInput({ setChatMessage }: IMessageInput) {
     reset()
   }
   const handleImageClick = () => {
-    message = message || 'Sent an Image'
+    message = message || 'Gửi 1 ảnh'
     setChatMessage(message.replace(/ +(?= )/g, ''), '', base64File)
     reset()
   }
@@ -88,7 +88,7 @@ export default function MessageInput({ setChatMessage }: IMessageInput) {
           }}
         />
       )}
-      <form className='w-full' onSubmit={handleSubmit}>
+      <form className='w-full bg-white' onSubmit={handleSubmit}>
         <div className='border h-16 flex items-center gap-3 w-full px-2'>
           {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-element-interactions */}
           <label

@@ -192,7 +192,7 @@ const ChatList = () => {
             <div className='flex items-center justify-between gap-3'>
               <label
                 htmlFor='searchFriendInput'
-                className='bg-inputLight rounded-full flex items-center flex-1 shadow-md'
+                className='bg-inputLight rounded-full flex items-center flex-1 shadow-md relative'
               >
                 <span className='h-full px-4 cursor-pointer'>
                   <SearchMessageSvg width='18px' height='18px' />
@@ -208,6 +208,20 @@ const ChatList = () => {
                   className='outline-none border-none bg-transparent py-3 text-xs font-light'
                   placeholder='Enter for search...'
                 />
+                {search && (
+                  <div className='flex flex-col overflow-y-auto h-full left-0 right-0 base-hidden-scroll bg-white absolute top-12 min-h-[300px] rounded-lg'>
+                    <SearchList
+                      searchTerm={search}
+                      result={searchResult}
+                      isSearching={isSearching}
+                      setSearchResult={setSearchResult}
+                      setIsSearching={setIsSearching}
+                      setSearch={setSearch}
+                      setSelectedUser={setSelectedUser}
+                      setComponentType={setComponentType}
+                    />
+                  </div>//kjwhbrjhwbv
+                )}
                 {search && (
                   <button
                     onClick={() => {
@@ -226,18 +240,18 @@ const ChatList = () => {
               </span>
             </div>
           </div>
-          <div className='overflow-y-scroll h-[800px] w-full'>
+          <div className='overflow-y-scroll h-[800px] bg-darkMain w-full'>
             {!search && (
-              <div className='flex flex-col w-full text-white'>
+              <div className='flex trung flex-col w-full text-white'>
                 {chatMessageList.map((data: any, index: number) => (
                   // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                   <div
                     key={index}
-                    className={`conversation-item px-2 py-3 flex items-center justify-between text-white ${
+                    className={`conversation-item px-2 py-3 flex items-center justify-between text-white rounded-md ${
                       searchParams.get('username') === data?.receiverUsername.toLowerCase() ||
                       searchParams.get('username') === data?.senderUsername.toLowerCase()
-                        ? 'bg-rose-400'
-                        : ''
+                        ? 'style-bg-main shadow-xl'
+                        : 'shadow-sm'
                     }`}
                     onClick={() => addUsernameToUrlQuery(data)}
                   >
@@ -290,19 +304,6 @@ const ChatList = () => {
                 ))}
               </div>
             )}
-          </div>
-          {/* Frients Messages */}
-          <div className='flex items-start flex-col overflow-y-auto h-full px-6 w-full gap-3 base-hidden-scroll'>
-            <SearchList
-              searchTerm={search}
-              result={searchResult}
-              isSearching={isSearching}
-              setSearchResult={setSearchResult}
-              setIsSearching={setIsSearching}
-              setSearch={setSearch}
-              setSelectedUser={setSelectedUser}
-              setComponentType={setComponentType}
-            />
           </div>
         </div>
       </div>

@@ -18,7 +18,7 @@ export const registerSchema = Yup.object({
     .required('Vui lòng nhập lại password')
     .min(6, 'Password tối thiểu là 6 kí tự')
     .max(15, 'Password không quá 15 kí tự')
-    .oneOf([Yup.ref('password')], 'password nhập lại như cc')
+    .oneOf([Yup.ref('password')], 'password nhập lại không trùng khớp')
 })
 
 export const loginSchema = Yup.object({
