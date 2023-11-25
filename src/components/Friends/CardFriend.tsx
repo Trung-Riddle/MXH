@@ -1,11 +1,14 @@
-import { Article, Button } from '..'
+import { Button } from '..'
 interface CardFriendProps {
   avatar: string
   id?: number
   fullName: string
-  friends: Array<{ id: number; avatar: string }>
+  followers: number
+  following: number
+  onClick?: () => void
+  text: string
 }
-const CardFriend = ({ avatar, id, fullName, friends }: CardFriendProps) => {
+const CardFriend = ({ avatar, fullName, followers, following, onClick, text }: CardFriendProps) => {
   return (
     <div className='flex gap-2 items-center w-full bg-light dark:bg-dark shadow-shadowMain rounded-md p-2 sm:p-3'>
       <div className='relative sm:rounded-md overflow-hidden rounded-full w-20 sm:h-20'>
@@ -14,27 +17,18 @@ const CardFriend = ({ avatar, id, fullName, friends }: CardFriendProps) => {
         </div>
       </div>
 
-      <div className='flex flex-col flex-1 gap-3'>
-        <div className='flex flex-col'>
-          <h4 className='text-base sm:text-sm font-semibold text-dark dark:text-light'>{fullName}</h4>
-          <div className='flex items-center'>
-            <div className='flex -space-x-2'>
-              {friends.map((friend) => (
-                <img
-                  key={friend.id}
-                  className='w-5 h-5 object-cover border-2 border-white rounded-full dark:border-gray-800'
-                  src={friend.avatar}
-                  alt=''
-                />
-              ))}
-            </div>
-            <span className='whitespace-nowrap text-sm sm:text-xs font-normal ml-1 text-dark dark:text-light'>
-              32 follow
-            </span>
-          </div>
-        </div>
-        <Button className='text-xs ml-auto sm:ml-0 py-1.5 px-3 w-max' rounded='rounded-md sm:rounded-lg'>
-          Theo dõi
+      <div className='flex flex-col flex-1'>
+        <h4 className='text-base sm:text-sm font-semibold text-dark dark:text-light mb-1'>{fullName}</h4>
+        <span className='flex items-center gap-2 mb-3'>
+          <span className='text-xs'>Followers: {followers}</span>
+          <span className='text-xs'>Followings: {following}</span>
+        </span>
+        <Button
+          onClick={onClick}
+          className='text-xs ml-auto text-right sm:ml-0 py-1.5 px-3 w-max'
+          rounded='rounded-md sm:rounded-lg'
+        >
+          {text}
         </Button>
       </div>
     </div>

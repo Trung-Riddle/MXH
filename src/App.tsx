@@ -7,15 +7,18 @@ import ModalExplore from './pages/App/Explore/ModalExplore'
 import ModalUpload from './pages/App/Explore/ModalUpload'
 import { useEffect } from 'react'
 import socketService from './services/socket/socket.service'
+import PostEdit from './components/Posts/PostEdit'
 
 export default function App() {
   useEffect(() => {
     socketService.setupSocketConnection()
   }, [])
+
   return (
     <AnimatePresence>
       <BrowserRouter>
         <AppRoutes />
+        <PostEdit />
         <PostMain />
         <ModalExplore />
         <ModalUpload />

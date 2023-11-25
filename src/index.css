@@ -75,24 +75,19 @@
     @apply m-0;
   }
 
-
   .test:focus + .hiddenfocus {
     display: block !important;
   }
-
- 
 
   .border-linear-color {
     border: 10px solid;
     border-image-slice: 2;
     border-width: 1.5px;
-    border-image-source: linear-gradient(90deg, #2ECEC2 0%, #34BAD0 48.23%, #3B89F1 125.13%);
+    border-image-source: linear-gradient(90deg, #2ecec2 0%, #34bad0 48.23%, #3b89f1 125.13%);
     border-left: 0;
     border-right: 0;
     border-top: 0;
   }
-
-
 
   .scroll-snap-mandatory {
     display: flex;
@@ -108,7 +103,7 @@
     scroll-snap-align: center;
     flex: none;
   }
-  
+
   /* .video-explore video {
     @apply absolute inset-0 w-full h-auto z-0 opacity-0
   }
@@ -213,5 +208,4 @@
 .bg-black-02 {
   background-color: rgba(6, 0, 0, 0.207);
 }
-
 

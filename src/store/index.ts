@@ -6,8 +6,10 @@ import allPostSlice from './slices/post/posts.slice'
 import allStorySlice from './slices/story/stories.slice'
 import exploreSlice from './slices/modal/explore.slice'
 import chatSlice from './slices/chat/chat.slice'
-import allExploreSlice from './slices/explore/explores.slice'
-
+import allCommentOfPost from './slices/comments/comments.slice'
+import notificationSlice from './slices/notifications/notifications.slice'
+import profileSlice from './slices/profile/profile.slice'
+import postEditSlice from './slices/post/postEdit.slice'
 
 export const store = configureStore({
   reducer: {
@@ -18,7 +20,10 @@ export const store = configureStore({
     allStory: allStorySlice,
     explore: exploreSlice,
     chat: chatSlice,
-    // allExplore: allExploreSlice
+    allComment: allCommentOfPost,
+    notification: notificationSlice,
+    profile: profileSlice,
+    postEdit: postEditSlice
   }
 })
 

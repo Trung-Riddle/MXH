@@ -42,8 +42,6 @@ const PostSlice = createSlice({
       state.feelings = action.payload
     },
     updatePostItem: (state, action) => {
-      console.log(action.payload)
-
       return { ...state, ...action.payload }
     }
   }

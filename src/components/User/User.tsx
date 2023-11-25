@@ -11,6 +11,7 @@ export interface UserProps extends React.HTMLAttributes<HTMLDivElement> {
   styleText?: string
   styleContent?: string
   feeling?: string
+  onClick?: () => void
 }
 
 const User = ({
@@ -23,11 +24,14 @@ const User = ({
   styleText,
   styleContent,
   feeling,
+  onClick,
   ...props
 }: UserProps) => {
   return (
     <div {...props} className={clsx('flex items-center gap-2 sm:gap-3 ', props.className)}>
-      <UserPresence alt={alt} presence={presence} source={source} size={size} />
+      <div aria-hidden='true' onClick={onClick}>
+        <UserPresence alt={alt} presence={presence} source={source} size={size} />
+      </div>
 
       {/* User informations */}
       <div className={clsx('flex flex-col flex-1', styleContent)}>

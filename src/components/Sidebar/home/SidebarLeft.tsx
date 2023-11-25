@@ -48,10 +48,14 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
       }
     })
   }
+
   return (
     <div className='md:flex hidden flex-shrink-0 flex-col max-w-1/5 sticky inherits-h-header base-hidden-scroll overflow-y-auto overflow-x-hidden gap-3 py-3'>
       <Article className='p-3 flex flex-col items-center justify-center md:flex-grow-0 md:gap-0 lg:gap-2 xl:gap-4'>
-        <Link to={'/profile'} className='flex flex-col justify-center items-center md:gap-1 xl:gap-2 my-2'>
+        <Link
+          to={'/profile/' + profile._id}
+          className='flex flex-col justify-center items-center md:gap-1 xl:gap-2 my-2'
+        >
           <div className='rounded-full relative sm:w-10 sm:h-10 md:w-14 md:h-14 lg:w-20 lg:h-20 overflow-hidden'>
             <img
               className='absolute inset-0 object-cover w-full h-full max-w-full'
@@ -62,6 +66,7 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
 
           <h5 className='md:text-xs lg:text-sm text-dark dark:text-light font-bold'>{profile.username}</h5>
         </Link>
+
         <div className='flex items-center justify-between flex-row w-full'>
           {Metrics.map(({ count, id, label }) => (
             <Metric key={id} count={count} label={label} />

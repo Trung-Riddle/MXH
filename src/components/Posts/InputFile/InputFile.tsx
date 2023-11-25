@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useAppSelector } from 'src/hooks/useRedux'
 import withBaseComponent from 'src/hooks/withBaseComponent'
 import { ImageUtils } from 'src/services/utilities/image.utils'
-import { updatePostItem } from 'src/store/slices/post/post.slice'
 
 const InputFile = withBaseComponent(({ dispatch }) => {
   const [imagePreview, setImagePreview] = useState<{ preview: string; name: string }>({
@@ -10,7 +9,8 @@ const InputFile = withBaseComponent(({ dispatch }) => {
     name: ''
   })
 
-  const { imageModalIsOpen } = useAppSelector((state) => state.modal)
+  const valuesPostEdit = useAppSelector((state) => state.postEdit)
+  const { editModalIsOpen } = useAppSelector((state) => state.modal)
 
   const handleInputImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
@@ -18,21 +18,15 @@ const InputFile = withBaseComponent(({ dispatch }) => {
     if (files && files.length > 0) {
       const file = files[0]
       setImagePreview({ preview: URL.createObjectURL(file), name: file.name })
-      ImageUtils.addFiletoRedux({ file, dispatch, type: 'image' })
+      ImageUtils.addFiletoRedux({ file, dispatch, type: 'image', editModalIsOpen })
     }
   }
 
-  console.log(imagePreview)
-
   useEffect(() => {
-    if (!imageModalIsOpen) {
-      dispatch(
-        updatePostItem({
-          imagePost: ''
-        })
-      )
+    if (editModalIsOpen && valuesPostEdit.imagePost && valuesPostEdit.imgId && valuesPostEdit.imgVersion) {
+      setImagePreview((prev) => ({ ...prev, preview: valuesPostEdit.imagePost }))
     }
-  }, [imageModalIsOpen, dispatch])
+  }, [editModalIsOpen, valuesPostEdit])
 
   return (
     <div className='w-full border border-dark/10 dark:border-light/10 rounded-lg h-[250px] mt-auto overflow-y-auto overflow-x-hidden'>

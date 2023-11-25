@@ -33,7 +33,6 @@ import { Button, User } from '..'
 import Form from './Form/Form'
 import Options from './Options/Options'
 import postService from 'src/services/api/post/post.service'
-import { getAllPostThunk } from 'src/store/api/posts'
 
 // # mock user data
 
@@ -41,6 +40,7 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
   // # states
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(false)
+
   // # Selectors
   const profile = useSelector((state: RootState) => state.user.profile)
   const mainModalIsOpen = useSelector((state: RootState) => state.modal.mainModalIsOpen)
@@ -103,7 +103,6 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
     dispatch(toggleOpenMainModal())
     dispatch(resetPost())
     setLoading(false)
-    dispatch(getAllPostThunk())
   }
 
   if (mainModalIsOpen) {
@@ -127,7 +126,7 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
               </Button>
             </User>
 
-            <Form onChangeContent={hanldeSetContent} />
+            <Form content={content} onChangeContent={hanldeSetContent} />
             <Options />
 
             <Button onClick={handleSubmit} className='w-full py-2 flex justify-center' rounded='rounded-lg'>

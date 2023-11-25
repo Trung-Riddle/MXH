@@ -8,6 +8,8 @@ import {
   toggleOpenInputFile,
   toggleOpenVideoModal
 } from 'src/store/slices/modal/modal.slice'
+import { updatePostItem } from 'src/store/slices/post/post.slice'
+import { updatePostEdit } from 'src/store/slices/post/postEdit.slice'
 
 const Options = () => {
   const dispatch = useAppDispatch()
@@ -31,7 +33,13 @@ const Options = () => {
       <p className='text-sm text-dark dark:text-light font-normal'>Thêm vào bài viết</p>
       <div className='flex items-center gap-4'>
         <button
-          onClick={() => dispatch(toggleOpenInputFile())}
+          onClick={() => {
+            dispatch(toggleOpenInputFile())
+            if (inputFileIsOpen) {
+              dispatch(updatePostEdit({ imagePost: '' }))
+              dispatch(updatePostItem({ imagePost: '' }))
+            }
+          }}
           className={`p-1 hover:bg-slate-400/20 transition-all ease-linear duration-150 rounded-md ${
             checkDisabledOptions('bgColor') ? 'cursor-not-allowed' : 'cursor-pointer'
           }`}

@@ -2,8 +2,12 @@ import NotifySvg from 'src/assets/icons/components/Notify'
 import { Button } from '..'
 import SearchSvg from 'src/assets/icons/components/SearchSvg'
 import ToggleTheme from '../Toggle/ToggleTheme'
+import { useAppSelector } from 'src/hooks/useRedux'
+import { DefaultAvatar } from 'src/assets/bg'
 
 const HeaderChildren = () => {
+  const { profile } = useAppSelector((state) => state.user)
+
   return (
     <div className='w-full sm:flex items-center px-6 py-4 bg-transparent sticky z-50 top-0 right-0 hidden'>
       <div className='flex flex-1'>
@@ -24,17 +28,17 @@ const HeaderChildren = () => {
       </div>
       <div className='flex items-center gap-5'>
         <ToggleTheme />
-        <Button className='p-2'>
-          <NotifySvg width='20px' height='20px' />
-        </Button>
+        <div>
+          <Button className='p-2'>
+            <NotifySvg width='20px' height='20px' />
+          </Button>
+        </div>
         <div className='base-border-main w-10 flex flex-shrink'>
           <div className='aspect-square relative w-full'>
             <img
               loading='lazy'
-              src={
-                'https://images.unsplash.com/photo-1694793587915-38b73970e73d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxOXx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=60'
-              }
-              alt={'test'}
+              src={profile.profilePicture || DefaultAvatar}
+              alt={profile.username}
               className='w-full h-full object-cover absolute inset-0 rounded-full border-[1.5px] border-white'
             />
           </div>
