@@ -242,7 +242,7 @@ const ChatList = () => {
           </div>
           <div className='overflow-y-scroll h-[800px] bg-darkMain w-full'>
             {!search && (
-              <div className='flex flex-col w-full text-white'>
+              <div className='flex trung flex-col w-full text-white'>
                 {chatMessageList.map((data: any, index: number) => (
                   // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                   <div
