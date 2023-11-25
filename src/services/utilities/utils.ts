@@ -1,6 +1,6 @@
 import { addUser, clearUser } from 'src/store/slices/user/user.slice'
 import { AvatarColor } from './static.data'
-import { floor, random } from 'lodash'
+import { floor, random, some } from 'lodash'
 
 export default class Utils {
   static randomAvatarColor() {
@@ -41,5 +41,17 @@ export default class Utils {
       id = id.replace(/['"]+/g, '')
     }
     return `https://res.cloudinary.com/dgyk7uloc/image/upload/v${version}/${id}`
+  }
+  static checkIfUserIsOnline(username: any, onlineUsers: any) {
+    return some(onlineUsers, (user) => user === username?.toLowerCase())
+  }
+  static generateString(length: number) {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = ' ';
+    const charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
   }
 }

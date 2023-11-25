@@ -24,10 +24,10 @@ const Chat = () => {
 
   return (
     <div className='w-full flex'>
-      <div className='w-1/4 border'>
+      <div className='w-1/4'>
         <ChatList />
       </div>
-      <div className='w-3/4 border bg-light dark:bg-[#0C0F1D]'>
+      <div className='w-3/4 bg-light dark:bg-[#0C0F1D]'>
         {(selectedChatUser || chatList.length > 0) && <ChatWindow />}
 
         {(selectedChatUser || !chatList.length) && (

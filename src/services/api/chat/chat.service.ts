@@ -25,5 +25,13 @@ class ChatService {
     const response = await http.post(`chat/message`, data)
     return response
   }
+  async updateMessageReaction(data: any) {
+    const response = await http.put(`chat/reaction`, data)
+    return response
+  }
+  async markMessageAsDelete({messageId, senderId, receiverId, type}: any) {
+    const response = await http.delete(`/chat/user/mark-as-deleted/${messageId}/${senderId}/${receiverId}/${type}`)
+    return response
+  }
 }
 export default new ChatService()
