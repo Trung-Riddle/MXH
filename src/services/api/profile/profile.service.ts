@@ -16,7 +16,7 @@ class ProfileService {
     return response
   }
 
-  async getProfileById(userId: string) {
+  async getUserProfileById(userId: any) {
     const response = await http.get(`user/profile/all/${userId}`)
     return response
   }

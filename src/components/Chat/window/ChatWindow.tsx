@@ -45,7 +45,7 @@ const ChatWindow = () => {
     } catch (error: any) {
       toast(error.response.data.message)
     }
-  }, [dispatch, profile, searchParams])
+  }, [profile, searchParams])
   const sendChatMessage = async (message: any, gifUrl: any, selectedImage: any) => {
     try {
       const checkUserOne = some(
@@ -114,7 +114,7 @@ const ChatWindow = () => {
         <div>loading...</div>
       ) : (
         <>
-          <div className='header h-16 w-full flex items-center px-4 fixed z-[888] shadow-lg bg-darkMain'>
+          <div className='header h-16 w-full flex fixed items-center px-4 z-[888] shadow-lg bg-darkMain'>
             {receiver && (
               <div className='flex items-center gap-3'>
                 <img className='w-12 h-12 rounded-full' src={receiver?.profilePicture} alt='' />
@@ -137,6 +137,7 @@ const ChatWindow = () => {
           </div>
         </>
       )}
+
       <div className='absolute bottom-0 w-full'>
         <MessageInput setChatMessage={sendChatMessage} />
       </div>
