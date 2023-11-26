@@ -88,8 +88,8 @@ export default function MessageInput({ setChatMessage }: IMessageInput) {
           }}
         />
       )}
-      <form className='w-full bg-white' onSubmit={handleSubmit}>
-        <div className='border h-16 flex items-center gap-3 w-full px-2'>
+      <form className='w-full bg-light dark:bg-dark' onSubmit={handleSubmit}>
+        <div className='h-16 flex items-center gap-3 w-full px-2'>
           {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-element-interactions */}
           <label
             htmlFor=''
@@ -139,7 +139,7 @@ export default function MessageInput({ setChatMessage }: IMessageInput) {
           </div>
           <input
             ref={messageInputRef}
-            className='border-2 text-xl outline-none rounded-2xl border-white py-1 px-3 flex-1 text-stone-700'
+            className='text-xl outline-none rounded-2xl bg-slate-400/25 py-1 px-3 flex-1 text-stone-700'
             type='text'
             id='message'
             name='message'

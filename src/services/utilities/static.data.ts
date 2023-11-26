@@ -6,15 +6,6 @@ import sad from 'src/assets/reactions/sad.gif'
 import angry from 'src/assets/reactions/angry.gif'
 import love from 'src/assets/reactions/heart.gif'
 
-export const reactionsMap: any = {
-  like,
-  love,
-  wow,
-  sad,
-  happy,
-  angry
-}
-
 export const AvatarColor = [
   '#f44336',
   '#e91e63',

@@ -27,7 +27,7 @@ const Form = ({ onChangeContent, content }: FormProps) => {
       dispatch(updateEditModal({ inputFileIsOpen: true }))
     }
 
-    if (valuesPostEdit.bgColor) {
+    if (valuesPostEdit.bgColor !== '') {
       dispatch(updateEditModal({ backgroundIsOpen: true }))
       setToggleBackground(true)
     }

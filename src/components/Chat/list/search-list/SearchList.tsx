@@ -35,31 +35,33 @@ const SearchList = ({
     setSearchResult([])
   }
   return (
-    <div className='overflow-y-scroll base-hidden-scroll w-full p-2'>
-      <div className='w-full flex items-center justify-center flex-col gap-2'>
+    <div className='overflow-y-scroll base-hidden-scroll h-max w-full '>
+      <div className='w-full flex items-center justify-center flex-col gap-2 p-2'>
         {!isSearching && result.length > 0 && (
           <>
             {result.map((user) => (
               // eslint-disable-next-line jsx-a11y/click-events-have-key-events
               <div
-                className='w-full bg-gray-100 shadow-md p-2 rounded-lg capitalize'
+                className='w-full bg-gray-100 dark:bg-dark shadow-md rounded-lg capitalize'
                 key={user._id}
                 onClick={() => addUsernameToUrlQuery(user)}
               >
-                <Avatar style={{color: '#333'}} avatar={user.profilePicture} fullName={user.username} />
+                <Avatar style={{ color: '#333' }} avatar={user.profilePicture} fullName={user.username} />
               </div>
             ))}
           </>
         )}
         {searchTerm && isSearching && result.length === 0 && (
           <div>
-            <span>Đang Tìm kiếm...</span>
+            <span className='text-dark text-xs dark:text-light'>Đang Tìm kiếm...</span>
           </div>
         )}
         {searchTerm && !isSearching && result.length === 0 && (
-          <div className='text-white'>
-            <span>Hông tìm thấy người nào.</span>
-            <p>Không tìm thấy cho từ khoá {searchTerm}</p>
+          <div className='text-dark dark:text-light text-center'>
+            <span className='mb-3 text-xs'>Hông tìm thấy người nào.</span>
+            <p className='text-xs'>
+              Không tìm thấy cho từ khoá <strong>{searchTerm}</strong>
+            </p>
           </div>
         )}
       </div>

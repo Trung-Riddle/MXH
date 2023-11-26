@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import MoreSvg from 'src/assets/icons/components/MoreSvg'
 import { useCollapse } from 'react-collapsed'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import SendSvg from 'src/assets/icons/components/messages/SendSvg'
 import postService from 'src/services/api/post/post.service'
 import { RootState } from 'src/store'
@@ -16,6 +16,8 @@ import { cloneDeep } from 'lodash'
 import { toast } from 'react-toastify'
 import { toggleOpenEditModal } from 'src/store/slices/modal/modal.slice'
 import { updatePostEdit } from 'src/store/slices/post/postEdit.slice'
+
+import moment from 'moment'
 
 interface PostProps {
   profilePicture: string
@@ -34,6 +36,16 @@ interface PostProps {
   currentPost?: any
 }
 
+type ItemWithCreatedAt = {
+  createdAt: string
+}
+
+function sortDatesByOldestFirst<T extends ItemWithCreatedAt>(list: T[]) {
+  return list.sort((a, b) => {
+    return Number(new Date(a.createdAt)) - Number(new Date(b.createdAt))
+  })
+}
+
 const Post = ({
   imagePost,
   profilePicture,
@@ -49,16 +61,21 @@ const Post = ({
   imgId,
   imgVersion
 }: PostProps) => {
-  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
-  const [postSeeMore, setPostSeeMore] = useState(false)
+  const dispatch = useAppDispatch()
   const postRef = useRef<HTMLDivElement | null>(null)
   const profile = useAppSelector((state: RootState) => state.user.profile)
+  const { getCollapseProps, getToggleProps, isExpanded } = useCollapse()
+
+  const [postSeeMore, setPostSeeMore] = useState(false)
+  const [editPostPopup, setEditPostPopup] = useState(false)
+
   const [comment, setComment] = useState('')
   const [reactions, setReactions] = useState<any[]>([])
-  const [editPostPopup, setEditPostPopup] = useState(false)
-  const dispatch = useAppDispatch()
-  const editModalIsOpen = useAppSelector((state) => state.modal.editModalIsOpen)
   const [listComment, setListComment] = useState<any[]>([])
+  const [clicked, setClicked] = useState(false)
+  const [isTyping, setIsTyping] = useState(false)
+
+  const userHasEmotion = reactions.some((r) => r.username === profile.username)
 
   const getAllReactionOfPost = async (postId: string) => {
     try {
@@ -72,7 +89,7 @@ const Post = ({
   const getAllCommentOfPost = async (postId: string) => {
     try {
       const result = await postService.getAllCommentOfPost(postId)
-      setListComment(result.data.comments)
+      setListComment(sortDatesByOldestFirst(result.data.comments))
     } catch (error) {
       console.log(error)
     }
@@ -87,6 +104,18 @@ const Post = ({
       }
     })
   }
+
+  useEffect(() => {
+    socketService.socket?.on('typing', (data: { typing: boolean }) => {
+      setIsTyping(data.typing)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (comment === '') {
+      socketService.socket?.emit('typing', { typing: false })
+    }
+  }, [comment])
 
   useEffect(() => {
     getAllReactionOfPost(postId as string)
@@ -112,7 +141,9 @@ const Post = ({
   }, [reactions])
 
   const handleReactionPost = async () => {
-    if (reactions.some((r) => r.username === profile.username)) {
+    setClicked(true)
+
+    if (userHasEmotion) {
       await postService.removeReactionOfPost(postId as string, 'like', {
         like: 0,
         love: 0,
@@ -121,7 +152,6 @@ const Post = ({
         wow: 0,
         angry: 0
       })
-      return
     } else {
       await postService.addReactionToPost({
         userTo: userId,
@@ -132,6 +162,8 @@ const Post = ({
         profilePicture: profile.profilePicture
       })
     }
+
+    setTimeout(() => setClicked(false), 400)
   }
 
   const handleCommentPost = async () => {
@@ -159,7 +191,7 @@ const Post = ({
   if (bgColor !== '') {
     content = (
       <div
-        className={`rounded-xl md:rounded-md overflow-hidden h-[200px] sm:h-[350px] flex items-center justify-center ${bgColor}`}
+        className={`rounded-xl md:rounded-md overflow-hidden h-[200px] md:h-[300px] lg:h-[350px] flex items-center justify-center ${bgColor}`}
       >
         <p className='font-semibold text-base sm:text-xl text-center text-light'>{post}</p>
       </div>
@@ -195,9 +227,9 @@ const Post = ({
     <>
       <div
         ref={postRef}
-        className='bg-light shadow-shadowMain w-full dark:bg-dark rounded-md px-3 py-4 mb-3 sm:mb-6 last:mb-0 relative overflow-hidden'
+        className='bg-light shadow-shadowMain w-full default-animations dark:bg-dark rounded-md px-3 py-4 mb-3 lg:mb-6 last:mb-0 relative overflow-hidden'
       >
-        <div className='flex flex-col gap-2 md:gap-4'>
+        <div className='flex flex-col gap-2 lg:gap-4'>
           <div className='flex items-center justify-between'>
             <Link to={`/profile/${userId}`}>
               <Avatar avatar={profilePicture} subs={quote} fullName={username} size='md' />
@@ -236,53 +268,89 @@ const Post = ({
           </div>
           {content}
           <div className='flex items-center md:justify-between select-none'>
-            <div className='flex w-2/4 flex-row gap-2 justify-center'>
-              <button onClick={handleReactionPost}>
-                <LikeSvg username={profile.username} reactions={reactions} className='md:w-8 md:h-8 w-6 h-6' />
+            <div className='flex w-2/4 justify-center'>
+              <button onClick={handleReactionPost} className='flex items-center gap-4 outline-none'>
+                <i
+                  className={clsx(
+                    'fa-heart md:text-xl lg:text-2xl style-main',
+                    clicked ? 'fa-solid fa-bounce' : 'fa-regular',
+                    userHasEmotion ? 'fa-solid' : 'fa-regular'
+                  )}
+                ></i>
+                <span className='flex items-center gap-1 text-xs md:text-sm font-medium'>
+                  {reactions.length}
+                  <span className='hidden md:block'>Like</span>
+                </span>
               </button>
-              <span className='flex items-center gap-2 text-xs md:text-sm'>
-                {reactions.length}
-                <span className='hidden md:block'>like</span>
-              </span>
             </div>
-            <div {...getToggleProps()} className='flex w-2/4 flex-row gap-2 md:mr-0 justify-center'>
-              <CommentSvg className='md:w-8 md:h-8 w-6 h-6' />
-              <span className='flex items-center gap-2 text-xs md:text-sm'>
-                {listComment.length} <span className='hidden md:block'>comment</span>
+            <div {...getToggleProps()} className='flex w-2/4 flex-row gap-4 md:mr-0 justify-center'>
+              <i className='fa-regular fa-message md:text-xl lg:text-2xl style-main vertical-align'></i>
+              <span className='flex items-center gap-1 text-xs md:text-sm'>
+                {listComment.length}
+                <span className='hidden md:block'>comment</span>
               </span>
             </div>
           </div>
         </div>
 
-        <div {...getCollapseProps()} className='relative'>
+        <div {...getCollapseProps()} className='relative mt-3'>
           {listComment.length > 0 && (
-            <div className='h-auto max-h-[400px] overflow-y-auto mb-12'>
-              {listComment.map((comment) => (
-                <Link
-                  key={comment._id + Math.random()}
-                  to={`/profile/${userId}`}
-                  className={clsx(
-                    'flex flex-col mt-4',
-                    profile.username === comment.username ? 'items-end' : 'items-start'
-                  )}
-                >
-                  <div className='flex gap-2 items-start'>
-                    <img src={comment.profilePicture} alt='' className='rounded-full object-cover w-8 h-8' />
+            <div className='h-auto max-h-[400px] overflow-y-auto mb-16 flex flex-col -mx-3 px-3 border-t border-slate-400/25'>
+              {listComment.map((comment, index) => {
+                const usernamesMatch = profile.username === comment.username
+                const viTime = moment.utc(comment.createdAt).clone().utcOffset(7).format('h:mm A')
+                const isAdjacentCommenting = index && listComment[index].username === listComment[index - 1].username
+                const showDateAtAdjacentEnd =
+                  index === listComment.length - 1 || listComment[index].username !== listComment[index + 1].username
 
-                    <div className='flex flex-col'>
-                      <div className='flex flex-col bg-slate-300/25 rounded-2xl py-2 px-3'>
-                        <span className='text-xs font-semibold'>{comment.username}</span>
-                        <span className='text-sm leading-4 font-normal'>{comment.comment}</span>
+                return (
+                  <div
+                    key={comment._id}
+                    className={clsx(
+                      'flex flex-1 items-center gap-4',
+                      usernamesMatch ? 'ml-auto flex-row-reverse' : '',
+                      isAdjacentCommenting ? 'mt-1' : 'mt-4'
+                    )}
+                  >
+                    <div className={clsx('flex gap-2 items-start', usernamesMatch ? 'flex-row-reverse' : '')}>
+                      {!isAdjacentCommenting ? (
+                        <img
+                          src={comment.profilePicture}
+                          alt={comment.username}
+                          className='rounded-full object-cover max-w-full w-8 h-8 flex-shrink-0'
+                        />
+                      ) : (
+                        <span className='mr-[32px]'></span>
+                      )}
+                      <div className='flex flex-col bg-slate-300/25 rounded-md py-2 px-3'>
+                        {!isAdjacentCommenting && (
+                          <span className={clsx('text-xs font-bold  max-w-[300px]', usernamesMatch ? 'ml-auto' : '')}>
+                            {comment.username}
+                          </span>
+                        )}
+                        <span className={clsx('text-sm font-medium', usernamesMatch ? 'ml-auto' : '')}>
+                          {comment.comment}
+                        </span>
                       </div>
                     </div>
+                    {showDateAtAdjacentEnd && <time className='text-slate-400 text-[11px]'>{viTime}</time>}
                   </div>
-                </Link>
-              ))}
+                )
+              })}
             </div>
           )}
 
           {listComment.length === 0 && (
             <div className='mb-12 mt-2 text-center py-2 border-t border-slate-400/25 font-semibold'>No comments</div>
+          )}
+          {isTyping && (
+            <div className='shadow-shadowMain absolute -bottom-4 left-0 p-2 m-2 rounded-md w-max'>
+              <div className='loader gap-1'>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
           )}
         </div>
 
@@ -292,24 +360,33 @@ const Post = ({
               initial={{ y: 100 }}
               animate={{ y: 0 }}
               exit={{ y: 100 }}
-              transition={{ ease: 'easeInOut', duration: 0.5 }}
-              className='absolute bottom-0 left-0 right-0 w-full h-auto flex items-center gap-2 bg-light dark:bg-dark shadow-shadowMain p-3'
+              transition={{ ease: 'easeInOut', duration: 1.2 }}
+              className='absolute bottom-0 left-0 right-0 w-full h-auto rounded-ss-lg rounded-se-lg flex items-center gap-2 bg-light dark:bg-dark shadow-shadowMain p-3'
             >
               <img src={profile.profilePicture} alt='' className='object-cover rounded-full w-8 h-8' />
 
-              <div className='flex items-center bg-slate-400/10 rounded-2xl py-1.5 px-3 w-full'>
+              <div className='flex items-center bg-gray-100 dark:bg-gray-400/25 rounded-md py-2 px-3 w-full'>
                 <input
-                  onChange={(e) => setComment(e.target.value)}
+                  onChange={(e) => {
+                    socketService.socket?.emit('typing', { typing: true })
+                    setComment(e.target.value)
+                  }}
                   type='text'
-                  className='outline-none flex-1 bg-transparent'
+                  className='outline-none font-medium placeholder:text-dark placeholder:dark:text-light flex-1 text-sm bg-transparent'
                   placeholder='Write comment...'
                   value={comment}
                   id={'comment' + postId}
                 />
-                <button onClick={handleCommentPost} className='outline-none'>
-                  <SendSvg width='20' height='20' />
-                </button>
               </div>
+
+              <motion.button
+                whileTap={{ scale: 0.8 }}
+                transition={{ type: 'spring', damping: 5 }}
+                onClick={handleCommentPost}
+                className='rounded-md outline-none flex items-center justify-center p-1.5 hover:bg-gray-100 dark:hover:bg-gray-400/25 text-sm transition-all ease-linear duration-150'
+              >
+                <SendSvg width='22' height='22' />
+              </motion.button>
             </motion.div>
           </AnimatePresence>
         )}

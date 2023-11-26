@@ -5,36 +5,40 @@ import { toast } from 'react-toastify'
 
 import { Button, Search } from '..'
 import { AddSvg, FangSvg, HeartSvg, NotifySvg, SendSvg } from '../icons'
-import { useAppDispatch } from 'src/hooks/useRedux'
+import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import { toggleOpenMainModal } from 'src/store/slices/modal/modal.slice'
 import FangHeadSvg from 'src/assets/icons/components/navigations/FangHeadSvg'
 import ToggleTheme from '../Toggle/ToggleTheme'
 import { getNotifications } from 'src/store/api/notification'
 import socketService from 'src/services/socket/socket.service'
+import useEffectOnce from 'src/hooks/useEffectOnce'
 
 export default function Header() {
   const dispatch = useAppDispatch()
+  const { notifications } = useAppSelector((state) => state.notification)
   const [showNotify, setShowNotify] = useState(false)
   const [listNotification, setListNotification] = useState<any[]>([])
   const [isNotification, setIsNotification] = useState(false)
+  const { profile } = useAppSelector((state) => state.user)
 
-  useEffect(() => {
+  useEffectOnce(() => {
     dispatch(getNotifications())
-      .then(({ payload }) => setListNotification(payload.notifications))
-      .catch((err: SerializedError) => toast.error(err.message))
-  }, [dispatch])
+  })
 
   useEffect(() => {
-    socketService.socket?.on('insert notification', (data: any) => {
-      if (data) {
-        setIsNotification(true)
-        setListNotification([...data])
-      }
+    setListNotification(notifications)
+  }, [notifications])
+
+  useEffect(() => {
+    socketService.socket?.on('received notification', (data: any[]) => {
+      console.log(data)
+      // setIsNotification(true)
+      // setListNotification([...data])
     })
-  }, [])
+  }, [profile])
 
   return (
-    <header className='py-2 md:shadow-md w-full flex items-center md:px-6 px-3 bg-light dark:bg-dark flex-shrink-0 z-10 sticky h-header top-0'>
+    <header className='py-2 md:shadow-md w-full flex items-center md:px-6 px-3 bg-light dark:bg-dark flex-shrink-0 z-10 sticky h-header top-0 default-animations'>
       <span className='md:hidden'>
         <FangHeadSvg width='35' height='35' />
       </span>

@@ -24,9 +24,9 @@ const LeftMessageDisplay = ({
   showImageModal
 }: any) => {
   return (
-    <div className='flex flex-col gap-2 px-5 py-2 w-full rounded-3xl bg-red-400'>
-      <div className='relative w-2/6 bg-[#f3f3f3] text-stone-600 px-3 py-2 rounded-xl relative'>
-        <div className='message-reactions-container'>
+    <div className='flex flex-col gap-2 px-5 py-2 w-full rounded-3xl'>
+      <div className='w-2/6 bg-gray-100 dark:bg-dark text-stone-600 px-3 py-2 rounded-xl relative'>
+        <div className=''>
           {toggleReaction && index === activeElementIndex && (
             <div ref={reactionRef}>
               <Reactions
@@ -47,7 +47,12 @@ const LeftMessageDisplay = ({
         </div>
         <div className='left-message-bubble-container'>
           <div className='message-img'>
-            <Avatar style={{ color: '#333'}} fullName={chat.senderUsername} avatar={chat.senderProfilePicture} size='sm' />
+            <Avatar
+              style={{ color: '#333' }}
+              fullName={chat.senderUsername}
+              avatar={chat.senderProfilePicture}
+              size='sm'
+            />
           </div>
           <div className='message-content-container'>
             <div className='message-content-container-wrapper'>
@@ -71,7 +76,7 @@ const LeftMessageDisplay = ({
                     <span className='message-deleted'>Tin nhắn đã xoá</span>
                   </div>
                 )}
-  
+
                 {!chat?.deleteForMe && (
                   <>
                     {chat?.content !== 'Gửi 1 ảnh động' && chat?.content !== 'Gửi 1 ảnh' && (
@@ -105,7 +110,10 @@ const LeftMessageDisplay = ({
               </div>
               {showReactionIcon && index === activeElementIndex && !chat?.deleteForMe && (
                 // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions
-                <div className='w-10 h-10 flex justify-center items-center text-3xl rounded-3xl absolute border bg-white-02 cursor-pointer right-[-50px] bottom-2 text-white' onClick={() => setToggleReaction(true)}>
+                <div
+                  className='w-10 h-10 flex justify-center items-center text-3xl rounded-3xl absolute border cursor-pointer right-[-50px] bottom-2 text-dark dark:text-light'
+                  onClick={() => setToggleReaction(true)}
+                >
                   &#9786;
                 </div>
               )}

@@ -39,7 +39,7 @@ const ChatWindow = () => {
   }, [searchParams])
   const getUserProfileById = useCallback(async () => {
     try {
-      const response = await profileService.getUserProfileById(searchParams.get('id'))
+      const response = await profileService.getProfileById(searchParams.get('id') as string)
       setReceiver(response.data.user)
       ChatUtils.joinRoomEvent(response.data.user, profile)
     } catch (error: any) {
@@ -114,12 +114,12 @@ const ChatWindow = () => {
         <div>loading...</div>
       ) : (
         <>
-          <div className='header h-16 w-full flex items-center px-4 fixed z-[888] shadow-lg bg-darkMain'>
+          <div className='header h-16 w-full flex items-center px-4 fixed z-[888] shadow-lg bg-light  dark:bg-dark'>
             {receiver && (
               <div className='flex items-center gap-3'>
                 <img className='w-12 h-12 rounded-full' src={receiver?.profilePicture} alt='' />
                 <p className='flex flex-col'>
-                  <span className='font-semibold text-lg'>{receiver?.username}</span>
+                  <span className='font-semibold text-lg text-dark dark:text-light'>{receiver?.username}</span>
                   <span className='text-[12px] text-sky-700'>
                     {Utils.checkIfUserIsOnline(receiver?.username, onlineUsers) && <span>Đang online</span>}
                   </span>
@@ -127,14 +127,12 @@ const ChatWindow = () => {
               </div>
             )}
           </div>
-          <div className='text-white'>
-            <MessageDisplay
-              chatMessages={chatMessages}
-              profile={profile}
-              updateMessageReaction={updateMessageReaction}
-              deleteChatMessage={deleteChatMessage}
-            />
-          </div>
+          <MessageDisplay
+            chatMessages={chatMessages}
+            profile={profile}
+            updateMessageReaction={updateMessageReaction}
+            deleteChatMessage={deleteChatMessage}
+          />
         </>
       )}
       <div className='absolute bottom-0 w-full'>

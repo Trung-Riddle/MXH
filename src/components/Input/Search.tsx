@@ -70,7 +70,7 @@ const Search = () => {
 
   return (
     <div className={`md:ml-14 ml-32 p-2 flex flex-col relative flex-shrink-0 top-0`}>
-      <div className='flex md:w-[200px] lg:w-[400px] max-w-full flex-shrink-0 md:gap-2 gap-8 items-center select-none bg-inputLight dark:bg-inputDark rounded-full relative z-[9999]'>
+      <div className='flex md:w-[200px] lg:w-[250px] xl:w-[400px] max-w-full flex-shrink-0 md:gap-2 gap-8 items-center select-none default-animations bg-inputLight dark:bg-inputDark rounded-full relative z-[9999]'>
         <span className='md:mx-1 lg:mx-3 cursor-pointer'>
           {loading ? <LoadingSmall /> : <SearchSvg width='24' height='24' />}
         </span>
@@ -102,13 +102,16 @@ const Search = () => {
       </div>
       <div
         ref={listSearchRef}
-        className='absolute hidden left-0 top-0 w-full pt-12 py-2.5 bg-light rounded-md shadow-shadowMain px-2.5'
+        className='absolute hidden left-0 top-0 w-full pt-12 py-2.5 bg-light dark:bg-dark rounded-md shadow-shadowMain px-2.5'
       >
         {listUser.length > 0 && !loading ? (
           <>
             <div className='py-1.5 pb-3 font-medium text-sm'>Kết quả tìm kiếm</div>
             {listUser.map((user) => (
-              <div key={user.id} className='flex rounded-md items-center py-2 px-4 gap-5 hover:bg-[#f4f4f4]'>
+              <div
+                key={user.id}
+                className='flex rounded-md items-center py-2 px-4 gap-5 hover:bg-[#f4f4f4] dark:hover:bg-slate-400/25'
+              >
                 <div className='w-[45px] h-[45px]'>
                   <div className='rounded-full overflow-hidden relative pt-[100%]'>
                     <img src={user.profilePicture} className='absolute w-full h-full object-cover inset-0' alt='' />
@@ -128,7 +131,7 @@ const Search = () => {
             {searchHistories.slice(0, 5).map((word, index) => (
               <div
                 key={index}
-                className='relative hover:bg-[#f4f4f4] cursor-pointer rounded-md flex items-center py-2 px-3'
+                className='relative hover:bg-[#f4f4f4] dark:hover:bg-slate-400/25 cursor-pointer rounded-md flex items-center py-2 px-3'
               >
                 <button
                   onClick={() => {

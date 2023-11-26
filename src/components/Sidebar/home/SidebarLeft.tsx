@@ -50,7 +50,7 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
   }
 
   return (
-    <div className='md:flex hidden flex-shrink-0 flex-col max-w-1/5 sticky inherits-h-header base-hidden-scroll overflow-y-auto overflow-x-hidden gap-3 py-3'>
+    <div className='md:flex hidden flex-shrink-0 flex-col md:max-w-[22.5%] lg:max-w-1/5 sticky inherits-h-header base-hidden-scroll overflow-y-auto overflow-x-hidden gap-3 py-3'>
       <Article className='p-3 flex flex-col items-center justify-center md:flex-grow-0 md:gap-0 lg:gap-2 xl:gap-4'>
         <Link
           to={'/profile/' + profile._id}
@@ -104,10 +104,14 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
         </button>
       </Article>
 
-      <Article className='p-3 flex flex-col lg:justify-center md:flex-grow-0'>
-        <h2 className='font-bold text-base mb-2 text-center'>Contact us</h2>
-        <address className='text-xs mb-1'>lime8@gmail.com</address>
-        <p className='whitespace-pre-wrap break-words text-xs'>Copyright © COGNOSPHERE. All Rights Reserved.</p>
+      <Article className='flex flex-col justify-center lg:justify-center lg:text-left text-center lg:p-3 p-2'>
+        <h2 className='font-bold lg:text-base text-dark dark:text-light text-xs lg:mb-3 mb-2 text-center'>
+          Contact us
+        </h2>
+        <address className='text-[10px] lg:text-xs mb-1'>lime8@gmail.com</address>
+        <p className='text-[10px] leading-4 lg:leading-none break-words text-xs'>
+          Copyright © COGNOSPHERE. All Rights Reserved.
+        </p>
       </Article>
     </div>
   )

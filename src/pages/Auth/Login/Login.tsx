@@ -12,6 +12,7 @@ import { toast } from 'react-toastify'
 import authService from 'src/services/api/auth/auth.service'
 import Utils from 'src/services/utilities/utils'
 import useSessionStorage from 'src/hooks/useSessionStorage'
+import { Link } from 'react-router-dom'
 
 function Login({ dispatch, navigate }: IHocProps) {
   const [keepLoggedIn, setKeepLoggedIn] = useState(false)
@@ -73,13 +74,19 @@ function Login({ dispatch, navigate }: IHocProps) {
           placeholder='Vui lòng nhập mật khẩu của bạn'
           type='password'
         />
-        <CheckBox
-          id='remember'
-          value={keepLoggedIn}
-          onChange={setKeepLoggedIn}
-          name='remember'
-          textCheck='Keep Login'
-        />
+        <div className='flex items-center justify-between'>
+          <CheckBox
+            id='remember'
+            value={keepLoggedIn}
+            onChange={setKeepLoggedIn}
+            name='remember'
+            textCheck='Keep Login'
+          />
+
+          <Link to={'/forgot-password'} className='text-sm style-main font-bold'>
+            Forgot password
+          </Link>
+        </div>
         <button
           type='submit'
           className='border-none block mx-auto font-bold text-white px-20 rounded-md py-3 my-10 style-bg-main'

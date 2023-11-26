@@ -8,7 +8,7 @@ export default function Article({ children, className, margin, ...props }: Artic
   return (
     <div
       className={clsx(
-        'bg-light dark:bg-dark shadow-shadowMain rounded-md flex flex-col flex-grow',
+        'bg-light dark:bg-dark shadow-shadowMain default-animations rounded-md flex flex-col flex-grow',
         className,
         margin ? margin : 'mx-2'
       )}

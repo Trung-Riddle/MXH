@@ -21,5 +21,9 @@ class UserService {
     const response = await http.get('signout')
     return response
   }
+
+  async getSuggestedUsersList() {
+    return (await http.get('user/profile/suggestions')).data
+  }
 }
 export default new UserService()

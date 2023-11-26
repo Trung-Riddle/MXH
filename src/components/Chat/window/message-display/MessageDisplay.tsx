@@ -90,7 +90,7 @@ function MessageDisplay({ chatMessages, profile, updateMessageReaction, deleteCh
             {(index === 0 ||
               timeAgo.dayMonthYear(chat.createdAt) !== timeAgo.dayMonthYear(chatMessages[index - 1].createdAt)) && (
               <div className='w-full text-center'>
-                <div className='m-auto rounded-3xl bg-white-02 py-1'>
+                <div className='mx-auto w-max rounded-3xl bg-gray-100 dark:bg-dark text-dark dark:text-light px-6 p-1.5 my-10'>
                   {timeAgo.chatMessageTransform(chat.createdAt)}
                 </div>
               </div>

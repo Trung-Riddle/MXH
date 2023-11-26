@@ -155,13 +155,9 @@ const ChatList = () => {
     <>
       <div className='w-full flex-col sm:w-[350px] bg-light dark:bg-darkMessage shadow-lg h-screen overflow-y-auto flex-shrink-0'>
         {/* Avatar User */}
-        <User
-          alt='User'
-          username={profile.username}
-          sloggan='itterasshai eren'
-          className='my-5 px-6'
-          source={profile.profilePicture}
-        />
+        <div className='p-6'>
+          <User alt='User' username={profile.username} sloggan='itterasshai eren' source={profile.profilePicture} />
+        </div>
         <div className='after:m-0 base-border-main h-[1px]'></div>
 
         <div className='flex items-start flex-col w-full my-5 h-[80%]'>
@@ -209,7 +205,7 @@ const ChatList = () => {
                   placeholder='Enter for search...'
                 />
                 {search && (
-                  <div className='flex flex-col overflow-y-auto h-full left-0 right-0 base-hidden-scroll bg-white absolute top-12 min-h-[300px] rounded-lg'>
+                  <div className='z-[9999] flex flex-col overflow-y-auto left-0 right-0 base-hidden-scroll bg-light dark:bg-dark absolute top-12 rounded-lg'>
                     <SearchList
                       searchTerm={search}
                       result={searchResult}
@@ -220,7 +216,7 @@ const ChatList = () => {
                       setSelectedUser={setSelectedUser}
                       setComponentType={setComponentType}
                     />
-                  </div>//kjwhbrjhwbv
+                  </div> //kjwhbrjhwbv
                 )}
                 {search && (
                   <button
@@ -240,70 +236,68 @@ const ChatList = () => {
               </span>
             </div>
           </div>
-          <div className='overflow-y-scroll h-[800px] bg-darkMain w-full'>
-            {!search && (
-              <div className='flex trung flex-col w-full text-white'>
-                {chatMessageList.map((data: any, index: number) => (
-                  // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-                  <div
-                    key={index}
-                    className={`conversation-item px-2 py-3 flex items-center justify-between text-white rounded-md ${
-                      searchParams.get('username') === data?.receiverUsername.toLowerCase() ||
-                      searchParams.get('username') === data?.senderUsername.toLowerCase()
-                        ? 'style-bg-main shadow-xl'
-                        : 'shadow-sm'
-                    }`}
-                    onClick={() => addUsernameToUrlQuery(data)}
-                  >
-                    <div className='avatar flex flex-col justify-end items-center'>
-                      <div className='flex gap-2 items-center'>
-                        <img
-                          className='w-12 h-12 rounded-full border border-sky-400 shadow-md'
-                          src={
-                            data.receiverName !== profile?.username
-                              ? data.receiverProfilePicture
-                              : data?.senderProfilePicture
-                          }
-                          alt=''
-                        />
-                        <div className='flex flex-col gap-1'>
-                          <p className='text-[16px] font-semibold'>
-                            {data.receiverUsername !== profile?.username ? data.receiverUsername : data?.senderUsername}
-                          </p>
-                          {data?.content && !data?.deleteForMe && !data.deleteForEveryone && (
-                            <ChatListBody data={data} profile={profile} />
-                          )}
-                        </div>
+          <div className='overflow-y-auto flex flex-grow h-[800px] px-6 w-full relative z-20'>
+            <div className='flex trung flex-col w-full text-white cursor-pointer'>
+              {chatMessageList.map((data: any, index: number) => (
+                // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                <div
+                  key={index}
+                  className={`conversation-item px-2 py-3 flex items-center justify-between text-dark dark:text-light rounded-md ${
+                    searchParams.get('username') === data?.receiverUsername.toLowerCase() ||
+                    searchParams.get('username') === data?.senderUsername.toLowerCase()
+                      ? 'style-bg-main shadow-xl'
+                      : 'shadow-sm'
+                  }`}
+                  onClick={() => addUsernameToUrlQuery(data)}
+                >
+                  <div className='avatar flex flex-col justify-end items-center'>
+                    <div className='flex gap-2 items-center'>
+                      <img
+                        className='w-12 h-12 rounded-full border border-sky-400 shadow-md'
+                        src={
+                          data.receiverName !== profile?.username
+                            ? data.receiverProfilePicture
+                            : data?.senderProfilePicture
+                        }
+                        alt=''
+                      />
+                      <div className='flex flex-col gap-1'>
+                        <p className='text-[16px] font-semibold'>
+                          {data.receiverUsername !== profile?.username ? data.receiverUsername : data?.senderUsername}
+                        </p>
+                        {data?.content && !data?.deleteForMe && !data.deleteForEveryone && (
+                          <ChatListBody data={data} profile={profile} />
+                        )}
                       </div>
                     </div>
-                    {data?.createdAt && (
-                      <span className='text-[12px] opacity-60'>{timeAgo.transform(data?.createdAt)}</span>
-                    )}
-
-                    {!data?.content && (
-                      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-                      <div className='cursor-pointer p-1' onClick={removeSelectedUserFromList}>
-                        <PiTrashLight size={18} />
-                      </div>
-                    )}
-
-                    {data?.deleteForMe && data?.deleteForEveryone && (
-                      <div className='bg-red-300 h-12 w-full'>
-                        <span className='message-deleted'>Tin nhắn đã xoá</span>
-                      </div>
-                    )}
-                    {data?.deleteForMe && !data.deleteForEveryone && data.senderUsername !== profile?.username && (
-                      <div className='conversation-message'>
-                        <span className='message-deleted'>Tin nhắn đã xoá</span>
-                      </div>
-                    )}
-                    {data?.deleteForMe && !data.deleteForEveryone && data.receiverUsername !== profile?.username && (
-                      <ChatListBody data={data} profile={profile} />
-                    )}
                   </div>
-                ))}
-              </div>
-            )}
+                  {data?.createdAt && (
+                    <span className='text-[12px] opacity-60'>{timeAgo.transform(data?.createdAt)}</span>
+                  )}
+
+                  {!data?.content && (
+                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                    <div className='cursor-pointer p-1' onClick={removeSelectedUserFromList}>
+                      <PiTrashLight size={18} />
+                    </div>
+                  )}
+
+                  {data?.deleteForMe && data?.deleteForEveryone && (
+                    <div className='bg-red-300 h-12 w-full'>
+                      <span className='message-deleted'>Tin nhắn đã xoá</span>
+                    </div>
+                  )}
+                  {data?.deleteForMe && !data.deleteForEveryone && data.senderUsername !== profile?.username && (
+                    <div className='conversation-message'>
+                      <span className='message-deleted'>Tin nhắn đã xoá</span>
+                    </div>
+                  )}
+                  {data?.deleteForMe && !data.deleteForEveryone && data.receiverUsername !== profile?.username && (
+                    <ChatListBody data={data} profile={profile} />
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

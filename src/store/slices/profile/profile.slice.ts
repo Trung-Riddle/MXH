@@ -1,16 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllProfileOfUser } from 'src/store/api/profile'
+import { getAllProfileOfUser, getSuggestedUsersList } from 'src/store/api/profile'
 
 interface ProfileState {
   loading: boolean
   profile: any
   posts: any[]
+  suggestedUserList: any[]
 }
 
 const initialState: ProfileState = {
   loading: false,
   profile: {},
-  posts: []
+  posts: [],
+  suggestedUserList: []
 }
 
 const ProfileSlice = createSlice({
@@ -33,6 +35,9 @@ const ProfileSlice = createSlice({
           state.profile = user
           state.posts = [...posts]
         }
+      })
+      .addCase(getSuggestedUsersList.fulfilled, (state, action) => {
+        state.suggestedUserList = action.payload
       })
   }
 })

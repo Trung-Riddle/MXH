@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { reactionsMap } from 'src/services/utilities/static.data';
+import { reactionsMap } from 'src/services/utilities/static.data'
 
 const Reactions = ({ handleClick, showLabel = false }: any) => {
   const reactionList = ['like', 'love', 'wow', 'happy', 'sad', 'angry']
   return (
-    <div className='bg-white p-4 rounded-3xl shadow-md'>
+    <div className='bg-gray-100 dark:bg-dark p-4 rounded-3xl shadow-md'>
       <div className='flex items-center justify-center'>
         {reactionList.map((reaction, index) => (
           // eslint-disable-next-line jsx-a11y/click-events-have-key-events
@@ -14,7 +14,7 @@ const Reactions = ({ handleClick, showLabel = false }: any) => {
             onClick={() => handleClick(reaction)}
           >
             {showLabel && (
-              <label className='absolute top-0 left-1/2 -mt-8 px-2 text-xs bg-black text-white rounded'>
+              <label className='absolute top-0 left-1/2 -mt-8 px-2 text-xs bg-black text-dark  dark:text-light ounded'>
                 {reaction}
               </label>
             )}
@@ -26,7 +26,7 @@ const Reactions = ({ handleClick, showLabel = false }: any) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Reactions

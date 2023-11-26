@@ -8,6 +8,7 @@ import ModalUpload from './pages/App/Explore/ModalUpload'
 import { useEffect } from 'react'
 import socketService from './services/socket/socket.service'
 import PostEdit from './components/Posts/PostEdit'
+import 'moment/locale/vi'
 
 export default function App() {
   useEffect(() => {

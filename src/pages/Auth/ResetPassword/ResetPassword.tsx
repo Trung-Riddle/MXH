@@ -1,37 +1,36 @@
 import { Input, Loading } from 'src/components'
-import EmailSvg from 'src/components/icons/Email'
 import bgImg from 'src/assets/bg/bg-auth.jpeg'
-import { ForgotPasswordSchena, forgotSchema } from 'src/services/utilities/rules'
+import { ResetPasswordSchema, resetPassword } from 'src/services/utilities/rules'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import authService from 'src/services/api/auth/auth.service'
-import { Link, useNavigate } from 'react-router-dom'
+import Lock from 'src/components/icons/Lock'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
-const ForgotPassword = () => {
+const ResetPassword = () => {
   const [loading, setLoading] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors }
-  } = useForm<ForgotPasswordSchena>({
-    resolver: yupResolver(forgotSchema)
+  } = useForm<ResetPasswordSchema>({
+    resolver: yupResolver(resetPassword)
   })
 
-  const onSubmit = handleSubmit(async (data: any) => {
+  const onSubmit = handleSubmit(async (data: ResetPasswordSchema) => {
     try {
-      const response = await authService.forgotPassword(data.email)
+      const response = await authService.changePassword(searchParams.get('token') as string, data)
       setLoading(true)
       if (response.status === 200) {
         toast(response.data.message)
-        setIsSuccess(true)
       }
       setLoading(false)
-      reset()
+      navigate('/')
     } catch (error: any) {
       setLoading(false)
       toast.error(error.response.data.message)
@@ -75,44 +74,38 @@ const ForgotPassword = () => {
               </svg>
               <span className='font-bold text-7xl style-main block-select hidden md:block'>lime8</span>
             </div>
-            <h2 className='text-center font-bold text-3xl text-black-1 my-5'>
-              {!isSuccess ? 'Forgot Password' : 'Gửi thành công'}
-            </h2>
+            <h2 className='text-center font-bold text-3xl text-black-1 my-5'>Reset Password</h2>
             <div className='flex flex-col items-center md:w-3/4 mx-auto'>
-              {!isSuccess ? (
-                <form className='w-full md:px-5 flex flex-col' onSubmit={onSubmit}>
-                  <Input
-                    errorMessage={errors.email?.message}
-                    name={'email'}
-                    register={register}
-                    labelText={'Email'}
-                    firstIcon={<EmailSvg width='36' height='34' />}
-                    styleInput='border w-full bg-yellow-10 px-16 rounded-md shadow-1'
-                    placeholder={`Vui lòng nhập email  của bạn`}
-                    type='text'
-                  />
+              <form className='w-full md:px-5' onSubmit={onSubmit}>
+                <Input
+                  errorMessage={errors.password?.message}
+                  name={'password'}
+                  register={register}
+                  labelText={'Password'}
+                  firstIcon={<Lock width='36' height='34' />}
+                  styleInput='border w-full bg-yellow-10 px-16 rounded-md shadow-1'
+                  placeholder={`Vui lòng nhập mật khẩu của bạn`}
+                  type='text'
+                />
 
-                  <button
-                    type='submit'
-                    className='border-none block mx-auto font-bold text-white px-20 rounded-md py-3 my-10 style-bg-main'
-                  >
-                    Submit
-                  </button>
-                  <Link to='/' className='text-lg font-semibold mx-auto'>
-                    Quay lại
-                  </Link>
-                </form>
-              ) : (
-                <div className='flex flex-col items-center justify-center'>
-                  <span className='text-base'>
-                    Email đã được gửi tới hòm thư của bạn vui lòng kiểm tra và cập nhật lại mật khẩu{' '}
-                  </span>
+                <Input
+                  errorMessage={errors.confirmPassword?.message}
+                  name={'confirmPassword'}
+                  register={register}
+                  labelText={'Confirm Password'}
+                  firstIcon={<Lock width='36' height='34' />}
+                  styleInput='border w-full bg-yellow-10 px-16 rounded-md shadow-1'
+                  placeholder={`Vui lòng nhập lại mật khẩu của bạn`}
+                  type='text'
+                />
 
-                  <Link to={'/'} className='py-2 px-6 style-bg-main text-light mt-5 block rounded-full'>
-                    Quay lại
-                  </Link>
-                </div>
-              )}
+                <button
+                  type='submit'
+                  className='border-none block mx-auto font-bold text-white px-20 rounded-md py-3 my-10 style-bg-main'
+                >
+                  Submit
+                </button>
+              </form>
             </div>
           </div>
         </div>
@@ -121,4 +114,4 @@ const ForgotPassword = () => {
   )
 }
 
-export default ForgotPassword
+export default ResetPassword

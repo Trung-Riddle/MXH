@@ -17,6 +17,7 @@ export default function ToggleBackground({ onToggleBackground, isToggle }: Toggl
   const dispatch = useAppDispatch()
   const valuesPostEdit = useAppSelector((state) => state.postEdit)
   const editModalIsOpen = useAppSelector((state) => state.modal.editModalIsOpen)
+  const mainModalIsOpen = useAppSelector((state) => state.modal.mainModalIsOpen)
 
   const handleToggleBackground = useCallback(() => {
     onToggleBackground((v) => !v)
@@ -48,12 +49,12 @@ export default function ToggleBackground({ onToggleBackground, isToggle }: Toggl
   )
 
   useEffect(() => {
-    if (!editModalIsOpen) {
+    if (!editModalIsOpen && !mainModalIsOpen) {
       dispatch(toggleOpenBackground())
       setIsActive(-1)
       dispatch(updatePostEdit({ bgColor: '' }))
     }
-  }, [editModalIsOpen, dispatch])
+  }, [editModalIsOpen, dispatch, mainModalIsOpen])
 
   useEffectOnce(() => {
     if (valuesPostEdit && valuesPostEdit.bgColor) {

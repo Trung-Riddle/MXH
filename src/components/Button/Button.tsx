@@ -15,7 +15,7 @@ function Button(props: ButtonProps) {
   return (
     <button
       className={clsx(
-        'font-bold text-sm',
+        'font-bold text-sm default-animations',
         newClassName,
         rounded ? rounded : ' rounded-full',
         bg ? bg : ' style-bg-main',

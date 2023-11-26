@@ -78,20 +78,16 @@ const PostEdit = () => {
       delete post.imagePost
       delete post?.videoPost
       await postService.updatePost(valuesPostEdit._id as string, post)
-      console.log('Normal post update')
     } else if (post?.post && post.bgColor) {
       delete post.imagePost
       delete post.videoPost
       await postService.updatePost(valuesPostEdit._id as string, post)
-      console.log('update Post with background color')
     } else if (post?.post && post?.imagePost !== '' && !post.bgColor) {
       delete post.videoPost
       await postService.updatePostWithImage(valuesPostEdit._id as string, post)
-      console.log('update Post with image')
     } else if (post?.post && post.imagePost && !post.bgColor && !post.videoPost) {
       delete post.imagePost
       await postService.updatePostWithVideo(valuesPostEdit._id as string, post)
-      console.log('update Post with video')
     }
 
     dispatch(toggleOpenEditModal())

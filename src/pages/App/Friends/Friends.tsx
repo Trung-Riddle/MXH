@@ -81,13 +81,15 @@ const Friends = () => {
         ))}
       </div>
 
-      <Button
-        bg='bg-light'
-        textColor='text-dark dark:text-light'
-        className='py-3 rounded-md shadow-shadowMain mt-4 dark:bg-dark'
-      >
-        Xem thêm
-      </Button>
+      {listUser.length > 16 && (
+        <Button
+          bg='bg-light'
+          textColor='text-dark dark:text-light'
+          className='py-3 rounded-md shadow-shadowMain mt-4 dark:bg-dark'
+        >
+          Xem thêm
+        </Button>
+      )}
     </div>
   )
 }
