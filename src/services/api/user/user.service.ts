@@ -25,5 +25,13 @@ class UserService {
   async getSuggestedUsersList() {
     return (await http.get('user/profile/suggestions')).data
   }
+
+  async userBlockedByAccountOwner(followerId: string) {
+    return (await http.put(`user/block/${followerId}`)).data
+  }
+
+  async userUnBlockedByAccountOwner(followerId: string) {
+    return (await http.put(`user/unblock/${followerId}`)).data
+  }
 }
 export default new UserService()

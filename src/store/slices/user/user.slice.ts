@@ -1,11 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { IUser } from 'src/interfaces'
 
 interface InitialState {
-  token: any
-  profile: any
+  token: string
+  profile: IUser | null
   isOpenModalAvatar: boolean
   isOpenModalBackground: boolean
 }
+
 const initialState: InitialState = {
   token: '',
   profile: null,

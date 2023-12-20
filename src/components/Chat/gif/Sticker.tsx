@@ -1,36 +1,55 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FaSearch } from 'react-icons/fa'
 import { GiphyUtils } from 'src/services/utilities/gif'
 
 const GifBox = ({ handleGiphyClick }: any) => {
   const [gifs, setGifs] = useState([])
   const [loading, setLoading] = useState(false)
+
   useEffect(() => {
     GiphyUtils.getTrendingGifs(setGifs, setLoading)
   }, [])
+
   return (
-    <div className='h-[360px] absolute bottom-14 rounded-md bg-white overflow-hidden'>
-      <div className='flex items-center text-stone-600 min-h-[50px] my-2 mx-3 px-2 border border-stone-600 rounded-2xl'>
-        <FaSearch size={28} />
+    <div className='absolute bottom-16 left-3 rounded-md bg-light shadow dark:bg-dark max-w-[350px] p-3'>
+      <label
+        htmlFor='gif'
+        className='flex items-center bg-inputLight dark:bg-inputDark shadow text-stone-600 px-2 py-1 rounded-md border border-gray-100 dark:border-slate-400/25 mb-2'
+      >
+        <FaSearch size={20} className='text-dark dark:text-light' />
         <input
           id='gif'
           name='gif'
           type='text'
-          className='flex-1 outline-none px-5 h-full'
+          className='flex-1 outline-none px-5 h-full bg-transparent text-sm'
           placeholder='tìm kiếm ảnh động'
-          onChange={(e: any) => GiphyUtils.searchGifs(e.target.value, setGifs, setLoading)}
+          onChange={(e) => GiphyUtils.searchGifs(e.target.value, setGifs, setLoading)}
         />
-      </div>
+      </label>
+
       {loading && <div>Loading...</div>}
-      <div className='overflow-y-auto h-full'>
-        {gifs.map((gif: any, index) => (
-          // eslint-disable-next-line jsx-a11y/no-static-element-interactions
-          <div key={index} onClick={() => handleGiphyClick(gif.images.original.url)}>
-            <img className='w-[470px] object-cover' src={`${gif.images.original.url!}`} alt='' />
+
+      {!loading && (
+        <div className='overflow-y-auto max-h-[300px] w-full'>
+          <div className='columns-3 gap-2'>
+            {gifs.map((gif: any, index) => (
+              <div
+                key={index}
+                aria-hidden='true'
+                className='w-full h-auto'
+                onClick={() => handleGiphyClick(gif.images.original.url)}
+              >
+                <img
+                  className='object-cover mb-2 w-full h-auto rounded-sm'
+                  src={`${gif.images.original.url!}`}
+                  loading='lazy'
+                  alt=''
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   )
 }

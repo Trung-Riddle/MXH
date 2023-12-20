@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { SerializedError } from '@reduxjs/toolkit'
-import { toast } from 'react-toastify'
-
 import { Button, Search } from '..'
 import { AddSvg, FangSvg, HeartSvg, NotifySvg, SendSvg } from '../icons'
 import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
@@ -12,13 +9,17 @@ import ToggleTheme from '../Toggle/ToggleTheme'
 import { getNotifications } from 'src/store/api/notification'
 import socketService from 'src/services/socket/socket.service'
 import useEffectOnce from 'src/hooks/useEffectOnce'
+import clsx from 'clsx'
 
 export default function Header() {
   const dispatch = useAppDispatch()
   const { notifications } = useAppSelector((state) => state.notification)
   const [showNotify, setShowNotify] = useState(false)
   const [listNotification, setListNotification] = useState<any[]>([])
-  const [isNotification, setIsNotification] = useState(false)
+  const [isNotification, setIsNotification] = useState({
+    notifyId: '',
+    isNotify: false
+  })
   const { profile } = useAppSelector((state) => state.user)
 
   useEffectOnce(() => {
@@ -30,10 +31,13 @@ export default function Header() {
   }, [notifications])
 
   useEffect(() => {
-    socketService.socket?.on('received notification', (data: any[]) => {
+    socketService.socket?.on('insert notification', (data: any[]) => {
       console.log(data)
-      // setIsNotification(true)
-      // setListNotification([...data])
+      if (!data.some(({ userFrom }) => userFrom?.username === profile?.username)) {
+        const latest = [...data.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())]
+        setIsNotification({ isNotify: true, notifyId: latest[0]._id })
+        setListNotification(latest)
+      }
     })
   }, [profile])
 
@@ -72,13 +76,13 @@ export default function Header() {
           <Button
             onClick={() => {
               setShowNotify((n) => !n)
-              setIsNotification(false)
+              setIsNotification((prev) => ({ ...prev, isNotify: false }))
             }}
             className='p-2'
           >
             <NotifySvg width='20' height='20' />
           </Button>
-          {isNotification && (
+          {isNotification.isNotify && !showNotify && (
             <span className='absolute top-0 right-0 flex h-2 w-2'>
               <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75'></span>
               <span className='relative inline-flex rounded-full h-2 w-2 bg-red-500'></span>
@@ -90,23 +94,21 @@ export default function Header() {
               {listNotification.length === 0 && <div>No Notifications</div>}
               {listNotification.map((notify) => (
                 <div
-                  className='flex gap-2 hover:bg-slate-400/25 cursor-pointer transition-all ease-linear duration-150 rounded-md p-2'
+                  onClick={() => setIsNotification({ isNotify: false, notifyId: '' })}
+                  aria-hidden='true'
+                  className={clsx(
+                    'flex gap-2 hover:bg-slate-400/25 cursor-pointer transition-all ease-linear duration-150 rounded-md p-2',
+                    isNotification.notifyId === notify._id && 'style-bg-main text-light'
+                  )}
                   key={notify._id}
                 >
                   <img className='w-14 h-14 rounded-full' src={notify.userFrom.profilePicture} alt='' />
 
-                  <p className='text-sm'>{notify.message}</p>
+                  <p className='text-xs'>{notify.message}</p>
                 </div>
               ))}
             </div>
           )}
-        </li>
-        <li>
-          <Link to='/message'>
-            <Button className='p-2'>
-              <SendSvg width='20' height='20' />
-            </Button>
-          </Link>
         </li>
       </ul>
     </header>

@@ -65,7 +65,7 @@ const UserSuggestions = [
 ]
 export default function SidebarRight() {
   const { suggestedUserList } = useAppSelector((state) => state.profile)
-
+  const { profile } = useAppSelector((state) => state.user)
   return (
     <aside className='md:flex flex-shrink-0 hidden flex-col md:max-w-[22.5%] lg:max-w-1/5 sticky inherits-h-header overflow-auto gap-3 py-3 base-hidden-scroll'>
       <Article className='p-3 flex flex-col justify-evenly'>
@@ -94,24 +94,27 @@ export default function SidebarRight() {
         </h2>
 
         <div className='flex flex-col flex-grow overflow-y-auto mt-2'>
-          <div className='flex flex-col min-h-[160px] lg:min-h-[300px] max-h-60 lg:max-h-80 gap-5'>
-            {suggestedUserList.map((userSuggested) => (
-              <Link
-                key={userSuggested._id}
-                to={`/profile/${userSuggested._id}`}
-                className='flex flex-row items-center gap-2 dark:hover:bg-slate-400/25 hover:bg-gray-100 p-1 lg:p-2 rounded-md transition-all ease-linear duration-150'
-              >
-                <div className='relative w-7 lg:w-10 h-7 lg:h-10 flex-shrink-0'>
-                  <img
-                    loading='lazy'
-                    src={userSuggested.profilePicture}
-                    alt={userSuggested.username}
-                    className='absolute rounded-full w-full h-full object-cover inset-0'
-                  />
-                </div>
-                <h4 className='text-xs lg:text-sm'>{userSuggested.username}</h4>
-              </Link>
-            ))}
+          <div className='flex flex-col min-h-[160px] lg:min-h-[300px] max-h-60 lg:max-h-80'>
+            {suggestedUserList.map((userSuggested) => {
+              if (profile?.blockedBy.includes(userSuggested?._id)) return null
+              return (
+                <Link
+                  key={userSuggested._id}
+                  to={`/profile/${userSuggested._id}`}
+                  className='flex flex-row items-center gap-2 dark:hover:bg-slate-400/25 hover:bg-gray-100 p-1 lg:p-2 rounded-md transition-all ease-linear duration-150'
+                >
+                  <div className='relative w-7 lg:w-10 h-7 lg:h-10 flex-shrink-0'>
+                    <img
+                      loading='lazy'
+                      src={userSuggested.profilePicture}
+                      alt={userSuggested.username}
+                      className='absolute rounded-full w-full h-full object-cover inset-0'
+                    />
+                  </div>
+                  <h4 className='text-xs lg:text-sm'>{userSuggested.username}</h4>
+                </Link>
+              )
+            })}
           </div>
         </div>
       </Article>

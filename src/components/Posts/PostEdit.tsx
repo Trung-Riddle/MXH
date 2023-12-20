@@ -7,7 +7,7 @@ import { Button, User } from '..'
 import { privacyCase } from 'src/services/utilities/cases'
 import { useCallback, useEffect, useState } from 'react'
 import Form from './Form/Form'
-import { toggleOpenEditModal, toggleOpenPrivacyModal, updateEditModal } from 'src/store/slices/modal/modal.slice'
+import { toggleOpenEditModal, toggleOpenPrivacyModal } from 'src/store/slices/modal/modal.slice'
 import { resetEditPost } from 'src/store/slices/post/postEdit.slice'
 import ModalPrivacy from './Modals/Privacy/ModalPrivacy'
 import ModalFeeling from './Modals/Feeling/ModalFeeling'
@@ -52,7 +52,7 @@ const PostEdit = () => {
   }, [dispatch])
 
   const handleSubmit = async () => {
-    // setIsLoading(true)
+    setIsLoading(true)
 
     const post: {
       privacy?: string
@@ -68,7 +68,7 @@ const PostEdit = () => {
       feelings: feeling || '',
       bgColor: bgColor || '',
       post: content || '',
-      profilePicture: profile.profilePicture,
+      profilePicture: profile?.profilePicture,
       imagePost: imagePost || '',
       videoPost: videoPost || '',
       gifUrl: gifUrl || ''
@@ -92,6 +92,7 @@ const PostEdit = () => {
 
     dispatch(toggleOpenEditModal())
     dispatch(resetEditPost())
+    setContent('')
     setIsLoading(false)
   }
 
@@ -106,7 +107,12 @@ const PostEdit = () => {
           <div className='border-linear-color w-3/4 mx-auto'></div>
 
           <div className='flex flex-col gap-4 my-4'>
-            <User source={profile.profilePicture} username={profile.username} alt='Avatar User' feeling={feeling}>
+            <User
+              source={profile?.profilePicture || ''}
+              username={profile?.username || ''}
+              alt='Avatar User'
+              feeling={feeling}
+            >
               <Button
                 className='flex items-center py-0.5 px-2 gap-2 text-xs font-normal w-max'
                 rounded='rounded-lg'

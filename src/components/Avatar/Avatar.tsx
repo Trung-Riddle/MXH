@@ -3,7 +3,7 @@ export type AvatarSizes = 'sm' | 'lg' | 'md'
 const avatarSizes: Record<AvatarSizes, string> = {
   md: 'lg:w-14 lg:h-14 md:w-12 md:h-12 w-10 h-10',
   lg: 'w-16 h-16',
-  sm: 'w-12 h-12'
+  sm: 'w-8 h-8'
 }
 
 interface AvatarProps {

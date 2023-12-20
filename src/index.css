@@ -29,6 +29,23 @@
     overflow-y: scroll;
   }
 
+  .question-blocked-title {
+    @apply font-bold text-lg text-dark dark:text-light !important;
+  }
+
+  .swal-text {
+    @apply text-dark text-sm dark:text-light mt-0 overflow-hidden !important;
+  }
+
+  .question-blocked-confirm-button {
+    background: linear-gradient(90deg, #2ecec2 0%, #34bad0 31.25%, #3b89f1 100%) !important;
+    @apply w-[100px] !important;
+  }
+
+  .question-blocked-denny-button {
+    @apply w-[100px] bg-inputLight dark:bg-inputDark shadow text-dark dark:text-light !important;
+  }
+
   .inherits-h-header {
     top: var(--header-height);
     height: calc(100vh - var(--header-height));

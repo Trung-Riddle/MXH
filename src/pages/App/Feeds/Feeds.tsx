@@ -1,5 +1,5 @@
 import { Button } from 'src/components'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import WatchAllSvg from 'src/assets/icons/components/WatchAllSvg'
 import useEffectOnce from 'src/hooks/useEffectOnce'
 import { useAppDispatch } from 'src/hooks/useRedux'
@@ -8,14 +8,22 @@ import PostList from 'src/components/Posts/PostList'
 import StoryList from 'src/components/Stories/StoryList'
 import { useEffect, useState } from 'react'
 import { getSuggestedUsersList } from 'src/store/api/profile'
+import { setSelectedChatUser } from 'src/store/slices/chat/chat.slice'
 
 const Feeds = () => {
   const dispatch = useAppDispatch()
   const [sortType, setSortType] = useState<string>(localStorage.getItem('sortType')! || 'none')
+  const location = useLocation()
 
   useEffect(() => {
     localStorage.setItem('sortType', sortType)
   }, [sortType])
+
+  useEffect(() => {
+    if (!location.pathname.includes('chat')) {
+      dispatch(setSelectedChatUser({ isLoading: false, user: null }))
+    }
+  }, [location.pathname, dispatch])
 
   useEffectOnce(() => {
     dispatch(getAllPostThunk())

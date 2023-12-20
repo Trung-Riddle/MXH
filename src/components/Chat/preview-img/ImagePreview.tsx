@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import React from 'react'
 import { FaTimes } from 'react-icons/fa'
 
 interface IImagePreview {
@@ -8,12 +6,15 @@ interface IImagePreview {
 }
 const ImagePreview = ({ image, onRemoreImg }: IImagePreview) => {
   return (
-    <div className='absolute left-4 bottom-[78px] bg-white-02 rounded-lg'>
-      <div className='border rounded-md p-5'>
-        <img className='w-24 object-cover rounded-lg' src={image} alt='' />
-        {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
-        <span className='absolute top-1 cursor-pointer right-1' onClick={onRemoreImg}>
-          <FaTimes size={14} />
+    <div className='absolute left-4 bottom-[78px]'>
+      <div className='border rounded-md'>
+        <img className='w-40 object-cover rounded-sm' src={image} alt='' />
+        <span
+          aria-hidden='true'
+          className='absolute rounded-full bg-light dark:bg-dark p-1 shadow-md -top-1.5 cursor-pointer -right-1.5'
+          onClick={onRemoreImg}
+        >
+          <FaTimes size={14} className='text-dark dark:text-light' />
         </span>
       </div>
     </div>

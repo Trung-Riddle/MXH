@@ -83,14 +83,14 @@ function MessageDisplay({ chatMessages, profile, updateMessageReaction, deleteCh
         })}
       <div
         ref={scrollRef}
-        className='overflow-y-scroll base-hidden-scroll font-[500] scroll-behavior scroll-smooth max-h-screen pb-[70px]'
+        className='overflow-y-scroll base-hidden-scroll scroll-behavior scroll-smooth h-screen -mt-[64px] py-[64px] pt-[52px]'
       >
         {chatMessages?.map((chat: any, index: any) => (
           <div className='w-full p-5' key={Utils.generateString(8)}>
             {(index === 0 ||
               timeAgo.dayMonthYear(chat.createdAt) !== timeAgo.dayMonthYear(chatMessages[index - 1].createdAt)) && (
               <div className='w-full text-center'>
-                <div className='mx-auto w-max rounded-3xl bg-gray-100 dark:bg-dark text-dark dark:text-light px-6 p-1.5 my-10'>
+                <div className='m-auto rounded-3xl text-dark dark:text-light py-1'>
                   {timeAgo.chatMessageTransform(chat.createdAt)}
                 </div>
               </div>

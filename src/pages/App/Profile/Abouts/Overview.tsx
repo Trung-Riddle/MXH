@@ -5,10 +5,14 @@ import Public from 'src/assets/icons/components/privacy/Public'
 import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import profileService from 'src/services/api/profile/profile.service'
 import { updateUserProfile } from 'src/store/slices/user/user.slice'
+import { updateCurrentProfile } from 'src/store/slices/profile/profile.slice'
 
 const Overview = () => {
   const { profile } = useAppSelector((state) => state.profile)
   const dispatch = useAppDispatch()
+
+  const currentUser = useAppSelector((state) => state.user.profile)
+  const currentProfile = useAppSelector((state) => state.profile.profile)
 
   const [inputValues, setInputValues] = useState<{ [x: string]: string }>({
     work: '',
@@ -44,6 +48,7 @@ const Overview = () => {
 
       await profileService.updateInfoProfile({ [id]: inputValues[id] })
       dispatch(updateUserProfile({ [id]: inputValues[id] }))
+      dispatch(updateCurrentProfile({ [id]: inputValues[id] }))
       toast.success('Updated profile')
       setInputValues({ ...inputValues, [id]: '' })
       setInputFields({ ...inputFields, [id]: false })
@@ -57,12 +62,20 @@ const Overview = () => {
         <div className='flex items-center'>
           <i className='fa-solid fa-briefcase text-lg mr-3'></i>
           <span className='text-sm font-medium flex-1'>Nhân viên tại {profile.work}</span>
-          <button
-            onClick={() => setInputFields({ ...inputFields, work: true })}
-            className='hover:bg-slate-100 px-2 py-1 rounded-full cursor-pointer'
-          >
-            <i className='fa-regular fa-pen-to-square'></i>
-          </button>
+
+          {currentUser._id === currentProfile._id && (
+            <button
+              onClick={() => setInputFields({ ...inputFields, work: true })}
+              className='hover:bg-slate-100 px-2 py-1 rounded-full cursor-pointer'
+            >
+              <i className='fa-regular fa-pen-to-square'></i>
+            </button>
+          )}
+        </div>
+      ) : currentUser._id !== currentProfile._id ? (
+        <div className='flex items-center mr-3'>
+          <i className='fa-solid fa-briefcase text-lg mr-3'></i>
+          Chưa thêm nơi làm việc
         </div>
       ) : (
         <>
@@ -138,12 +151,20 @@ const Overview = () => {
         <div className='flex items-center'>
           <i className='fa-solid fa-school mr-3 text-lg'></i>
           <span className='text-sm font-medium flex-1'>Học tại {profile.school}</span>
-          <button
-            onClick={() => setInputFields({ ...inputFields, school: true })}
-            className='hover:bg-slate-100 px-2 py-1 rounded-full cursor-pointer'
-          >
-            <i className='fa-regular fa-pen-to-square'></i>
-          </button>
+
+          {currentUser._id === currentProfile._id && (
+            <button
+              onClick={() => setInputFields({ ...inputFields, school: true })}
+              className='hover:bg-slate-100 px-2 py-1 rounded-full cursor-pointer'
+            >
+              <i className='fa-regular fa-pen-to-square'></i>
+            </button>
+          )}
+        </div>
+      ) : currentUser._id !== currentProfile._id ? (
+        <div className='flex items-center mr-3'>
+          <i className='fa-solid fa-school mr-3 text-lg'></i>
+          Chưa thêm trường trung học
         </div>
       ) : (
         <>
@@ -218,12 +239,20 @@ const Overview = () => {
         <div className='flex items-center'>
           <i className='fa-solid fa-location-dot text-lg mr-3'></i>
           <span className='text-sm font-medium flex-1'>Sống tại {profile.location}</span>
-          <button
-            onClick={() => setInputFields({ ...inputFields, location: true })}
-            className='hover:bg-slate-100 px-2 py-1 rounded-full cursor-pointer'
-          >
-            <i className='fa-regular fa-pen-to-square'></i>
-          </button>
+
+          {currentUser._id === currentProfile._id && (
+            <button
+              onClick={() => setInputFields({ ...inputFields, location: true })}
+              className='hover:bg-slate-100 px-2 py-1 rounded-full cursor-pointer'
+            >
+              <i className='fa-regular fa-pen-to-square'></i>
+            </button>
+          )}
+        </div>
+      ) : currentUser._id !== currentProfile._id ? (
+        <div className='flex items-center mr-3'>
+          <i className='fa-solid fa-location-dot text-lg mr-3'></i>
+          Chưa có tỉnh/thành phố hiện tại
         </div>
       ) : (
         <>

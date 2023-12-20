@@ -14,8 +14,8 @@ const ToggleTheme = () => {
       >
         <i
           className={clsx(
-            'text-xs dark:text-light text-yellow-500 fa-solid animated',
-            chooseTheme ? 'fa-sun animate-spin' : 'fa-moon animate-spin'
+            'text-xs dark:text-light text-yellow-500 fa-solid animate-animateSpin',
+            chooseTheme ? 'fa-sun' : 'fa-moon'
           )}
         ></i>
       </div>

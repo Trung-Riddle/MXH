@@ -84,23 +84,33 @@ const PostMain = withBaseComponent(({ dispatch, useSelector }) => {
       gifUrl: gifUrl || ''
     }
 
-    if (post.post && !post.bgColor && !post.imagePost && !post.videoPost) {
+    if (!post.imagePost && !post.videoPost) {
       delete post.imagePost
       delete post.videoPost
-      await postService.createPost({ ...post })
-    } else if (post?.post && post.bgColor) {
-      delete post.imagePost
+
+      if (!post.bgColor) {
+        await postService.createPost({ ...post })
+      } else {
+        if (!post.post) {
+          setLoading(false)
+          return
+        }
+        await postService.createPost({ ...post })
+      }
+    }
+
+    if (post.imagePost && !post.bgColor) {
       delete post.videoPost
-      await postService.createPost({ ...post })
-    } else if (post?.post && post?.imagePost && !post.bgColor) {
-      delete post.videoPost
-      await postService.createPostWithImage({ ...post })
-    } else if (post?.post && post.imagePost && !post.bgColor && !post.videoPost) {
-      delete post.imagePost
       await postService.createPostWithImage({ ...post })
     }
 
+    if (post.videoPost && !post.bgColor) {
+      delete post.imagePost
+      await postService.createPostWithVideo({ ...post })
+    }
+
     dispatch(toggleOpenMainModal())
+    setContent('')
     dispatch(resetPost())
     setLoading(false)
   }

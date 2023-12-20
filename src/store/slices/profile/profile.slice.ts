@@ -41,4 +41,6 @@ const ProfileSlice = createSlice({
       })
   }
 })
+
+export const { updateCurrentProfile } = ProfileSlice.actions
 export default ProfileSlice.reducer

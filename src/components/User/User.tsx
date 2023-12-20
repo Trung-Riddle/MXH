@@ -12,6 +12,7 @@ export interface UserProps extends React.HTMLAttributes<HTMLDivElement> {
   styleContent?: string
   feeling?: string
   onClick?: () => void
+  isLoading?: boolean
 }
 
 const User = ({
@@ -25,12 +26,18 @@ const User = ({
   styleContent,
   feeling,
   onClick,
+  isLoading,
   ...props
 }: UserProps) => {
   return (
     <div {...props} className={clsx('flex items-center gap-2 sm:gap-3 ', props.className)}>
       <div aria-hidden='true' onClick={onClick}>
-        <UserPresence alt={alt} presence={presence} source={source} size={size} />
+        {isLoading && (
+          <div className='bg-light dark:bg-dark rounded-full'>
+            <div className='animate-pulse rounded-full bg-gray-300 dark:bg-gray-700 h-[152px] w-[152px]'></div>
+          </div>
+        )}
+        {!isLoading && <UserPresence alt={alt} presence={presence} source={source} size={size} />}
       </div>
 
       {/* User informations */}

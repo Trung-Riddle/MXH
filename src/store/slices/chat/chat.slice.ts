@@ -8,10 +8,11 @@ export interface IChatList {
   receiverUsername: string
   senderUsername: string
   isRead: boolean
+  senderId: string
 }
 interface InitialState {
   chatList: IChatList[]
-  selectedChatUser: any
+  selectedChatUser: any | null
   isLoading: boolean
 }
 const initialState: InitialState = {
@@ -31,6 +32,7 @@ const chatSlice = createSlice({
     },
     setSelectedChatUser: (state, action) => {
       const { isLoading, user } = action.payload
+
       state.selectedChatUser = user
       state.isLoading = isLoading
     }
@@ -51,5 +53,5 @@ const chatSlice = createSlice({
   }
 })
 
-export const { addToChatList, setSelectedChatUser } = chatSlice.actions
+export const { addToChatList, setSelectedChatUser, updateUserReadedData } = chatSlice.actions
 export default chatSlice.reducer

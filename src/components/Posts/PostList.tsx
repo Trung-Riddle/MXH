@@ -1,14 +1,15 @@
 import { RootState } from 'src/store'
-import { useAppSelector } from 'src/hooks/useRedux'
+import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import ListPostSkeleton from './skeletons/ListPostSkeleton'
-import Post from './Post/Post'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { cloneDeep } from 'lodash'
 import socketService from 'src/services/socket/socket.service'
 import InfiniteScroll from './InfiniteScroll'
 import postService from 'src/services/api/post/post.service'
 import { toast } from 'react-toastify'
 import { AnimatePresence, motion } from 'framer-motion'
+import { updateUserProfile } from 'src/store/slices/user/user.slice'
+import Post from './Post/Post'
 
 interface PostListProps {
   sortType: string
@@ -21,6 +22,7 @@ function sortList(list: any[], sortType: string) {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
   }
+
   return list
 }
 
@@ -31,18 +33,24 @@ const PostList = ({ sortType, allPosts }: PostListProps) => {
   const [hasMore, setHasMore] = useState(true)
   const [currentPage, setCurrentPage] = useState(2)
   const [pageSize, setPageSize] = useState(0)
-  const [testState, setTestState] = useState<any>()
+  const dispatch = useAppDispatch()
 
   const handleCheckPrivacy = (profile: any, post: any) => {
     const isPrivate = post?.privacy === 'private' && post?.userId === profile?._id
     const isPublic = post?.privacy === 'public'
     return isPrivate || isPublic
   }
+
   const socketIOPost = (statePosts: any[], setStatePosts: any, sortType: string) => {
     statePosts = cloneDeep(statePosts)
     socketService.socket?.on('add post', (post: any) => {
+      console.log(post)
       statePosts = [post, ...statePosts]
       setStatePosts(sortList(statePosts, sortType))
+
+      if (post.userId === profile?._id) {
+        dispatch(updateUserProfile({ postsCount: statePosts.filter(({ userId }) => userId === profile?._id).length }))
+      }
     })
   }
 
@@ -54,6 +62,7 @@ const PostList = ({ sortType, allPosts }: PostListProps) => {
 
   useEffect(() => {
     socketService.socket?.on('delete post', (postId: string) => {
+      dispatch(updateUserProfile({ postsCount: postList.filter((post) => post._id !== postId).length }))
       setPostList(
         sortList(
           postList.filter((post) => post._id !== postId),
@@ -61,7 +70,7 @@ const PostList = ({ sortType, allPosts }: PostListProps) => {
         )
       )
     })
-  }, [sortType, postList])
+  }, [sortType, postList, dispatch])
 
   useEffect(() => {
     if (allPosts) {
@@ -115,10 +124,12 @@ const PostList = ({ sortType, allPosts }: PostListProps) => {
           </AnimatePresence>
         }
       >
-        {postList.map(
-          (post, index) =>
+        {postList.map((post, index) => {
+          if (profile?.blockedBy.includes(post.userId)) return null
+          return (
             handleCheckPrivacy(profile, post) && (
               <Post
+                listPost={postList}
                 key={index}
                 userId={post.userId}
                 postId={post._id}
@@ -130,9 +141,12 @@ const PostList = ({ sortType, allPosts }: PostListProps) => {
                 profilePicture={post.profilePicture}
                 imgVersion={post.imgVersion}
                 imgId={post.imgId}
+                videoId={post.videoId}
+                videoVersion={post.videoVersion}
               />
             )
-        )}
+          )
+        })}
       </InfiniteScroll>
     )
   }

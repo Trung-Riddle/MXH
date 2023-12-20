@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import authService from 'src/services/api/auth/auth.service'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const ForgotPassword = () => {
   const [loading, setLoading] = useState(false)

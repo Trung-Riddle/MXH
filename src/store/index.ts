@@ -10,6 +10,7 @@ import allCommentOfPost from './slices/comments/comments.slice'
 import notificationSlice from './slices/notifications/notifications.slice'
 import profileSlice from './slices/profile/profile.slice'
 import postEditSlice from './slices/post/postEdit.slice'
+import modalVideoSlice from './slices/modal/video.slice'
 
 export const store = configureStore({
   reducer: {
@@ -23,7 +24,8 @@ export const store = configureStore({
     allComment: allCommentOfPost,
     notification: notificationSlice,
     profile: profileSlice,
-    postEdit: postEditSlice
+    postEdit: postEditSlice,
+    modalVideo: modalVideoSlice
   }
 })
 

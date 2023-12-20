@@ -2,6 +2,7 @@
 import React from 'react'
 import { createSearchParams, useLocation, useNavigate } from 'react-router-dom'
 import { Avatar, User } from 'src/components'
+import { useAppSelector } from 'src/hooks/useRedux'
 
 interface SearchListProps {
   result: any[]
@@ -25,6 +26,7 @@ const SearchList = ({
 }: SearchListProps) => {
   const location = useLocation()
   const navigate = useNavigate()
+  const { profile } = useAppSelector((state) => state.user)
   const addUsernameToUrlQuery = (user: any) => {
     setComponentType('searchList')
     setSelectedUser(user)
@@ -35,33 +37,33 @@ const SearchList = ({
     setSearchResult([])
   }
   return (
-    <div className='overflow-y-scroll base-hidden-scroll h-max w-full '>
-      <div className='w-full flex items-center justify-center flex-col gap-2 p-2'>
+    <div className='overflow-y-scroll base-hidden-scroll w-full p-2'>
+      <div className='w-full flex items-center justify-center flex-col gap-2'>
         {!isSearching && result.length > 0 && (
           <>
-            {result.map((user) => (
-              // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-              <div
-                className='w-full bg-gray-100 dark:bg-dark shadow-md rounded-lg capitalize'
-                key={user._id}
-                onClick={() => addUsernameToUrlQuery(user)}
-              >
-                <Avatar style={{ color: '#333' }} avatar={user.profilePicture} fullName={user.username} />
-              </div>
-            ))}
+            {result.map((user) => {
+              return (
+                <div
+                  aria-hidden='true'
+                  className='w-full bg-gray-100 shadow-md p-2 rounded-lg capitalize'
+                  key={user._id}
+                  onClick={() => addUsernameToUrlQuery(user)}
+                >
+                  <Avatar style={{ color: '#333' }} avatar={user.profilePicture} fullName={user.username} />
+                </div>
+              )
+            })}
           </>
         )}
         {searchTerm && isSearching && result.length === 0 && (
           <div>
-            <span className='text-dark text-xs dark:text-light'>Đang Tìm kiếm...</span>
+            <span>Đang Tìm kiếm...</span>
           </div>
         )}
         {searchTerm && !isSearching && result.length === 0 && (
-          <div className='text-dark dark:text-light text-center'>
-            <span className='mb-3 text-xs'>Hông tìm thấy người nào.</span>
-            <p className='text-xs'>
-              Không tìm thấy cho từ khoá <strong>{searchTerm}</strong>
-            </p>
+          <div className='text-white'>
+            <span>Hông tìm thấy người nào.</span>
+            <p>Không tìm thấy cho từ khoá {searchTerm}</p>
           </div>
         )}
       </div>
