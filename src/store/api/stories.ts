@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 
 export const getAllStoryFaker = createAsyncThunk('story/getAllStoryFaker', async () => {
   try {
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise((resolve) => setTimeout(resolve, 500))
     return StoryList
   } catch (error: any) {
     Swal.fire('Thông báo', error.message, 'error')

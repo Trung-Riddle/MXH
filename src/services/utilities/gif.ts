@@ -9,6 +9,8 @@ export class GiphyUtils {
       setLoading(false)
     } catch (error) {
       setLoading(false)
+    } finally {
+      setLoading(false)
     }
   }
 

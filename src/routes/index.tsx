@@ -4,7 +4,7 @@ import Explore from 'src/pages/App/Explore/Explore'
 // import Message from 'src/pages/App/Messages/Message'
 // import SingleChatBox from 'src/pages/App/Messages/SingleChatBox'
 import Profile from 'src/pages/App/Profile/Profile'
-import { AuthTabs } from 'src/pages/Auth'
+import { AuthTabs, ForgotPassword, ResetPassword } from 'src/pages/Auth'
 import { LayoutMain, LayoutMessage } from 'src/pages/Layouts'
 import { Chat } from 'src/pages/App'
 import LayoutChildren from 'src/pages/Layouts/LayoutChildren'
@@ -29,6 +29,14 @@ export default function AppRoutes() {
     {
       path: '/',
       element: <AuthTabs />
+    },
+    {
+      path: '/forgot-password',
+      element: <ForgotPassword />
+    },
+    {
+      path: '/reset-password',
+      element: <ResetPassword />
     },
     {
       element: <LayoutMobile />,

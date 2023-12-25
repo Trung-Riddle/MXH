@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { getAllPostThunk } from 'src/store/api/posts'
 // import { PostDocuments } from 'src/interfaces/post.interface'
 
@@ -21,6 +21,8 @@ interface IPost {
   feelings?: string
   videoVersion?: string
   suggestions?: string
+
+  reactionsCount?: number
 }
 
 interface IAllPosts {
@@ -45,6 +47,11 @@ const AllPostSlice = createSlice({
       if (action.payload) {
         state.posts = [...state.posts, ...action.payload]
       }
+    },
+    updateReactionsCount: (state, action) => {
+      if (action.payload) {
+        state.posts = [...action.payload]
+      }
     }
   },
   extraReducers: (builder) => {
@@ -62,5 +69,5 @@ const AllPostSlice = createSlice({
       })
   }
 })
-export const { addToPosts, updateMorePosts } = AllPostSlice.actions
+export const { addToPosts, updateMorePosts, updateReactionsCount } = AllPostSlice.actions
 export default AllPostSlice.reducer

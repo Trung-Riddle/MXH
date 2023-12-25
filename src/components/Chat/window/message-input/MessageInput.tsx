@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Button } from 'src/components'
 import IconSvg from 'src/assets/icons/components/messages/IconSvg'
 import LinkSvg from 'src/assets/icons/components/messages/LinkSvg'
-import { SearchSvg, SendSvg } from 'src/components/icons'
+import { SendSvg } from 'src/components/icons'
 import { BsImages } from 'react-icons/bs'
 import loadable from '@loadable/component'
 import GifBox from '../../gif/Sticker'
@@ -88,11 +88,11 @@ export default function MessageInput({ setChatMessage }: IMessageInput) {
           }}
         />
       )}
-      <form className='w-full bg-white' onSubmit={handleSubmit}>
-        <div className='border h-16 flex items-center gap-3 w-full px-2'>
-          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-element-interactions */}
+      <form className='w-full bg-light dark:bg-dark' onSubmit={handleSubmit}>
+        <div className='border-t border-gray-200 dark:border-slate-400/25 py-2 flex items-center gap-3 w-full px-2'>
           <label
             htmlFor=''
+            aria-hidden='true'
             onClick={() => {
               setShowEmojiContainer(false)
               setShowGifContainer(false)
@@ -106,17 +106,17 @@ export default function MessageInput({ setChatMessage }: IMessageInput) {
                   fileInputRef.current.value = null
                 }
               }}
-              onChange={(event: any) => addToPreview(event.target.files[0])}
+              onChange={(e) => addToPreview(e.target.files?.[0] as File)}
               ref={fileInputRef}
               name='image'
               id='image'
               type='file'
               hidden
             />
-            <BsImages size={30} />
+            <BsImages size={22} />
           </label>
-          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <div
+            aria-hidden='true'
             onClick={() => {
               setShowEmojiContainer(false)
               setShowGifContainer(!showGifContainer)
@@ -124,10 +124,10 @@ export default function MessageInput({ setChatMessage }: IMessageInput) {
             }}
             className='cursor-pointer sticker-gif'
           >
-            <LinkSvg width='32' height='32' />
+            <LinkSvg width='22' height='22' />
           </div>
-          {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
           <div
+            aria-hidden='true'
             className='cursor-pointer emoji'
             onClick={() => {
               setShowEmojiContainer(!showEmojiContainer)
@@ -135,21 +135,21 @@ export default function MessageInput({ setChatMessage }: IMessageInput) {
               setShowImagePreview(false)
             }}
           >
-            <IconSvg width='32' height='32' />
+            <IconSvg width='22' height='22' />
           </div>
           <input
             ref={messageInputRef}
-            className='border-2 text-xl outline-none rounded-2xl border-white py-1 px-3 flex-1 text-stone-700'
+            className='border-2 border-gray-200 dark:border-slate-400/25 text-base outline-none bg-inputLight dark:bg-inputDark rounded-2xl py-1 px-3 flex-1 text-stone-700 dark:text-light'
             type='text'
             id='message'
             name='message'
             value={message}
             onChange={(event) => setMessage(event.target.value)}
-            placeholder='Soạn tin nhắn ...'
+            placeholder='Aa ...'
           />
           {showImagePreview && !message && (
-            <Button className='px-5 py-2' onClick={handleImageClick}>
-              <SendSvg width='32' height='32' />
+            <Button className='px-1.5 py-1.5' rounded='rounded-md' onClick={handleImageClick}>
+              <SendSvg width='22' height='22' />
             </Button>
           )}
         </div>

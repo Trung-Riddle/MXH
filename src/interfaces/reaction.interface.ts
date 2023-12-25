@@ -1,19 +1,10 @@
-export interface ReactionsDocuments {
-  id: string
-  username: string
-  avatarColor: string
-  type: string
-  profilePicture: string
+export type ReactionTypes = 'like' | 'wow' | 'love' | 'angry' | 'sad' | 'happy'
+
+export interface IReaction {
+  _id?: string
   postId: string
-  userTo: string
-  comment: string
-  createdAt: Date
-}
-export interface IReactions {
-  angry: number
-  happy: number
-  like: number
-  love: number
-  sad: number
-  wow: number
+  type: ReactionTypes
+  username: string
+  profilePicture?: string
+  avatarColor: string
 }

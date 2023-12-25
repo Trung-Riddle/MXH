@@ -33,5 +33,23 @@ export const loginSchema = Yup.object({
     .max(15, 'Password không quá 15 kí tự')
 })
 
+export const forgotSchema = Yup.object({
+  email: Yup.string().required('Vui lòng nhập email').email('Email không đúng định dạng')
+})
+
+export const resetPassword = Yup.object({
+  password: Yup.string()
+    .required('Vui lòng nhập password')
+    .min(6, 'Password tối thiểu là 6 kí tự')
+    .max(15, 'Password không quá 15 kí tự'),
+  confirmPassword: Yup.string()
+    .required('Vui lòng nhập lại password')
+    .min(6, 'Password tối thiểu là 6 kí tự')
+    .max(15, 'Password không quá 15 kí tự')
+    .oneOf([Yup.ref('password')], 'password nhập lại không trùng khớp')
+})
+
 export type RegisterSchema = Yup.InferType<typeof registerSchema>
 export type LoginSchema = Yup.InferType<typeof loginSchema>
+export type ResetPasswordSchema = Yup.InferType<typeof resetPassword>
+export type ForgotPasswordSchena = Yup.InferType<typeof forgotSchema>

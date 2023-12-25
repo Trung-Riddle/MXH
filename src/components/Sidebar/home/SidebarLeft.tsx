@@ -6,12 +6,13 @@ import { useTheme } from 'src/hooks/useTheme'
 import SettingSvg from 'src/assets/icons/components/navigations/SettingSvg'
 import SignOutSvg from 'src/assets/icons/components/navigations/SignOutSvg'
 import { useAppSelector } from 'src/hooks/useRedux'
-import { clearUser } from 'src/store/slices/user/user.slice'
+import { clearUser, updateUserProfile } from 'src/store/slices/user/user.slice'
 import userService from 'src/services/api/user/user.service'
 import Swal from 'sweetalert2'
 import withBaseComponent from 'src/hooks/withBaseComponent'
 import IHocProps from 'src/interfaces/hoc.interface'
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
+import socketService from 'src/services/socket/socket.service'
 const Metrics = [
   {
     id: 1,
@@ -33,6 +34,7 @@ const Metrics = [
 const Sidebar = ({ navigate, dispatch }: IHocProps) => {
   const { profile } = useAppSelector((state) => state.user)
   const location = useLocation()
+  const { posts } = useAppSelector((state) => state.allPost)
   const { chooseTheme } = useTheme()
   const logout = () => {
     Swal.fire({
@@ -49,28 +51,58 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
     })
   }
 
+  useEffect(() => {
+    socketService.socket?.on('add follower', (data: any) => {
+      if (profile?._id === data._id) {
+        dispatch(updateUserProfile({ followersCount: data.followersCount, followingCount: data.followingCount }))
+      }
+    })
+  }, [profile?._id, dispatch])
+
+  useEffect(() => {
+    socketService.socket?.on('remove follower', ({ followeeId, followersCount }: any) => {
+      if (profile?._id === followeeId) {
+        dispatch(
+          updateUserProfile({
+            followersCount: profile!.followersCount - followersCount
+          })
+        )
+      }
+    })
+  }, [profile, dispatch])
+
   return (
-    <div className='md:flex hidden flex-shrink-0 flex-col max-w-1/5 sticky inherits-h-header base-hidden-scroll overflow-y-auto overflow-x-hidden gap-3 py-3'>
+    <div className='md:flex hidden flex-shrink-0 flex-col md:max-w-[22.5%] lg:max-w-1/5 sticky inherits-h-header base-hidden-scroll overflow-y-auto overflow-x-hidden gap-3 py-3'>
       <Article className='p-3 flex flex-col items-center justify-center md:flex-grow-0 md:gap-0 lg:gap-2 xl:gap-4'>
         <Link
-          to={'/profile/' + profile._id}
+          to={'/profile/' + profile?._id}
           className='flex flex-col justify-center items-center md:gap-1 xl:gap-2 my-2'
         >
           <div className='rounded-full relative sm:w-10 sm:h-10 md:w-14 md:h-14 lg:w-20 lg:h-20 overflow-hidden'>
             <img
               className='absolute inset-0 object-cover w-full h-full max-w-full'
-              src={profile.profilePicture}
+              src={profile?.profilePicture}
               alt=''
             />
           </div>
 
-          <h5 className='md:text-xs lg:text-sm text-dark dark:text-light font-bold'>{profile.username}</h5>
+          <h5 className='md:text-xs lg:text-sm text-dark dark:text-light font-bold'>{profile?.username}</h5>
         </Link>
 
         <div className='flex items-center justify-between flex-row w-full'>
-          {Metrics.map(({ count, id, label }) => (
-            <Metric key={id} count={count} label={label} />
-          ))}
+          <div className='flex flex-col items-center justify-center md:justify-between gap-1'>
+            <span className='md:text-[10px] lg:text-xs font-bold'>{profile?.postsCount}</span>
+            <p className='font-bold md:text-[8px] xl:text-xs'>Post</p>
+          </div>
+
+          <div className='flex flex-col items-center justify-center md:justify-between gap-1'>
+            <span className='md:text-[10px] lg:text-xs font-bold'>{profile?.followersCount}</span>
+            <p className='font-bold md:text-[8px] xl:text-xs'>Follower</p>
+          </div>
+          <div className='flex flex-col items-center justify-center md:justify-between gap-1'>
+            <span className='md:text-[10px] lg:text-xs font-bold'>{profile?.followingCount}</span>
+            <p className='font-bold md:text-[8px] xl:text-xs'>Following</p>
+          </div>
         </div>
       </Article>
 
@@ -104,10 +136,14 @@ const Sidebar = ({ navigate, dispatch }: IHocProps) => {
         </button>
       </Article>
 
-      <Article className='p-3 flex flex-col lg:justify-center md:flex-grow-0'>
-        <h2 className='font-bold text-base mb-2 text-center'>Contact us</h2>
-        <address className='text-xs mb-1'>lime8@gmail.com</address>
-        <p className='whitespace-pre-wrap break-words text-xs'>Copyright © COGNOSPHERE. All Rights Reserved.</p>
+      <Article className='flex flex-col justify-center lg:justify-center lg:text-left text-center lg:p-3 p-2'>
+        <h2 className='font-bold lg:text-base text-dark dark:text-light text-xs lg:mb-3 mb-2 text-center'>
+          Contact us
+        </h2>
+        <address className='text-[10px] lg:text-xs mb-1'>lime8@gmail.com</address>
+        <p className='text-[10px] leading-4 lg:leading-none break-words text-xs'>
+          Copyright © COGNOSPHERE. All Rights Reserved.
+        </p>
       </Article>
     </div>
   )

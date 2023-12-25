@@ -4,6 +4,7 @@ import { reactionsMap } from 'src/services/utilities/static.data'
 import { timeAgo } from 'src/services/utilities/timeago'
 import doubleCheckmark from 'src/assets/reactions/doublecheck.png'
 import RightMessageBubble from './RightMessageBubble'
+import clsx from 'clsx'
 
 const RightMessageDisplay = ({
   chat,
@@ -25,30 +26,33 @@ const RightMessageDisplay = ({
   setImageUrl
 }: any) => {
   return (
-    <div className='flex flex-col items-end gap-2 px-5 py-2 w-full rounded-3xl'>
-      <div className='w-2/6 style-bg-main px-3 py-2 rounded-xl relative'>
-        <div className='container'>
-          {toggleReaction && index === activeElementIndex && !chat?.deleteForEveryone && (
-            <div ref={reactionRef}>
-              <Reactions
-                handleClick={(event: any) => {
-                  const body = {
-                    conversationId: chat?.conversationId,
-                    messageId: chat?._id,
-                    reaction: event,
-                    type: 'add'
-                  }
-                  handleReactionClick(body)
-                  setToggleReaction(false)
-                }}
-              />
-            </div>
-          )}
+    <div className='flex flex-col items-end gap-2 px-5 py-2 w-full rounded-3xl relative'>
+      {toggleReaction && index === activeElementIndex && !chat?.deleteForEveryone && (
+        <div ref={reactionRef}>
+          <Reactions
+            handleClick={(event: any) => {
+              const body = {
+                conversationId: chat?.conversationId,
+                messageId: chat?._id,
+                reaction: event,
+                type: 'add'
+              }
+              handleReactionClick(body)
+              setToggleReaction(false)
+            }}
+          />
         </div>
+      )}
+      <div
+        className={clsx(
+          'max-w-[65%] style-bg-main px-3 py-2 rounded-xl relative',
+          chat?.content.length < 10 && !chat?.selectedImage ? 'w-[130px]' : 'w-max'
+        )}
+      >
         <div className='message-right-container'>
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events */}
           <div
-            className='message-content'
+            aria-hidden='true'
+            className='text-light'
             onClick={() => {
               if (!chat?.deleteForEveryone) {
                 delMessage(chat, 'deleteForEveryone')
@@ -89,12 +93,12 @@ const RightMessageDisplay = ({
             )}
           </div>
           {showReactionIcon && index === activeElementIndex && !chat?.deleteForEveryone && (
-            // eslint-disable-next-line jsx-a11y/click-events-have-key-events
             <div
+              aria-hidden='true'
               onClick={() => {
                 setToggleReaction(true)
               }}
-              className='w-10 h-10 flex justify-center items-center text-3xl rounded-3xl absolute border bg-white-02 cursor-pointer left-[-50px] bottom-2'
+              className='w-10 h-10 flex justify-center items-center text-3xl rounded-3xl absolute border cursor-pointer left-[-50px] bottom-2 text-dark dark:text-light'
             >
               &#9786;
             </div>
@@ -102,11 +106,11 @@ const RightMessageDisplay = ({
         </div>
         <div className='message-bottom'>
           {chat?.reaction && chat?.reaction.length > 0 && !chat.deleteForEveryone && (
-            <div className='message-reaction'>
+            <div className='absolute bottom-1 right-1  flex items-center -space-x-4'>
               {chat?.reaction.map((data: any, index: number) => (
-                // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
                 <img
-                  className='w-5 h-5 object-cover rounded-lg'
+                  aria-hidden='true'
+                  className='w-7 h-7 object-cover rounded-lg'
                   key={index}
                   src={reactionsMap[data?.type]}
                   alt=''
@@ -129,13 +133,13 @@ const RightMessageDisplay = ({
             {chat?.senderUsername === profile?.username && !chat?.deleteForEveryone && (
               <>
                 {lastChatMessage?.isRead ? (
-                  <img className='w-[13px]' src={doubleCheckmark} alt='' />
+                  <img className='w-[13px] absolute top-1 left-1' src={doubleCheckmark} alt='' />
                 ) : (
                   <>{chat?.isRead && <img className='w-[13px]' src={doubleCheckmark} alt='' />}</>
                 )}
               </>
             )}
-            <span>{timeAgo.timeFormat(chat?.createdAt)}</span>
+            <span className='text-light text-sm font-semibold'>{timeAgo.timeFormat(chat?.createdAt)}</span>
           </div>
         </div>
       </div>

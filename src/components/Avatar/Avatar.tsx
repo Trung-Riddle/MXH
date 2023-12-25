@@ -1,9 +1,9 @@
 export type AvatarSizes = 'sm' | 'lg' | 'md'
 
 const avatarSizes: Record<AvatarSizes, string> = {
-  md: 'md:w-14 md:h-14 w-10 h-10',
+  md: 'lg:w-14 lg:h-14 md:w-12 md:h-12 w-10 h-10',
   lg: 'w-16 h-16',
-  sm: 'w-12 h-12'
+  sm: 'w-8 h-8'
 }
 
 interface AvatarProps {
@@ -24,7 +24,7 @@ const Avatar = ({ fullName, avatar, size = 'sm', subs, style }: AvatarProps) => 
       </div>
 
       <div style={style} className='flex flex-col gap-1'>
-        <h3 className='font-bold text-xs md:text-sm'>{fullName}</h3>
+        <h3 className='font-bold md:text-xs lg:text-sm text-dark dark:text-light'>{fullName}</h3>
         <span className='text-[10px] md:text-xs font-medium'>{subs}</span>
       </div>
     </div>

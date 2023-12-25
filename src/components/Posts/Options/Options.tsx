@@ -2,12 +2,7 @@ import Icons from 'src/assets/icons'
 import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import { RootState } from 'src/store'
 
-import {
-  toggleOpenFeelingsModal,
-  toggleOpenGifsModal,
-  toggleOpenInputFile,
-  toggleOpenVideoModal
-} from 'src/store/slices/modal/modal.slice'
+import { toggleOpenFeelingsModal, toggleOpenGifsModal, toggleOpenInputFile } from 'src/store/slices/modal/modal.slice'
 import { updatePostItem } from 'src/store/slices/post/post.slice'
 import { updatePostEdit } from 'src/store/slices/post/postEdit.slice'
 
@@ -40,20 +35,13 @@ const Options = () => {
               dispatch(updatePostItem({ imagePost: '' }))
             }
           }}
-          className={`p-1 hover:bg-slate-400/20 transition-all ease-linear duration-150 rounded-md ${
+          className={`p-1 hover:bg-slate-400/20 transition-all ease-linear duration-150 rounded-md flex items-center gap-1.5 ${
             checkDisabledOptions('bgColor') ? 'cursor-not-allowed' : 'cursor-pointer'
           }`}
           disabled={checkDisabledOptions('bgColor')}
         >
           <Icons.Post.AddImage width='28' height='28' disabled={checkDisabledOptions('bgColor')} />
-        </button>
-        <button
-          onClick={() => dispatch(toggleOpenVideoModal())}
-          className={`p-1 hover:bg-slate-400/20 transition-all ease-linear duration-150 rounded-md ${
-            checkDisabledOptions('bgColor') ? 'cursor-not-allowed' : 'cursor-pointer'
-          }`}
-          disabled={checkDisabledOptions('bgColor')}
-        >
+          <span className='text-[10px] text-dark dark:text-light'>OR</span>
           <Icons.Post.AddVideo width='28' height='28' disabled={checkDisabledOptions('bgColor')} />
         </button>
         <button

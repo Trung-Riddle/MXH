@@ -35,23 +35,23 @@ export default class Utils {
     deleteSessionPageReload()
     setLoggedIn(false)
   }
-  static appImageUrl(version: string, id: string) {
+  static appImageUrl(version: string, id: string, type?: string) {
     if (typeof version === 'string' && typeof id === 'string') {
       version = version.replace(/['"]+/g, '')
       id = id.replace(/['"]+/g, '')
     }
-    return `https://res.cloudinary.com/dgyk7uloc/image/upload/v${version}/${id}`
+    return `https://res.cloudinary.com/dgyk7uloc/${type === 'video' ? 'video' : 'image'}/upload/v${version}/${id}`
   }
   static checkIfUserIsOnline(username: any, onlineUsers: any) {
     return some(onlineUsers, (user) => user === username?.toLowerCase())
   }
   static generateString(length: number) {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = ' ';
-    const charactersLength = characters.length;
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    let result = ' '
+    const charactersLength = characters.length
     for (let i = 0; i < length; i++) {
-      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      result += characters.charAt(Math.floor(Math.random() * charactersLength))
     }
-    return result;
+    return result
   }
 }

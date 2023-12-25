@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Button } from 'src/components'
 import CardFriend from 'src/components/Friends/CardFriend'
-import { useAppSelector } from 'src/hooks/useRedux'
+import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import followService from 'src/services/api/follow/follow.service'
 import profileService from 'src/services/api/profile/profile.service'
 import socketService from 'src/services/socket/socket.service'
@@ -9,9 +9,12 @@ import socketService from 'src/services/socket/socket.service'
 const Friends = () => {
   const [listUser, setListUser] = useState<any[]>([])
   const [followings, setFollowings] = useState<any[]>([])
-
+  const dispatch = useAppDispatch()
   const { profile } = useAppSelector((state) => state.user)
-  const isFollow = useCallback((userId: string) => followings.some((f) => f._id === userId), [followings])
+  const [isFollow, setIsFollow] = useState({
+    follow: false,
+    userId: ''
+  })
 
   useEffect(() => {
     const getAllUser = async () => {
@@ -31,7 +34,7 @@ const Friends = () => {
 
   useEffect(() => {
     socketService.socket?.on('add follower', (data: any) => {
-      if (isFollow(data._id)) {
+      if (isFollow.follow) {
         setFollowings([...followings.filter((f) => f._id !== data._id)])
       } else {
         setFollowings([...followings, data])
@@ -49,18 +52,30 @@ const Friends = () => {
         ])
       }
     })
-  }, [isFollow, followings, listUser])
+  }, [isFollow.follow, followings, listUser])
+
+  console.log(listUser)
+
+  useEffect(() => {
+    socketService.socket?.on('remove follower', ({ followeeId, followersCount }: any) => {
+      setListUser([
+        ...listUser.map((u) => (u._id === followeeId ? { ...u, followersCount: u.followersCount - followersCount } : u))
+      ])
+    })
+  }, [profile, dispatch, listUser])
 
   const handleFollowUser = useCallback(
     async (userId: string) => {
-      if (isFollow(userId)) {
-        await followService.unFollowUser(profile._id, userId)
+      if (isFollow.follow) {
+        await followService.unFollowUser(profile?._id || '', userId)
         setListUser([...listUser.map((u) => (u._id === userId ? { ...u, followersCount: u.followersCount - 1 } : u))])
+        setIsFollow({ follow: false, userId })
       } else {
         await followService.followUser(userId)
+        setIsFollow({ follow: true, userId })
       }
     },
-    [isFollow, profile._id, listUser]
+    [isFollow.follow, profile?._id, listUser]
   )
 
   return (
@@ -76,18 +91,20 @@ const Friends = () => {
             followers={user.followersCount}
             following={user.followingCount}
             fullName={user.username}
-            text={isFollow(user._id) ? 'Un Follow' : 'Follow'}
+            text={isFollow.userId === user._id && isFollow.follow ? 'Un Follow' : 'Follow'}
           />
         ))}
       </div>
 
-      <Button
-        bg='bg-light'
-        textColor='text-dark dark:text-light'
-        className='py-3 rounded-md shadow-shadowMain mt-4 dark:bg-dark'
-      >
-        Xem thêm
-      </Button>
+      {listUser.length > 16 && (
+        <Button
+          bg='bg-light'
+          textColor='text-dark dark:text-light'
+          className='py-3 rounded-md shadow-shadowMain mt-4 dark:bg-dark'
+        >
+          Xem thêm
+        </Button>
+      )}
     </div>
   )
 }

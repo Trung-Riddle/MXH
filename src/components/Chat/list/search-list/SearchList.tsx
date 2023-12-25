@@ -2,6 +2,7 @@
 import React from 'react'
 import { createSearchParams, useLocation, useNavigate } from 'react-router-dom'
 import { Avatar, User } from 'src/components'
+import { useAppSelector } from 'src/hooks/useRedux'
 
 interface SearchListProps {
   result: any[]
@@ -25,6 +26,7 @@ const SearchList = ({
 }: SearchListProps) => {
   const location = useLocation()
   const navigate = useNavigate()
+  const { profile } = useAppSelector((state) => state.user)
   const addUsernameToUrlQuery = (user: any) => {
     setComponentType('searchList')
     setSelectedUser(user)
@@ -39,16 +41,18 @@ const SearchList = ({
       <div className='w-full flex items-center justify-center flex-col gap-2'>
         {!isSearching && result.length > 0 && (
           <>
-            {result.map((user) => (
-              // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-              <div
-                className='w-full bg-gray-100 shadow-md p-2 rounded-lg capitalize'
-                key={user._id}
-                onClick={() => addUsernameToUrlQuery(user)}
-              >
-                <Avatar style={{color: '#333'}} avatar={user.profilePicture} fullName={user.username} />
-              </div>
-            ))}
+            {result.map((user) => {
+              return (
+                <div
+                  aria-hidden='true'
+                  className='w-full bg-gray-100 shadow-md p-2 rounded-lg capitalize'
+                  key={user._id}
+                  onClick={() => addUsernameToUrlQuery(user)}
+                >
+                  <Avatar style={{ color: '#333' }} avatar={user.profilePicture} fullName={user.username} />
+                </div>
+              )
+            })}
           </>
         )}
         {searchTerm && isSearching && result.length === 0 && (

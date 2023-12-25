@@ -32,7 +32,7 @@ const SidebarMessage = ({ navigate, dispatch }: IHocProps) => {
   }
 
   return (
-    <div className='h-screen sticky md:flex flex-col overflow-auto w-max base-hidden-scroll hidden top-0'>
+    <div className='h-screen sticky md:flex flex-col overflow-auto w-max base-hidden-scroll hidden top-0 flex-shrink-0'>
       {/* Logo Fang */}
       <div className='mx-6 mb-10 mt-5'>
         <FangHeadSvg width='40px' height='40px' />
@@ -45,9 +45,12 @@ const SidebarMessage = ({ navigate, dispatch }: IHocProps) => {
             <div key={route.pathname} className='relative w-full'>
               <NavLink
                 to={route.pathname}
-
                 className={({ isActive }) =>
-                  isActive ? AppSettings.NavigationStyles.Active : AppSettings.NavigationStyles.UnActive
+                  isActive
+                    ? location.pathname?.includes('chat')
+                      ? `${AppSettings.NavigationStyles.Active} cursor-not-allowed`
+                      : AppSettings.NavigationStyles.Active
+                    : AppSettings.NavigationStyles.UnActive
                 }
               >
                 <route.icon width='28px' height='28px' active={route.pathname === pathname} />

@@ -35,38 +35,38 @@ const AppSettings = {
     {
       pathname: '',
       icon: Icons.NavigationFriends.Friends,
-      label: 'Bài viết'
+      label: 'Posts'
     },
     {
       pathname: 'about',
       icon: Icons.NavigationFriends.Friends,
-      label: 'Giới thiệu'
+      label: 'About'
     },
     {
       pathname: 'friends',
       icon: Icons.NavigationFriends.Friends,
-      label: 'Bạn bè'
+      label: 'Followers'
     },
     {
       pathname: 'resources',
       icon: Icons.NavigationFriends.Friends,
-      label: 'Tài nguyên'
+      label: 'Resources'
     }
   ],
   RoutesAbout: [
     {
       pathname: 'about',
-      label: 'Tổng quan'
+      label: 'Overview'
     }
   ],
   RoutesProfileFriends: [
     {
       pathname: 'followers-all',
-      label: 'Tổng quan'
+      label: 'Overview'
     },
     {
       pathname: 'following',
-      label: 'Đang theo dõi'
+      label: 'Following'
     }
   ]
 }

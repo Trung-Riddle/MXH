@@ -6,6 +6,7 @@ import InputFile from '../InputFile/InputFile'
 import { useAppDispatch, useAppSelector } from 'src/hooks/useRedux'
 import { RootState } from 'src/store'
 import { updateEditModal } from 'src/store/slices/modal/modal.slice'
+import { updatePostItem } from 'src/store/slices/post/post.slice'
 
 interface FormProps {
   onChangeContent: (content: string) => void
@@ -27,7 +28,7 @@ const Form = ({ onChangeContent, content }: FormProps) => {
       dispatch(updateEditModal({ inputFileIsOpen: true }))
     }
 
-    if (valuesPostEdit.bgColor) {
+    if (valuesPostEdit.bgColor !== '') {
       dispatch(updateEditModal({ backgroundIsOpen: true }))
       setToggleBackground(true)
     }
@@ -39,6 +40,12 @@ const Form = ({ onChangeContent, content }: FormProps) => {
     }
   }, [editModalIsOpen])
 
+  useEffect(() => {
+    if (!inputFileIsOpen) {
+      dispatch(updatePostItem({ imagePost: '', videoPost: '' }))
+    }
+  }, [inputFileIsOpen, dispatch])
+
   const handleChangeContent = (e: ContentEditableEvent) => {
     const text = e.target.value
     if (text.length > 50) {
@@ -46,6 +53,7 @@ const Form = ({ onChangeContent, content }: FormProps) => {
     } else {
       contentEditableRef.current!.style.fontSize = '16px'
     }
+
     onChangeContent(text)
   }
   const handleFocus = () => {

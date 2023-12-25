@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { Article } from 'src/components'
+import { useAppSelector } from 'src/hooks/useRedux'
 
 const TrendingFeeds = [
   {
@@ -63,16 +64,24 @@ const UserSuggestions = [
   }
 ]
 export default function SidebarRight() {
+  const { suggestedUserList } = useAppSelector((state) => state.profile)
+  const { profile } = useAppSelector((state) => state.user)
   return (
-    <aside className='md:flex flex-shrink-0 hidden flex-col max-w-1/5 sticky inherits-h-header overflow-auto gap-3 py-3 base-hidden-scroll'>
+    <aside className='md:flex flex-shrink-0 hidden flex-col md:max-w-[22.5%] lg:max-w-1/5 sticky inherits-h-header overflow-auto gap-3 py-3 base-hidden-scroll'>
       <Article className='p-3 flex flex-col justify-evenly'>
-        <h2 className='font-bold text-base text-dark dark:text-light mb-3 text-center'>Trending feed</h2>
+        <h2 className='font-bold lg:text-base text-dark dark:text-light text-xs lg:mb-3 mb-2 text-center'>
+          Trending feed
+        </h2>
 
-        <div className='grid grid-cols-2 gap-2'>
+        <div className='grid grid-cols-2 md:gap-1 lg:gap-2'>
           {TrendingFeeds.map(({ image, id }) => (
             <div key={id} className='w-full relative'>
               <div className='aspect-2/1'>
-                <img alt='' src={image} className='absolute inset-0 rounded-md w-full h-full object-cover' />
+                <img
+                  alt=''
+                  src={image}
+                  className='absolute inset-0 rounded-sm lg:rounded-md w-full h-full object-cover'
+                />
               </div>
             </div>
           ))}
@@ -80,46 +89,54 @@ export default function SidebarRight() {
       </Article>
 
       <Article className='flex flex-col justify-evenly p-3'>
-        <h2 className='font-bold text-base text-dark dark:text-light mb-3 text-center'>Suggestions for you</h2>
+        <h2 className='font-bold lg:text-base text-dark dark:text-light text-xs lg:mb-3 mb-2 text-center'>
+          Suggestions for you
+        </h2>
 
-        <div className='base-hidden-scroll overflow-y-scroll flex flex-col flex-grow'>
-          <div className='flex flex-col max-h-80 gap-5'>
-            {UserSuggestions.map(({ id, avatar, name }) => (
-              <Link key={id} to={'' + id} className='flex flex-row items-center gap-2'>
-                <div className='relative w-10 h-10'>
-                  <div className='aspect-square'>
+        <div className='flex flex-col flex-grow overflow-y-auto mt-2'>
+          <div className='flex flex-col min-h-[160px] lg:min-h-[300px] max-h-60 lg:max-h-80'>
+            {suggestedUserList.map((userSuggested) => {
+              if (profile?.blockedBy.includes(userSuggested?._id)) return null
+              return (
+                <Link
+                  key={userSuggested._id}
+                  to={`/profile/${userSuggested._id}`}
+                  className='flex flex-row items-center gap-2 dark:hover:bg-slate-400/25 hover:bg-gray-100 p-1 lg:p-2 rounded-md transition-all ease-linear duration-150'
+                >
+                  <div className='relative w-7 lg:w-10 h-7 lg:h-10 flex-shrink-0'>
                     <img
                       loading='lazy'
-                      src={avatar}
-                      alt=''
+                      src={userSuggested.profilePicture}
+                      alt={userSuggested.username}
                       className='absolute rounded-full w-full h-full object-cover inset-0'
                     />
                   </div>
-                </div>
-                <h4 className='text-sm'>{name}</h4>
-              </Link>
-            ))}
+                  <h4 className='text-xs lg:text-sm'>{userSuggested.username}</h4>
+                </Link>
+              )
+            })}
           </div>
         </div>
       </Article>
 
-      <Article className='p-3 flex justify-evenly items-center'>
-        <h2 className='font-bold text-base text-dark dark:text-light mb-3 text-center'>Content creator</h2>
+      <Article className='p-3 flex justify-center lg:justify-evenly items-center'>
+        <h2 className='font-bold lg:text-base text-dark dark:text-light text-xs lg:mb-3 mb-2 text-center'>
+          Content creator
+        </h2>
 
-        <div className='mt-3 flex -space-x-2 overflow-hidden justify-center mb-1'>
+        <div className='lg:mt-3 flex -space-x-2 justify-center mb-2'>
           {UserSuggestions.slice(0, 4).map(({ id, avatar }) => (
-            <div key={id} className='h-8 w-8 relative inline-block'>
-              <div className='aspect-square'>
-                <img
-                  className='h-full w-full rounded-full object-cover absolute inset-0 ring-2 ring-white'
-                  src={avatar}
-                  alt=''
-                />
-              </div>
+            <div key={id} className='lg:h-8 lg:w-8 w-5 h-5 relative inline-block'>
+              <img
+                className='h-full w-full rounded-full object-cover absolute inset-0 ring-2 ring-light dark:ring-dark'
+                src={avatar}
+                loading='lazy'
+                alt=''
+              />
             </div>
           ))}
         </div>
-        <p className='text-center text-xs'>
+        <p className='text-center text-[10px] lg:text-xs lg:mt-2'>
           More than 142k people became content creators, become a content creator of Lime8
         </p>
       </Article>

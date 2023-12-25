@@ -2,8 +2,12 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
+  important: true,
   theme: {
     extend: {
+      animation: {
+        animateSpin: 'spin 1s linear'
+      },
       fill: {
         dark: '#1B1D2A',
         light: '#FFFFFF'

@@ -12,7 +12,7 @@ interface AddFiletoRedux {
 
 export class ImageUtils {
   static validateFile(file: File, type: string) {
-    if (type === 'image') {
+    if (type.includes('image')) {
       const validImageTypes = ['image/gif', 'image/jpeg', 'image/png', 'image/jpg']
       return file && validImageTypes.indexOf(file.type) > -1
     } else {
@@ -59,15 +59,13 @@ export class ImageUtils {
     if (editModalIsOpen) {
       dispatch(
         updatePostEdit({
-          imagePost: type === 'image' ? base64 : '',
-          videoPost: type === 'video' ? base64 : ''
+          [type.includes('image') ? 'imagePost' : 'videoPost']: base64
         })
       )
     } else {
       dispatch(
         updatePostItem({
-          imagePost: type === 'image' ? base64 : '',
-          videoPost: type === 'video' ? base64 : ''
+          [type.includes('image') ? 'imagePost' : 'videoPost']: base64
         })
       )
     }

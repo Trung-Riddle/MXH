@@ -1,31 +1,26 @@
-export interface UserDocuments {
-  id: string
-  createdAt: Date
-  authId: string
-  gender: {
-    female: boolean
-    male: boolean
-  }
-  profilePicture: string
-  postsCount: number
-  followers: number
-  following: number
-  password: string
-  relatives: string[]
-  blocked: string[]
-  social: {
-    facebook: string
-    github: string
-    intagram: string
-    youtube: string
-  }
-  blokedsBy: string[]
-  bgImageCover: string
-  work: string
-  status: boolean
-  quote: string
-  bgImageId: string
-  location: string
+export interface IUser {
+  _id: string
+  uId: string
+
   fullName: string
-  birthday: Date
+  username: string
+  email: string
+  bgImageId: string
+  bgImageVersion: string
+  avatarColor: string
+  profilePicture: string
+
+  quote: string
+  work: string
+  birthday: string
+  school: string
+  location: string
+  relatives: string
+
+  blocked: string[]
+  blockedBy: string[]
+  followingCount: number
+  followersCount: number
+  postsCount: number
+  createdAt: string
 }

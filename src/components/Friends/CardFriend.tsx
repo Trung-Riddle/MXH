@@ -20,8 +20,8 @@ const CardFriend = ({ avatar, fullName, followers, following, onClick, text }: C
       <div className='flex flex-col flex-1'>
         <h4 className='text-base sm:text-sm font-semibold text-dark dark:text-light mb-1'>{fullName}</h4>
         <span className='flex items-center gap-2 mb-3'>
-          <span className='text-xs'>Followers: {followers}</span>
-          <span className='text-xs'>Followings: {following}</span>
+          <span className='text-xs text-dark dark:text-light'>Followers: {followers}</span>
+          <span className='text-xs text-dark dark:text-light'>Followings: {following}</span>
         </span>
         <Button
           onClick={onClick}

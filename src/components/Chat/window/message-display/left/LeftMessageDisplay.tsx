@@ -24,35 +24,19 @@ const LeftMessageDisplay = ({
   showImageModal
 }: any) => {
   return (
-    <div className='flex flex-col gap-2 px-5 py-2 w-full rounded-3xl bg-red-400'>
-      <div className='relative w-2/6 bg-[#f3f3f3] text-stone-600 px-3 py-2 rounded-xl relative'>
-        <div className='message-reactions-container'>
-          {toggleReaction && index === activeElementIndex && (
-            <div ref={reactionRef}>
-              <Reactions
-                showLabel={false}
-                handleClick={(event: any) => {
-                  const body = {
-                    conversationId: chat?.conversationId,
-                    messageId: chat?._id,
-                    reaction: event,
-                    type: 'add'
-                  }
-                  handleReactionClick(body)
-                  setToggleReaction(false)
-                }}
-              />
-            </div>
-          )}
-        </div>
-        <div className='left-message-bubble-container'>
-          <div className='message-img'>
-            <Avatar style={{ color: '#333'}} fullName={chat.senderUsername} avatar={chat.senderProfilePicture} size='sm' />
-          </div>
+    <div className='flex flex-col gap-2 px-5 py-2 w-full rounded-3xl items-start'>
+      <div className='relative max-w-[65%] w-max bg-gray-100 dark:bg-slate-400/25 text-dark dark:text-light px-3 py-2 rounded-xl '>
+        <div className='flex flex-col gap-2'>
+          <Avatar
+            style={{ color: '#333' }}
+            fullName={chat.senderUsername}
+            avatar={chat.senderProfilePicture}
+            size='sm'
+          />
           <div className='message-content-container'>
             <div className='message-content-container-wrapper'>
-              {/*eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
               <div
+                aria-hidden='true'
                 className='message-content'
                 onClick={() => {
                   if (!chat?.deleteForMe) {
@@ -71,7 +55,7 @@ const LeftMessageDisplay = ({
                     <span className='message-deleted'>Tin nhắn đã xoá</span>
                   </div>
                 )}
-  
+
                 {!chat?.deleteForMe && (
                   <>
                     {chat?.content !== 'Gửi 1 ảnh động' && chat?.content !== 'Gửi 1 ảnh' && (
@@ -84,14 +68,15 @@ const LeftMessageDisplay = ({
                           marginTop: `${chat?.content && chat?.content !== 'Gửi 1 ảnh' ? '5px' : ''}`
                         }}
                       >
-                        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
                         <img
+                          aria-hidden='true'
+                          className='object-cover w-full max-w-[200px]'
                           src={chat?.selectedImage}
+                          alt=''
                           onClick={() => {
                             setImageUrl(chat?.selectedImage)
                             setShowImageModal(!showImageModal)
                           }}
-                          alt=''
                         />
                       </div>
                     )}
@@ -104,20 +89,24 @@ const LeftMessageDisplay = ({
                 )}
               </div>
               {showReactionIcon && index === activeElementIndex && !chat?.deleteForMe && (
-                // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/no-static-element-interactions
-                <div className='w-10 h-10 flex justify-center items-center text-3xl rounded-3xl absolute border bg-white-02 cursor-pointer right-[-50px] bottom-2 text-white' onClick={() => setToggleReaction(true)}>
+                <div
+                  aria-hidden='true'
+                  className='w-10 h-10 flex justify-center items-center text-3xl rounded-3xl absolute border bg-white-02 cursor-pointer right-[-50px] bottom-2 text-dark dark:text-light'
+                  onClick={() => setToggleReaction(true)}
+                >
                   &#9786;
                 </div>
               )}
             </div>
             {chat?.reaction && chat.reaction.length > 0 && !chat?.deleteForMe && (
-              <div className='message-reaction'>
-                {chat?.reaction.map((data: any, index: any) => (
-                  // eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions
+              <div className='absolute bottom-1 right-1 flex items-center -space-x-4'>
+                {chat?.reaction.map((data: { senderName: string; type: string }, idx: number) => (
                   <img
+                    key={idx}
+                    aria-hidden='true'
+                    className='w-7 h-7 object-cover rounded-lg'
                     src={reactionsMap[data?.type]}
-                    alt=''
-                    key={index}
+                    alt={data.senderName}
                     onClick={() => {
                       if (data?.senderName === profile?.username) {
                         const body = {
@@ -134,11 +123,31 @@ const LeftMessageDisplay = ({
               </div>
             )}
             <div className='message-time'>
-              <span data-testid='chat-time'>{timeAgo.timeFormat(chat?.createdAt)}</span>
+              <span data-testid='text-dark dark:text-light text-sm font-semibold'>
+                {timeAgo.timeFormat(chat?.createdAt)}
+              </span>
             </div>
           </div>
         </div>
       </div>
+
+      {toggleReaction && index === activeElementIndex && (
+        <div ref={reactionRef}>
+          <Reactions
+            showLabel={false}
+            handleClick={(event: any) => {
+              const body = {
+                conversationId: chat?.conversationId,
+                messageId: chat?._id,
+                reaction: event,
+                type: 'add'
+              }
+              handleReactionClick(body)
+              setToggleReaction(false)
+            }}
+          />
+        </div>
+      )}
     </div>
   )
 }
